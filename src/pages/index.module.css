@@ -1,0 +1,44 @@
+a{
+  color: black;
+  text-decoration: none;
+}
+.logo{
+  padding-top: 15px;
+  background: #FFB701;
+  text-align: center;
+  margin: auto;
+}
+.header{
+  background:#FED200;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.menu{
+  display: flex;
+}
+.menu li {
+  margin: 10px;
+}
+.menu li a{
+  display: block;
+  padding: 0px 10px;
+}
+.footer{
+  background: #FFB701;
+  font-size: small;
+  padding: 20px 0;
+  text-align: center;
+  width:100%;
+  position:fixed;
+  bottom:0px;
+}
+.footer > p{
+  font-size: 15px;
+  padding: 5px;
+}
+.footer > p > a{
+  text-decoration: underline;
+  font-weight: 600;
+}
