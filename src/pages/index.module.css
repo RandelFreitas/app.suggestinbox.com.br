@@ -25,14 +25,16 @@ a{
   display: block;
   padding: 0px 10px;
 }
+.back{
+  min-height: 50vh;
+}
 .footer{
   background: #FFB701;
-  font-size: small;
+  position: relative;
+  bottom: 0;
+  width:100%;
   padding: 20px 0;
   text-align: center;
-  width:100%;
-  position:fixed;
-  bottom:0px;
 }
 .footer > p{
   font-size: 15px;

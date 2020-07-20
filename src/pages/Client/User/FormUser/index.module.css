@@ -1,4 +1,53 @@
-.form{
+.wrap{
   margin: auto;
-  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 250px;
+}
+.label{
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.labelRadio{
+  margin: 5px;
+  font-size: 16px;
+}
+.labelCheckbox{
+  margin: 5px;
+  font-size: 13px;
+}
+.inputRadio{
+  padding: 25px;
+}
+.input{
+  width: 95%;
+  border: solid 1px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.textArea{
+  border: solid 1px;
+  border-radius: 5px;
+}
+.link{
+  text-align: center;
+  margin: 15px;
+  background: #0060BE;
+  display: block;
+  color: white;
+  padding: 15px;
+  border: solid 1px;
+  border-radius: 10px;
+}
+.buttons{
+  margin: auto;
+  width: 300px;
+}
+.center{
+  text-align: center;
+  padding-top : 5px;
 }
