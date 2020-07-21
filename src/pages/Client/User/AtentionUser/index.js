@@ -8,7 +8,7 @@ const AtentionUser = () => {
 
   return(
     <div className={styles.center}>
-      <h2>Chamada enviada!</h2>
+      <h2>Chamado enviado!</h2>
       <p>Chegaremos assim que possível.</p>
       <p className={styles.suggest}>Enquanto isso você pode ver nosso cardápio online no botão abaixo:</p>
       <div className={styles.buttons}>

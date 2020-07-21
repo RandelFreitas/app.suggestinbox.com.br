@@ -3,22 +3,13 @@
   margin: auto;
   width: 300px;
 }
-.suggest{
-  padding-right: 30px;
-  padding-left: 30px;
-  margin-top: 60px;
-}
 .link{
   text-align: center;
-  margin: 15px;
+  margin: 50px;
   background: #0060BE;
   display: block;
   color: white;
   padding: 15px;
   border: solid 1px;
   border-radius: 10px;
-}
-.buttons{
-  margin: auto;
-  width: 300px;
 }

@@ -65,7 +65,7 @@ const FormUser = () => {
           <textarea className={styles.textArea} type='text' rows='5' cols='34' maxlength='300'></textarea>
         </div>
         <div className={styles.buttons}>
-          <Link className={styles.link} to={`${match.url}`}>Enviar opinião</Link>
+          <Link className={styles.link} to={`${match.url}/sucesso`}>Enviar opinião</Link>
         </div>
       </form>
     </div>

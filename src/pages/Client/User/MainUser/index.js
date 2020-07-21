@@ -19,7 +19,7 @@ const MainUser = () => {
         <p>Servindo bem para servir sempre</p>
       </div>
       <div className={styles.buttons}>
-        <Link className={styles.link} to={`${match.url}/sugestao`}>Dar opinião</Link>
+        <Link className={styles.link} to={`${match.url}/opiniao`}>Dar opinião</Link>
         <Link className={styles.link} to={`${match.url}/cardapio`}>Cardápio online</Link>
         <Link className={styles.link} to={`${match.url}/atencao`}>Chamar garçom(a)</Link>
       </div>

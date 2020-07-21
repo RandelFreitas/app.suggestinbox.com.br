@@ -1,0 +1,28 @@
+a{
+  color: black;
+  text-decoration: none;
+}
+.logo{
+  padding-top: 15px;
+  background: #FFB701;
+  text-align: center;
+  margin: auto;
+}
+.back{
+  min-height: 50vh;
+}
+.footer{
+  background: #FFB701;
+  position: fixed;
+  bottom: 0;
+  width:100%;
+  padding: 20px 0;
+  text-align: center;
+}
+.footer > p{
+  font-size: 15px;
+  padding: 5px;
+}
+.footer > p > a{
+  font-weight: 600;
+}
