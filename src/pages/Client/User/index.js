@@ -8,7 +8,7 @@ const App = () => {
   
   return(
     <div className={styles.body}>
-      <h1 className={styles.logo}><img src='/logo_palpitebox.png'/></h1>
+      <h1 className={styles.logo}><img src='/assets/logo_palpitebox.png'/></h1>
       <header className={styles.header}>
         <nav>
           <ul className={styles.menu}>
