@@ -1,7 +1,7 @@
 .center{
   margin: auto;
   text-align: center;
-  width: 300PX;
+  max-width: 300px;
 }
 .map{
   margin: 15px 0;

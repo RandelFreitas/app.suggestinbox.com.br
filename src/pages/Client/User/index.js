@@ -7,27 +7,38 @@ const App = () => {
   const match = useRouteMatch();
   
   return(
-    <div className={styles.body}>
-      <h1 className={styles.logo}><img src='/assets/logo_palpitebox.png'/></h1>
+    <div>
+      
       <header className={styles.header}>
+        <div className={styles.logo}>
+          <div className={styles.container}>
+            <img src='/assets/logo_palpitebox.png'/>
+          </div>
+        </div>
         <nav>
-          <ul className={styles.menu}>
-            <li><Link className={styles.link} to={`${match.url}`}>Início</Link></li>
-            <li>|</li>
-            <li><Link className={styles.link} to={`${match.url}/sobrenos`}>Sobre nós</Link></li>
-          </ul>
+          <div className={styles.container}>
+            <ul className={styles.menu}>
+              <li><Link className={styles.link} to={`${match.url}`}>INÍCIO</Link></li>
+              <li><Link className={styles.link} to={`${match.url}/sobrenos`}>SOBRE</Link></li>
+            </ul>
+          </div>
         </nav>
       </header>
-      <div className={styles.back}>
-        <RoutesApp/>
-      </div>
-      <div className={styles.wrapFooter}>
-        <footer className={styles.footer}>
+
+      <section className={styles.back}>
+        <div className={styles.container}>
+          <RoutesApp/>
+        </div>
+      </section>
+
+      <footer className={styles.footer}>
+        <div className={styles.container}>
           <p>Colocar Suggest na sua empresa, <Link to={'/'}>clique aqui!</Link></p>
           <p>Suggest In Box - Todos os direitos reservados.</p>
           <p>© 2020 - Copyright</p>
-        </footer>
-      </div>
+        </div>
+      </footer>
+
     </div>
   );
 }

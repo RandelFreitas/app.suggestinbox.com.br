@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Main = () => {
+const Promo = () => {
   return(
     <div>
-      SUGESTOES
+      PROMOÇÕES
     </div>
   );
 }
 
-export default Main;
+export default Promo;

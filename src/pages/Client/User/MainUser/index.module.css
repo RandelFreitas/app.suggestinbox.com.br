@@ -11,6 +11,9 @@
   border: solid 1px;
   border-radius: 10px;
 }
+.link:hover{
+  background: #005fbed0;
+}
 .info > li{
   padding: 20px;
 }
@@ -19,5 +22,5 @@
 }
 .buttons{
   margin: auto;
-  width: 300px;
+  max-width: 300px;
 }

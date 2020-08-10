@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&family=Yantramanav&display=swap');
 .container {
   margin-right: auto;
   margin-left: auto;
 }
 @media (min-width: 768px) {
-  .container {
+  .container{
     width: 750px;
   }
 }
@@ -17,18 +18,19 @@
     width: 1170px;
   }
 }
-/*CSS HEADER*/
+
+/****************CSS HEADER****************/
 .colorHeader{
-  background: #F5F5F5;
+  background: #FFB701;
 }
 .a{
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 20px;
+  font-family: 'Yantramanav';
 }
 .header{
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  height: 30px;
   padding: 20px;
 }
 .menu{
@@ -40,37 +42,43 @@
 .menu li a {
   display: block;
 }
-/*CSS SECTION1*/
+
+/****************CSS SECTION1****************/
 .colorSection1{
-  background: #3161A3;
+  background:#F5F5F5;
 }
 .section1{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  color: white;
-  font-size: 30px;
-  text-align: center;
-  height: 300px;
+  align-items: center;
+  justify-items: center;
+  font-size: 25px;
+  font-family: 'Source Sans Pro';
+  text-align: start;
+  height: 400px;
 }
-/*CSS SECTION2*/
+/****************CSS SECTION2****************/
 .colorSection2{
-  background:#F5F5F5;
+  background:#FED200;
 }
 .section2{
-  height: 300px;
+  height: 400px;
 }
-/*CSS SECTION3*/
+
+/****************CSS SECTION3****************/
 .section3{
-  height: 300px;
+  height: 400px;
 }
-/*CSS SECTION4*/
+
+/****************CSS SECTION4****************/
 .section4{
-  height: 300px;
+  height: 400px;
 }
-/*CSS FOOTER*/
+
+/*****************CSS FOOTER****************/
 .colorFooter{
   background: #C8E6F5;
 }
 .footer{
-  height: 300px;
+  height: 200px;
 }

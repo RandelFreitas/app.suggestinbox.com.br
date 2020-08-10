@@ -6,8 +6,8 @@ const Site = () => {
     <div className={styles.wrap}>
       <header className={styles.colorHeader}>
         <div className={`${styles.container} ${styles.header}`}>
-          <a className={styles.a} href='#'>LOGO</a>
           <nav>
+            <a className={styles.a} href='#'>LOGO  |</a>
             <ul className={styles.menu}>
               <li><a className={styles.a} href='#'>SOBRE</a></li>
               <li><a className={styles.a} href='#'>SOLUÇÕES</a></li>
@@ -15,32 +15,47 @@ const Site = () => {
               <li><a className={styles.a} href='#'>ARTIGOS</a></li>
             </ul>
           </nav>
+          <div>
+            <img src='./assets/facebook.svg'/>
+            <img src='./assets/instagram.svg'/>
+            <img src='./assets/youtube.svg'/>
+            <button>Login</button>
+          </div>
         </div>
       </header>
+
       <section className={styles.colorSection1}>
         <div className={`${styles.container} ${styles.section1}`}>
-          <span>Qual a pessoa mais importante para seu negócio?</span>
-          <img width='200' height='200' src='./assets/cliente.png'></img>
+          <div>
+            <h2>Qual a pessoa mais importante para seu negócio?</h2>
+            <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>
+          </div>
+          <img className={styles.asset} width='304' height='294' src='./assets/cliente-2.png'></img>
         </div>
       </section>
+      
       <section className={styles.colorSection2}>
-        <div className={`${styles.container} ${styles.section2}`}>
-          <p>SEÇÃO 2</p>
+        <div className={`${styles.container} ${styles.section1}`}>
+          <img className={styles.asset} width='300' height='160' src='./assets/satisfaction.png'></img>
+          <div>
+            <h2>Qual a pessoa mais importante para seu negócio?</h2>
+            <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>
+          </div>
+        </div>
+      </section>
+      <section className={styles.colorSection1}>
+        <div className={`${styles.container} ${styles.section3}`}>
+          
         </div>
       </section>
       <section className={styles.colorFooter}>
-        <div className={`${styles.container} ${styles.section3}`}>
-          <p>SEÇÃO 3</p>
-        </div>
-      </section>
-      <section className={styles.colorSection2}>
         <div className={`${styles.container} ${styles.section4}`}>
-          <p>SEÇÃO 4</p>
+          
         </div>
       </section>
-      <footer className={styles.colorSection1}>
+      <footer className={styles.colorSection2}>
         <div className={`${styles.container} ${styles.footer}`}>
-          <p>Rodapé!</p>
+          Rodape
         </div>
       </footer>
     </div>
