@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useRouteMatch} from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 
 const MainUser = () => {
-  const match = useRouteMatch();
   //const { establishment } = props;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  //const [ idUrl ] = useState(window.location.href.split('/?')[1]);
 
-  useEffect(() => {
+  //useEffect(() => {
     //props.getEstablishment(idUrl);
-    console.log(idUrl);
-  },[]);
+  //  console.log(idUrl);
+  //},[]);
 
   return(
     <div>
@@ -19,9 +18,9 @@ const MainUser = () => {
         <p>Servindo bem para servir sempre</p>
       </div>
       <div className={styles.buttons}>
-        <Link className={styles.link} to={`${match.url}/opiniao`}>Dar opinião</Link>
-        <Link className={styles.link} to={`${match.url}/cardapio`}>Cardápio online</Link>
-        <Link className={styles.link} to={`${match.url}/atencao`}>Chamar garçom(a)</Link>
+        <Link className={styles.link} to='/app/opiniao'>Dar opinião</Link>
+        <Link className={styles.link} to='/app/cardapio'>Cardápio online</Link>
+        <Link className={styles.link} to='/app/atencao'>Chamar garçom(a)</Link>
       </div>
     </div>
   );

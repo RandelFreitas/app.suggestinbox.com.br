@@ -1,44 +1,51 @@
-.container {
-  margin-right: auto;
-  margin-left: auto;
+/*********HEADER*********/
+.header{
+  background:#FED200;
+  justify-content: center;
 }
-@media (min-width: 768px) {
-  .container{
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
-
 .logo{
   padding-top: 15px;
   background: #FFB701;
   text-align: center;
   margin: auto;
 }
+.nav{
+  margin: auto;
+  max-width: 700px;
+}
+.menu{
+  display: flex;
+  justify-content: space-evenly;
+}
+.menu li {
+  margin: 8px;
+  font-size: 15px;
+}
+.menu li a:hover{
+  text-decoration: underline;
+}
+/*********SECTION*********/
 .back{
+  margin: auto;
   min-height: 50vh;
 }
+/*********FOOTER*********/
 .footer{
   background: #FFB701;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width:100%;
   padding: 20px 0;
   text-align: center;
 }
-.footer > p{
+.footer > div > p{
   font-size: 15px;
   padding: 5px;
 }
-.footer > p > a{
+.footer > div > p > a{
+  text-decoration: underline;
   font-weight: 600;
+}
+.footer > div > p > a:hover{
+  color: white;
 }

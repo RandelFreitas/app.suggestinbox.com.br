@@ -1,7 +1,7 @@
 export const TOKEN_KEY = "@token";
 export const NAME = "@name";
 
-export const isAuthenticated = () => false;//localStorage.getItem(TOKEN_KEY) !== null;
+export const isAuthenticated = () => true;//localStorage.getItem(TOKEN_KEY) !== null;
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const getName = () => localStorage.getItem(NAME);

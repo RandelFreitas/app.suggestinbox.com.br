@@ -7,18 +7,18 @@ const Site = () => {
       <header className={styles.colorHeader}>
         <div className={`${styles.container} ${styles.header}`}>
           <nav>
-            <a className={styles.a} href='#'>LOGO  |</a>
+            <a className={styles.a} href='/'>LOGO  |</a>
             <ul className={styles.menu}>
-              <li><a className={styles.a} href='#'>SOBRE</a></li>
-              <li><a className={styles.a} href='#'>SOLUÇÕES</a></li>
-              <li><a className={styles.a} href='#'>CONTATO</a></li>
-              <li><a className={styles.a} href='#'>ARTIGOS</a></li>
+              <li><a className={styles.a} href='/'>SOBRE</a></li>
+              <li><a className={styles.a} href='/'>SOLUÇÕES</a></li>
+              <li><a className={styles.a} href='/'>CONTATO</a></li>
+              <li><a className={styles.a} href='/'>ARTIGOS</a></li>
             </ul>
           </nav>
           <div>
-            <img src='./assets/facebook.svg'/>
-            <img src='./assets/instagram.svg'/>
-            <img src='./assets/youtube.svg'/>
+            <img alt='face' src='./assets/facebook.svg'/>
+            <img alt='insta' src='./assets/instagram.svg'/>
+            <img alt='youtube' src='./assets/youtube.svg'/>
             <button>Login</button>
           </div>
         </div>
@@ -30,13 +30,13 @@ const Site = () => {
             <h2>Qual a pessoa mais importante para seu negócio?</h2>
             <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>
           </div>
-          <img className={styles.asset} width='304' height='294' src='./assets/cliente-2.png'></img>
+          <img className={styles.asset} width='304' height='294' alt='logo' src='./assets/cliente-2.png'></img>
         </div>
       </section>
       
       <section className={styles.colorSection2}>
         <div className={`${styles.container} ${styles.section1}`}>
-          <img className={styles.asset} width='300' height='160' src='./assets/satisfaction.png'></img>
+          <img className={styles.asset} width='300' height='160' alt='satisfaction' src='./assets/satisfaction.png'></img>
           <div>
             <h2>Qual a pessoa mais importante para seu negócio?</h2>
             <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>

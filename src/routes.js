@@ -5,8 +5,10 @@ import Adm from './pages/Client/Adm';
 import Site from './Site';
 import App from './pages/Client/User';
 import Suggest from './pages/Suggest';
+import { Login } from './components';
 
 import { isAuthenticated } from './services/auth';
+//import history from './services/history';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -25,8 +27,8 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path='/' component={Site}/>
-      <Route exact path='/login' component={()=><h1>Login</h1>}/>
       <Route path='/app' component={App}/>
+      <Route path='/login' component={Login}/>
       <PrivateRoute path='/adm' component={Adm}/>
       <PrivateRoute path='/suggest' component={Suggest}/>
     </Switch>

@@ -18,7 +18,6 @@
     width: 1170px;
   }
 }
-
 /****************CSS HEADER****************/
 .colorHeader{
   background: #FFB701;
@@ -42,7 +41,6 @@
 .menu li a {
   display: block;
 }
-
 /****************CSS SECTION1****************/
 .colorSection1{
   background:#F5F5F5;
@@ -64,17 +62,14 @@
 .section2{
   height: 400px;
 }
-
 /****************CSS SECTION3****************/
 .section3{
   height: 400px;
 }
-
 /****************CSS SECTION4****************/
 .section4{
   height: 400px;
 }
-
 /*****************CSS FOOTER****************/
 .colorFooter{
   background: #C8E6F5;

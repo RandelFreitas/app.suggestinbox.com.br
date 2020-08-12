@@ -2,7 +2,7 @@
   margin: auto;
   margin-top: 15px;
   margin-bottom: 10px;
-  width: 250px;
+  max-width: 250px;
 }
 .label{
   display: block;
@@ -22,7 +22,7 @@
   padding: 25px;
 }
 .input{
-  width: 95%;
+  width: 100%;
   border: solid 1px;
   height: 40px;
   border-radius: 5px;

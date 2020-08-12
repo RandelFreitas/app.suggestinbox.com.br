@@ -1,0 +1,99 @@
+/**********CONTAINER*******/
+.container {
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container{
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+/*********HEADER********/
+.logo{
+  padding-top: 15px;
+  background: #FFB701;
+  text-align: center;
+  margin: auto;
+}
+.login{
+  padding-top: 15px;
+  text-align: center;
+  margin: auto;
+}
+/*********SECTION LOGIN********/
+section{
+  height: 60vh;
+}
+.wrap{
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 250px;
+}
+.label{
+  display: block;
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.input{
+  width: 100%;
+  border: solid 1px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.labelCheckbox{
+  margin: 5px;
+  margin-right: 34px;
+  font-size: 13px;
+}
+.labelFogot{
+  font-size: 13px;
+  text-align: end;
+}
+.buttons{
+  margin: auto;
+  margin-top: 40px;
+  max-width: 200px;
+}
+.link{
+  text-align: center;
+  margin: 15px;
+  background: #0060BE;
+  display: block;
+  color: white;
+  padding: 15px;
+  border: solid 1px;
+  border-radius: 10px;
+}
+/********FOOTER********/
+.footer{
+  background: #FFB701;
+  position: relative;
+  bottom: 0;
+  width:100%;
+  padding: 20px 0;
+  text-align: center;
+}
+.footer > div > p{
+  font-size: 15px;
+  padding: 5px;
+}
+.footer > div > p > a{
+  text-decoration: underline;
+  font-weight: 600;
+}
+.footer > div > p > a:hover{
+  color: white;
+}

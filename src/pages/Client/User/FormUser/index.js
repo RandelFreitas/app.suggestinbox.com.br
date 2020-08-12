@@ -1,9 +1,8 @@
 import React, { useState} from 'react';
-import { Link, useRouteMatch} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './index.module.css';
 
 const FormUser = () => {
-  const match = useRouteMatch();
   const [ disab, setDisab] = useState(false);
   
   const desabilitar =() =>{
@@ -18,7 +17,7 @@ const FormUser = () => {
 
   return(
     <div>
-      <form className={styles.form}>
+      <form>
         <div className={styles.wrap}>
           <label className={styles.label}>Nome:</label>
           <input className={styles.input} disabled={disab} id='name' type='text' maxlength='50'></input>
@@ -65,7 +64,7 @@ const FormUser = () => {
           <textarea className={styles.textArea} type='text' rows='5' cols='34' maxlength='300'></textarea>
         </div>
         <div className={styles.buttons}>
-          <Link className={styles.link} to={`${match.url}/sucesso`}>Enviar opinião</Link>
+          <Link className={styles.link} to='/app/opiniao/sucesso'>Enviar opinião</Link>
         </div>
       </form>
     </div>

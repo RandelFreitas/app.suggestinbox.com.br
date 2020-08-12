@@ -1,0 +1,35 @@
+table{
+  width: 100%;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+table, th, td {
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+}
+th, td {
+  font-size: 15px;
+  text-align: center;
+}
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+.wrap{
+  max-width: 700px;
+  margin: auto;
+}
+.name{
+  min-width: 140px;
+}
+.tel{
+  min-width: 120px;
+}
+.note{
+  min-width: 60px;
+}
+.ind{
+  min-width: 60px;
+}
+.opn{
+  min-width: 180px;
+}
