@@ -16,15 +16,14 @@ const App = () => {
               <li><Link className={styles.link} to='/adm'>SUGESTÕES</Link></li>
               <li><Link className={styles.link} to='/adm/promo'>PROMOÇÕES</Link></li>
               <li><Link className={styles.link} to='/adm/setup'>CONFIGURAÇÕES</Link></li>
+              <li><Link className={styles.link} to='/adm/finances'>FINANCEIRO</Link></li>
             </ul>
           </div>
         </nav>
       </header>
-      <section>
-        <div className={styles.back}>
-          <RoutesAppAdm/>
-        </div>
-      </section>
+      <div className={styles.back}>
+        <RoutesAppAdm/>
+      </div>
       <footer className={styles.footer}>
         <div>
           <p>Suggest In Box - Todos os direitos reservados.</p>

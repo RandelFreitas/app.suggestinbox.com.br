@@ -1,7 +1,22 @@
+/*******FILTER AND ORDER*******/
+.inline{
+  display: grid;
+  grid-template-columns: 3fr 2fr 5fr 2fr;
+  margin-top: 20px;
+}
+.filter, .order, .period, .itens{
+  margin: auto;
+}
+label{
+  font-size: 13px;
+}
+.select{
+  margin-right: 6px;
+}
+/********SECTION TABLE********/
 table{
   width: 100%;
   margin: 10px auto;
-  border-radius: 10px;
 }
 table, th, td {
   border: 1px solid #dddddd;
@@ -15,8 +30,11 @@ tr:nth-child(odd) {
   background-color: #dddddd;
 }
 .wrap{
-  max-width: 700px;
+  max-width: 800px;
   margin: auto;
+}
+.info{
+  min-width: 100px;
 }
 .name{
   min-width: 140px;
@@ -32,4 +50,12 @@ tr:nth-child(odd) {
 }
 .opn{
   min-width: 180px;
+}
+.fav{
+  min-width: 40px;
+}
+.pagination > p{
+  text-align: center;
+  margin: 25px 0;
+  font-size: 13px;
 }

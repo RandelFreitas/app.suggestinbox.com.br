@@ -1,13 +1,13 @@
 /*********HEADER*********/
+.header{
+  background:#FED200;
+  justify-content: center;
+}
 .logo{
   padding-top: 15px;
   background: #FFB701;
   text-align: center;
   margin: auto;
-}
-.header{
-  background:#FED200;
-  justify-content: center;
 }
 .menu{
   display: flex;
