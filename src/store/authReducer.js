@@ -1,21 +1,28 @@
 import api from '../services/api';
 import history from '../services/history';
-import { setInfosLocalStorage, logoutApp } from '../services/auth';
+import { setInfosLocalStorage, logoutAdm } from '../services/auth';
 
 const ACTIONS = {
   AUTH: 'AUTH',
 }
 
-const ESTADO_INICIAL = {
+const INITIAL_STATE = {
+  infos:[],
   token: '',
 }
 
-export const authReducer = (state = ESTADO_INICIAL, action) => {
+export const authReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.AUTH:
       return {...state, manager: action.manager}
     default:
       return state;
+  }
+}
+
+export const teste = (values) => {
+  return dispatch => {
+      console.log(values);
   }
 }
 
@@ -25,16 +32,19 @@ export const auth = (login) => {
     .then(Response => {
       dispatch({
           type: ACTIONS.AUTH,
-          manager: Response.data,
+          infos: Response.data,
         },
         setInfosLocalStorage(Response.data.token, Response.data.name),
         history.push(`/adm`)
       );
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
 }
 
 export const logout = () =>{
-  logoutApp();
-  history.push(`/`);
+  logoutAdm();
+  history.push(`/login`);
 }

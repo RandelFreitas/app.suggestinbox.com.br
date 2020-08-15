@@ -8,7 +8,7 @@ const MenuUser = () =>{
         <h3>Cardápio</h3>
         <div className={styles.wrap}>
           <label className={styles.name}>Seção: </label>
-          <select for='section'>
+          <select htmlFor='section'>
             <option value='comida'>Comida</option>
             <option value='bebida'>Bebida</option>
           </select>

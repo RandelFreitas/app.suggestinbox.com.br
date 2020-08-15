@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, Redirect, Router } from 'react-router-dom';
 import Adm from './pages/Client/Adm';
 
 import Site from './Site';
@@ -8,7 +8,7 @@ import Suggest from './pages/Suggest';
 import { Login } from './components';
 
 import { isAuthenticated } from './services/auth';
-//import history from './services/history';
+import history from './services/history';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -24,15 +24,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
  
 const Routes = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <Switch>
       <Route exact path='/' component={Site}/>
+      <Route exact path='/login' component={Login}/>
       <Route path='/app' component={App}/>
-      <Route path='/login' component={Login}/>
       <PrivateRoute path='/adm' component={Adm}/>
-      <PrivateRoute path='/suggest' component={Suggest}/>
+      <PrivateRoute exact path='/suggest' component={Suggest}/>
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default Routes;
