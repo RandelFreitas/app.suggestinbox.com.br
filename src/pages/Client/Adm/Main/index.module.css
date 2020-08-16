@@ -26,8 +26,11 @@ th, td {
   font-size: 15px;
   text-align: center;
 }
-tr:nth-child(odd) {
-  background-color: #dddddd;
+.th{
+  background: #dddddd;
+}
+.td:nth-child(even) {
+  background: #dddddd;
 }
 .wrap{
   max-width: 800px;

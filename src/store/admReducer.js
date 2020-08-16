@@ -1,12 +1,33 @@
-const INITIAL_STATE = { 
-  text: 'Este texto'
-};
+import api from '../services/api';
+
+const ACTIONS = {
+  LIST: 'LIST',
+}
+
+const INITIAL_STATE = {
+  suggest:[],
+}
 
 export const admReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
-    case 'ADD_PROMO':
-      return {...state, data: [...state.data, action.title]};
+    case ACTIONS.LIST:
+      return {...state, suggest: action.suggest}
     default:
       return state;
+  }
+}
+
+export const listSuggest = (id) => {
+  return dispatch => {
+    api.post('/adm/listsuggest', id)
+    .then(Response => {
+      dispatch({
+          type: ACTIONS.LIST,
+          suggesr: Response.data,
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 }

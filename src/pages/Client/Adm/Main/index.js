@@ -1,19 +1,54 @@
-import React from 'react';
+import React, { useEffect} from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { listSuggest } from '../../../../store/admReducer';
+
 import styles from './index.module.css';
 
-const Main = () => {
+const Main = (props) => {
+  const suggests = [
+    {
+      'info':'25/12/2020',
+      'name':'ok',
+      'tel': '(88)998615555',
+      'note': '10'
+    },
+    {
+      'info':'25/12/2020',
+      'name':'ok',
+      'tel': '(88)998615555',
+      'note': '10'
+    },
+    {
+      'info':'25/12/2020',
+      'name':'ok',
+      'tel': '(88)998615555',
+      'note': '10'
+    },
+    {
+      'info':'25/12/2020',
+      'name':'ok',
+      'tel': '(88)998615555',
+      'note': '10'
+    },
+  ];
+  
+  useEffect(() => {
+    console.log('Deu certo redux');
+  },[]);
+
   return(
     <div className={styles.wrap}>
       <div className={styles.inline}>
         <div className={styles.filter}>
           <label>Filtrar por:</label>
           <div>
-            <select className={styles.select} for='section'>
+            <select className={styles.select} htmlFor='section'>
               <option value='comida'>Positivas</option>
               <option value='bebida'>Negativas</option>
               <option value='bebida'>Favoritas</option>
             </select>
-            <select for='section'>
+            <select htmlFor='section'>
               <option value='comida'>Identificadas</option>
               <option value='bebida'>Anônimas</option>
             </select>
@@ -22,7 +57,7 @@ const Main = () => {
         <div className={styles.itens}>
           <label>Por página:</label>
           <div>
-            <select for='section'>
+            <select htmlFor='section'>
               <option value='10'>10 sugestões</option>
               <option value='20'>20 sugestões</option>
             </select>
@@ -38,7 +73,7 @@ const Main = () => {
         <div className={styles.order}>
           <label>Ordenar por:</label>
           <div>
-            <select for='section'>
+            <select htmlFor='section'>
               <option value='comida'>Melhor - Pior</option>
               <option value='bebida'>Pior - Melhor</option>
             </select>
@@ -46,59 +81,32 @@ const Main = () => {
         </div>
       </div>
       <table>
-        <tr className={styles.th}>
-          <th className={styles.info}>Data</th>
-          <th className={styles.name}>Nome</th>
-          <th className={styles.tel}>Telefone</th>
-          <th className={styles.note}>Nota</th>
-          <th className={styles.ind}>Indica</th>
-          <th className={styles.opn}>Opinião</th>
-          <th className={styles.fav}></th>
-        </tr>
-        <tr className={styles.td}>
-          <td>13/08/2020 12:45</td>
-          <td>Fulano de Tal da silva martins</td>
-          <td>(88) 99861-5555</td>
-          <td>10</td>
-          <td>Sim</td>
-          <td>O arroz estava uma delicia delicia delicia delicia delicia delicia delicia!
-          ma delicia delicia delicia delicia delicia delicia delicia
-          ma delicia delicia delicia delicia delicia delicia delicia</td>
-          <td>X</td>
-        </tr>
-        <tr className={styles.td}>
-          <td>13/08/2020 12:45</td>
-          <td>Fulano de Tal</td>
-          <td>(88) 99861-5555</td>
-          <td>10</td>
-          <td>Sim</td>
-          <td>O arroz estava uma delicia delicia delicia delicia delicia delicia delicia!
-          ma delicia delicia delicia delicia delicia delicia delicia
-          ma delicia delicia delicia delicia delicia delicia delicia</td>
-          <td>X</td>
-        </tr>
-        <tr className={styles.td}>
-          <td>13/08/2020 12:45</td>
-          <td>Fulano de Tal</td>
-          <td>(88) 99861-5555</td>
-          <td>10</td>
-          <td>Sim</td>
-          <td>O arroz estava uma delicia delicia delicia delicia delicia delicia delicia!
-          ma delicia delicia delicia delicia delicia delicia delicia
-          ma delicia delicia delicia delicia delicia delicia delicia</td>
-          <td>X</td>
-        </tr>
-        <tr className={styles.td}>
-          <td>13/08/2020 12:45</td>
-          <td>Fulano de Tal</td>
-          <td>(88) 99861-5555</td>
-          <td>10</td>
-          <td>Sim</td>
-          <td>O arroz estava uma delicia delicia delicia delicia delicia delicia delicia!
-          ma delicia delicia delicia delicia delicia delicia delicia
-          ma delicia delicia delicia delicia delicia delicia delicia</td>
-          <td>X</td>
-        </tr>
+        <thead>
+          <tr className={styles.th}>
+            <th className={styles.info}>Data</th>
+            <th className={styles.name}>Nome</th>
+            <th className={styles.tel}>Telefone</th>
+            <th className={styles.note}>Nota</th>
+            <th className={styles.ind}>Indica</th>
+            <th className={styles.opn}>Opinião</th>
+            <th className={styles.fav}></th>
+          </tr>
+        </thead>
+        <tbody>
+          { suggests.map( suggest => {
+            return (
+              <tr className={styles.td} key={suggest.id}>
+                <td>{suggest.date}</td>
+                <td>{suggest.name}</td>
+                <td>{suggest.tel}</td>
+                <td>{suggest.note}</td>
+                <td>{suggest.recomends}</td>
+                <td>{suggest.opinion}</td>
+                <td>{suggest.fav}</td>
+              </tr>
+            )
+          })}
+        </tbody>
       </table>
       <div className={styles.pagination}>
         <p>Ant. - 1 2 3 - Prox.</p>
@@ -106,5 +114,11 @@ const Main = () => {
     </div>
   );
 }
+const mapStateToProps = state => ({
+  suggests: state.user.list
+});
 
-export default Main;
+const mapsDispatchToProps = dispatch => 
+  bindActionCreators({listSuggest}, dispatch);
+
+export default connect(mapStateToProps, mapsDispatchToProps)(Main);
