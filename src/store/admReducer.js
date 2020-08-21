@@ -3,11 +3,9 @@ import api from '../services/api';
 const ACTIONS = {
   LIST: 'LIST',
 }
-
 const INITIAL_STATE = {
   suggest:[],
 }
-
 export const admReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.LIST:
@@ -16,7 +14,6 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
-
 export const listSuggest = (id) => {
   return dispatch => {
     api.post('/adm/listsuggest', id)

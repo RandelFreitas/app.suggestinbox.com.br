@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styles from './index.module.css';
 import { getInfo } from '../../../../store/companyReducer';
 
-const AboutUser = (props) => {
+const AboutClient = (props) => {
   const { infos } = props;
   const [ idUrl ] = useState(window.location.href.split('/?')[1]);
 
@@ -30,4 +30,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({getInfo}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(AboutUser);
+export default connect(mapStateToProps, mapDispatchToProps)(AboutClient);

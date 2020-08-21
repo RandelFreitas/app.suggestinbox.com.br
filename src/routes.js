@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect, Router } from 'react-router-dom';
-import Adm from './pages/Client/Adm';
 
 import Site from './Site';
-import App from './pages/Client/User';
-import Suggest from './pages/Suggest';
+import Client from './pages/Client';
 import { Login } from './components';
+import User from './pages/User';
+import Adm from './pages/Adm';
 
 import { isAuthenticated } from './services/auth';
 import history from './services/history';
@@ -28,9 +28,9 @@ const Routes = () => (
     <Switch>
       <Route exact path='/' component={Site}/>
       <Route exact path='/login' component={Login}/>
-      <Route path='/app' component={App}/>
+      <Route path='/client' component={Client}/>
+      <PrivateRoute path='/user' component={User}/>
       <PrivateRoute path='/adm' component={Adm}/>
-      <PrivateRoute path='/suggest' component={Suggest}/>
     </Switch>
   </Router>
 );

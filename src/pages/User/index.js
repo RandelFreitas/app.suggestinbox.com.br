@@ -5,7 +5,7 @@ import styles from './index.module.css';
 
 const App = () => {
   return(
-    <div className={styles.body}>
+    <div className={styles.wrap}>
       <header className={styles.header}>
         <div>
           <h1 className={styles.logo}><img src='/assets/logo_palpitebox.png' alt='logo'/></h1>
