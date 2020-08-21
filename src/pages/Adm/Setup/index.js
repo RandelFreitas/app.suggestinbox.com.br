@@ -1,11 +1,11 @@
 import React from 'react';
 
-const SetupSuggest = () => {
+const SetupAdm = () => {
   return (
     <div>
-      Setup Suggest
+      Setup Adm!
     </div>
   );
 }
 
-export default SetupSuggest;
+export default SetupAdm;

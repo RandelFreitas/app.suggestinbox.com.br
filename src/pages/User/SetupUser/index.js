@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Setup = () => {
+const SetupUser = () => {
   return(
     <div>
       CONFIGURAÇÕES
@@ -8,4 +8,4 @@ const Setup = () => {
   );
 }
 
-export default Setup;
+export default SetupUser;

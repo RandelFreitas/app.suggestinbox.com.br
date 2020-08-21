@@ -3,11 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { submitSuggest } from '../../../../store/userReducer';
+import { submitSuggest } from '../../../store/clientReducer';
 
 import styles from './index.module.css';
 
-const FormUser = (props) => {
+const FormClient = (props) => {
   const [ disab, setDisab] = useState(false);
   
   const desabilitar =() =>{
@@ -94,4 +94,4 @@ const FormUser = (props) => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators({submitSuggest}, dispatch);
 
-export default connect(null, mapDispatchToProps)(FormUser);
+export default connect(null, mapDispatchToProps)(FormClient);

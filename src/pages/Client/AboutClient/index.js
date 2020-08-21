@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styles from './index.module.css';
-import { getInfo } from '../../../../store/companyReducer';
+import { getInfo } from '../../../store/clientReducer';
 
 const AboutClient = (props) => {
   const { infos } = props;
@@ -24,7 +24,7 @@ const AboutClient = (props) => {
 }
 
 const mapStateToProps = state => ({
-  infos: state.company.infos
+  infos: state.client.infos
 });
 
 const mapDispatchToProps = dispatch =>

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const MainSuggest = () => {
+const MainAdm = () => {
   return (
     <div>
-      Painel Suggest!
+      Painel Adm!
     </div>
   );
 }
 
-export default MainSuggest;
+export default MainAdm;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import RoutesApp from './routesApp';
+import RoutesClient from './routesClient';
 import styles from './index.module.css';
 
-const App = () => {
+const Client = () => {
   return(
     <div>
       <header className={styles.header}>
@@ -15,14 +15,14 @@ const App = () => {
         <nav>
           <div>
             <ul className={styles.menu}>
-              <li><Link to='/app' className={styles.link}>INÍCIO</Link></li>
-              <li><Link to='/app/sobrenos' className={styles.link}>SOBRE</Link></li>
+              <li><Link to='/client' className={styles.link}>INÍCIO</Link></li>
+              <li><Link to='/client/sobrenos' className={styles.link}>SOBRE</Link></li>
             </ul>
           </div>
         </nav>
       </header>
       <div className={styles.section}>
-        <RoutesApp/>
+        <RoutesClient/>
       </div>
       <footer className={styles.footer}>
         <div>
@@ -35,4 +35,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default Client;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Finances = () => {
+const FinancesUser = () => {
   return(
     <div>
       FINANÇAS
@@ -8,4 +8,4 @@ const Finances = () => {
   );
 }
 
-export default Finances;
+export default FinancesUser;

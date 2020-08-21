@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import RoutesAppAdm from './routesAppAdm';
+import RoutesUser from './routesUser';
 import styles from './index.module.css';
 
-const App = () => {
+const User = () => {
   return(
     <div className={styles.wrap}>
       <header className={styles.header}>
@@ -13,16 +13,16 @@ const App = () => {
         <nav>
           <div className={styles.nav}>
             <ul className={styles.menu}>
-              <li><Link className={styles.link} to='/adm'>SUGESTÕES</Link></li>
-              <li><Link className={styles.link} to='/adm/promo'>PROMOÇÕES</Link></li>
-              <li><Link className={styles.link} to='/adm/setup'>CONFIGURAÇÕES</Link></li>
-              <li><Link className={styles.link} to='/adm/finances'>FINANCEIRO</Link></li>
+              <li><Link className={styles.link} to='/user'>SUGESTÕES</Link></li>
+              <li><Link className={styles.link} to='/user/promo'>PROMOÇÕES</Link></li>
+              <li><Link className={styles.link} to='/user/setup'>CONFIGURAÇÕES</Link></li>
+              <li><Link className={styles.link} to='/user/finances'>FINANCEIRO</Link></li>
             </ul>
           </div>
         </nav>
       </header>
       <div className={styles.back}>
-        <RoutesAppAdm/>
+        <RoutesUser/>
       </div>
       <footer className={styles.footer}>
         <div>
@@ -34,4 +34,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default User;

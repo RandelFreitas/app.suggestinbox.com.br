@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.css';
 
-const MenuUser = () =>{
+const MenuClient = () =>{
   return(
     <div className={styles.wrap}>
       <div className={styles.section}>
@@ -32,4 +32,4 @@ const MenuUser = () =>{
   );
 }
 
-export default MenuUser;
+export default MenuClient;

@@ -1,11 +1,11 @@
 import React, { useEffect} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listSuggest } from '../../../../store/admReducer';
+import { listSuggest } from '../../../store/admReducer';
 
 import styles from './index.module.css';
 
-const Main = (props) => {
+const MainUser = (props) => {
   const suggests = [
     {
       'info':'25/12/2020',
@@ -121,4 +121,4 @@ const mapStateToProps = state => ({
 const mapsDispatchToProps = dispatch => 
   bindActionCreators({listSuggest}, dispatch);
 
-export default connect(mapStateToProps, mapsDispatchToProps)(Main);
+export default connect(mapStateToProps, mapsDispatchToProps)(MainUser);

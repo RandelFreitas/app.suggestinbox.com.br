@@ -3,9 +3,9 @@ import { Route, Switch, Redirect, Router } from 'react-router-dom';
 
 import Site from './Site';
 import Client from './pages/Client';
-import { Login } from './components';
 import User from './pages/User';
 import Adm from './pages/Adm';
+import { Login } from './components';
 
 import { isAuthenticated } from './services/auth';
 import history from './services/history';
