@@ -28,9 +28,11 @@ const Routes = () => (
     <Switch>
       <Route exact path='/' component={Site}/>
       <Route exact path='/login' component={Login}/>
+      <Route exact path="/not-found" component={()=><h1>Página não encontrada 404</h1>}/>
       <Route path='/client' component={Client}/>
       <PrivateRoute path='/user' component={User}/>
       <PrivateRoute path='/adm' component={Adm}/>
+      <Redirect to="/not-found" />
     </Switch>
   </Router>
 );

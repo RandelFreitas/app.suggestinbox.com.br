@@ -1,19 +1,19 @@
 export const TOKEN_KEY = "@token";
-export const NAME = "@name";
+export const INFOS = "@infos";
 
 export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const getName = () => localStorage.getItem(NAME);
+export const getInfos = () => localStorage.getItem(INFOS);
 
-export const setInfosLocalStorage = (token, name) => {
+export const setInfosLocalStorage = (token, infos) => {
   localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(NAME, name);
+  localStorage.setItem(INFOS, JSON.stringify(infos));
 };
 export const setTokenLocalStorage = (token) => {
   localStorage.setItem(TOKEN_KEY, token);
 };
 export const logoutAdm = () => {
   localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(NAME);
+  localStorage.removeItem(INFOS);
 };

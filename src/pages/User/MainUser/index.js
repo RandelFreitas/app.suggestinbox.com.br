@@ -1,4 +1,5 @@
-import React, { useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { listSuggest } from '../../../store/admReducer';
@@ -6,36 +7,32 @@ import { listSuggest } from '../../../store/admReducer';
 import styles from './index.module.css';
 
 const MainUser = (props) => {
-  const suggests = [
-    {
-      'info':'25/12/2020',
-      'name':'ok',
-      'tel': '(88)998615555',
-      'note': '10'
-    },
-    {
-      'info':'25/12/2020',
-      'name':'ok',
-      'tel': '(88)998615555',
-      'note': '10'
-    },
-    {
-      'info':'25/12/2020',
-      'name':'ok',
-      'tel': '(88)998615555',
-      'note': '10'
-    },
-    {
-      'info':'25/12/2020',
-      'name':'ok',
-      'tel': '(88)998615555',
-      'note': '10'
-    },
-  ];
+  const {suggests, infos} = props;
+  const [page, setPage] = useState(1);
+  const [nOfItems, setNoOfItems] = useState(25);
   
   useEffect(() => {
-    console.log('Deu certo redux');
-  },[]);
+    props.listSuggest(page, nOfItems);
+    console.log(suggests);
+  },[page, nOfItems]);
+
+  const mapSuggest = (
+    <React.Fragment>
+      { suggests.map( suggest => {
+        return (
+          <tr className={styles.td} key={suggest._id}>
+            <td>{suggest.createdAt}</td>
+            <td>{suggest.name}</td>
+            <td>{suggest.phone}</td>
+            <td>{suggest.note}</td>
+            <td>{suggest.recommends===true? 'Sim': 'Não'}</td>
+            <td>{suggest.opinion}</td>
+            <td>{suggest.favorite===true? 'Sim': 'Não'}</td>
+          </tr>
+        )
+      })}
+    </React.Fragment>
+  )
 
   return(
     <div className={styles.wrap}>
@@ -83,29 +80,17 @@ const MainUser = (props) => {
       <table>
         <thead>
           <tr className={styles.th}>
-            <th className={styles.info}>Data</th>
+            <th className={styles.createdAt}>Data</th>
             <th className={styles.name}>Nome</th>
-            <th className={styles.tel}>Telefone</th>
+            <th className={styles.phone}>Telefone</th>
             <th className={styles.note}>Nota</th>
             <th className={styles.ind}>Indica</th>
             <th className={styles.opn}>Opinião</th>
-            <th className={styles.fav}></th>
+            <th className={styles.fav}>Favorito</th>
           </tr>
         </thead>
         <tbody>
-          { suggests.map( suggest => {
-            return (
-              <tr className={styles.td} key={suggest.id}>
-                <td>{suggest.date}</td>
-                <td>{suggest.name}</td>
-                <td>{suggest.tel}</td>
-                <td>{suggest.note}</td>
-                <td>{suggest.recomends}</td>
-                <td>{suggest.opinion}</td>
-                <td>{suggest.fav}</td>
-              </tr>
-            )
-          })}
+          {mapSuggest}
         </tbody>
       </table>
       <div className={styles.pagination}>
@@ -114,8 +99,14 @@ const MainUser = (props) => {
     </div>
   );
 }
+
+MainUser.prototypes = {
+  suggests: PropTypes.array.isRequired
+};
+
 const mapStateToProps = state => ({
-  suggests: state.user.list
+  suggests: state.adm.suggests,
+  infos: state.adm.infos,
 });
 
 const mapsDispatchToProps = dispatch => 

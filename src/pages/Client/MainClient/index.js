@@ -1,18 +1,12 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getInfo } from '../../../store/clientReducer';
 
 import styles from './index.module.css';
 
 const MainClient = (props) => {
   const { infos } = props;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
-
-  useEffect(() => {
-    console.log(idUrl);
-  },[idUrl]);
 
   return(
     <div>
@@ -21,19 +15,22 @@ const MainClient = (props) => {
         <p>{infos.slogan}</p>
       </div>
       <div className={styles.buttons}>
-        <Link className={styles.link} to='/client/opiniao'>Dar opinião</Link>
-        <Link className={styles.link} to='/client/cardapio'>Cardápio online</Link>
-        <Link className={styles.link} to='/client/atencao'>Chamar garçom(a)</Link>
+        <Link className={styles.link} to={`/client/opiniao/?${infos._id}`}>Dar opinião</Link>
+        {/*
+        <Link className={styles.link} to={`/client/cardapio/?${infos._id}`}>Cardápio online</Link>
+        <Link className={styles.link} to={`/client/atencao/?${infos._id}`}>Chamar garçom(a)</Link>
+        */}
       </div>
     </div>
   );
 }
 
+MainClient.prototypes = {
+  infos: PropTypes.array.isRequired
+};
+
 const mapStateToProps = state => ({
   infos: state.client.infos
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({getInfo}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainClient);
+export default connect(mapStateToProps)(MainClient);

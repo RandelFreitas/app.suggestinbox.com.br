@@ -6,32 +6,26 @@ const ACTIONS = {
   AUTH: 'AUTH',
 }
 const INITIAL_STATE = {
-  infos:[],
-  token: '',
+  infos:[]
 }
 export const authReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.AUTH:
-      return {...state, manager: action.manager}
+      return {...state, infos: action.infos}
     default:
       return state;
   }
 }
-export const teste = (values) => {
-  return dispatch => {
-      console.log(values);
-  }
-}
 export const auth = (login) => {
   return dispatch => {
-    api.post('/auth/authenticate', login)
+    api.post('/auth', login)
     .then(Response => {
       dispatch({
           type: ACTIONS.AUTH,
           infos: Response.data,
         },
-        setInfosLocalStorage(Response.data.token, Response.data.name),
-        history.push(`/adm`)
+        setInfosLocalStorage(Response.data.token, Response.data.user),
+        history.push(`/user?page=1&limit=25`)
       );
     })
     .catch(error => {
