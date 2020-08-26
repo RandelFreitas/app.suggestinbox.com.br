@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     justifyContent: 'center'
   },
+  content: {
+    width: '275px',
+    margin: 'auto',
+    paddingTop: '30px'
+  },
   offset: theme.mixins.toolbar,
 }));
 
@@ -123,7 +128,7 @@ const Client = (props) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <div>
+      <div className={classes.content}>
         <RoutesClient/>
       </div>
       <AppBar position="fixed" color="secondary" className={classes.appBar}>

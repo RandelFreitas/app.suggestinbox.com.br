@@ -13,7 +13,7 @@ export const setInfosLocalStorage = (token, infos) => {
 export const setTokenLocalStorage = (token) => {
   localStorage.setItem(TOKEN_KEY, token);
 };
-export const logoutAdm = () => {
+export const logoutUser = () => {
   localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(INFOS);
+  localStorage.removeItem(INFOS);  
 };

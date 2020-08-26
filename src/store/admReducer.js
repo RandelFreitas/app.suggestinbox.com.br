@@ -16,7 +16,7 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
-export const listSuggest = (page, nOfItems) => {
+export const listSuggest = (page, nOfItems=10) => {
   return dispatch => {
     api.get(`/adm/suggest?page=${page}&limit=${nOfItems}`)
     .then(Response => {

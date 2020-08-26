@@ -1,6 +1,6 @@
 import api from '../services/api';
 import history from '../services/history';
-import { setInfosLocalStorage, logoutAdm } from '../services/auth';
+import { setInfosLocalStorage, logoutUser } from '../services/auth';
 
 const ACTIONS = {
   AUTH: 'AUTH',
@@ -34,6 +34,6 @@ export const auth = (login) => {
   }
 }
 export const logout = () =>{
-  logoutAdm();
+  logoutUser();
   history.push(`/login`);
 }

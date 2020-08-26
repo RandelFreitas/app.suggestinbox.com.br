@@ -1,67 +1,130 @@
-import React from 'react';
+import React, { useCallback, useState} from 'react';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import ReCAPTCHA from "react-google-recaptcha"
+
 import * as Yup from 'yup';
+import { useFormik } from 'formik';
+
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { auth } from '../../store/authReducer';
-import styles from './index.module.css';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  error: {
+    color: 'red',
+    fontSize: 12
+  },
+  link: {
+    fontSize: 15 
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 const Login = (props) => {
-  return(
-    <Formik
-      initialValues={{email: '', password: ''}}
-      validationSchema={Yup.object({
-        email: Yup.string()
-        .email('Email inválido!')
+  const classes = useStyles();
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  const formik = useFormik ({
+    initialValues: { email: '', password: ''},
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email('Email invalido')
         .required('Email obrigatório!'),
-        password: Yup.string()
+      password: Yup.string()
         .required('Senha obrigatória!'),
-      })}
-      onSubmit={(values) => {
+      }),
+      onSubmit: values => {
         props.auth(values);
-      }}
-    >
-      <div>
-        <header>
-          <div>
-            <h1 className={styles.logo}><img src='/assets/logo_palpitebox.png' alt='logo'/></h1>
-          </div>
-        </header>
-        <section>
-          <div>
-            <h3 className={styles.login}>Login</h3>
-            <Form>
-              <div className={styles.wrap}>
-                <label className={styles.label} htmlFor='email'>Email:</label>
-                <Field className={styles.input} name='email' type='email'/>
-                <p className={styles.erro}><ErrorMessage name='email'/></p>
-              </div>
-              <div className={styles.wrap}>
-                <label className={styles.label} htmlFor='password'>Senha:</label>
-                <Field className={styles.input} name='password' type='password'/>
-                <p className={styles.erro}><ErrorMessage name='password'/></p>
-              </div>
-              <div className={styles.wrap}>
-                <Field name='fogotCheckbox' id='fogotCheckbox' type='checkbox'/>
-                <label className={styles.labelCheckbox} htmlFor='fogotCheckbox'>Lembrar-me</label>
-                <label className={styles.labelFogot}><Link to='/'>Esqueci minha senha</Link></label>
-              </div>
-              <div>
-                <button className={styles.link} type='submit'>Entrar</button>
-              </div>
-            </Form>
-          </div>
-        </section>
-        <footer className={styles.footer}>
-          <div>
-            <p>Colocar Suggest na sua empresa, <Link to='/'>clique aqui!</Link></p>
-            <p>Suggest In Box - Todos os direitos reservados.</p>
-            <p>© 2020 - Copyright</p>
-          </div>
-        </footer>
-      </div>
-    </Formik>
+      },
+  });
+
+  return (
+    <div>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+        <Typography variant="h6" noWrap>
+          SuggestInBox
+        </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography> 
+          <form onSubmit={formik.handleSubmit}>
+            <TextField 
+              variant="outlined" 
+              type="email" 
+              name="email"
+              margin="normal"
+              fullWidth
+              label="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+            />
+            <div>
+              {formik.touched.email && formik.errors.email ? (
+                <Typography className={classes.error}>{formik.errors.email}</Typography>
+              ) : null}
+            </div>
+            <TextField 
+              variant="outlined" 
+              type="password" 
+              name="password"
+              margin="normal"
+              fullWidth
+              label="Senha"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password} 
+            />
+            <div>
+              {formik.touched.password && formik.errors.password ? (
+                <Typography className={classes.error}>{formik.errors.password}</Typography>
+              ) : null}
+            </div>
+            <ReCAPTCHA sitekey="6Lf2OKoZAAAAADMySEr-aZsfTDc1bc3bXjqHVlig" onChange={useCallback(() => setDisableSubmit(false))} />
+            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+              Entrar
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link className={classes.link} to="/" variant="body2">
+                  Esqueci minha senha
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 }
 
