@@ -16,15 +16,15 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
-export const listSuggest = (page, nOfItems=10) => {
+export const listSuggest = (page, nOfItems) => {
   return dispatch => {
     api.get(`/adm/suggest?page=${page}&limit=${nOfItems}`)
     .then(Response => {
-      const { suggest, ...infos} = Response.data;
+      const { docs, infos } = Response.data;
       dispatch({
           type: ACTIONS.LIST,
-          suggests: suggest.docs,
-          infos: infos,
+          suggests: docs,
+          infos,
       })
     })
     .catch(error => {

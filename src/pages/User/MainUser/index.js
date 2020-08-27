@@ -11,31 +11,47 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Box from '@material-ui/core/Box';
+import Pagination from '@material-ui/lab/Pagination';
 
 const MainUser = (props) => {
   const {suggests, infos} = props;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const nOfPages = infos.pages;
+  const [page, setPage] = useState(1);
+  const [nOfItems, setNoOfItems] = useState(10);
 
   useEffect(() => {
-    props.listSuggest(1);
-  },[page]);
+    props.listSuggest(page, nOfItems);
+  },[page, nOfItems]);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  const handleChange=(event, value)=>{
+    setPage(value);
+  }
+  const handleNofItems=(event)=>{
+    setNoOfItems(event.target.value);
+    console.log(nOfPages);
+    setPage(1);
+  }
 
   return (
     <div>
-      <div>
-        FILTROS
+       <div>
+        <FormControl>
+          <FormHelperText>Número por página:</FormHelperText>
+          <Select
+            value={nOfItems}
+            onChange={handleNofItems}
+            inputProps={{ 'aria-label': 'Without label' }}>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <Paper>
         <TableContainer>
@@ -48,7 +64,7 @@ const MainUser = (props) => {
                 <TableCell align='center'>Avaliação</TableCell>
                 <TableCell align='center'>Recomenda</TableCell>
                 <TableCell align='center'>Opinião</TableCell>
-                <TableCell align='center'>Ação</TableCell>
+                <TableCell align='center'></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -59,23 +75,21 @@ const MainUser = (props) => {
                     <TableCell align='center'>{suggest.name}</TableCell>
                     <TableCell align='center'>{suggest.phone}</TableCell>
                     <TableCell align='center'>{suggest.stars}</TableCell>
-                    <TableCell align='center'>{suggest.recommends}</TableCell>
+                    <TableCell align='center'>{suggest.recommends === true? "Sim":"Não"}</TableCell>
                     <TableCell align='center'>{suggest.opinion}</TableCell>
-                    <TableCell align='center'>F E E</TableCell>
+                    <TableCell align='center'>{suggest.favorite === true? "Sim":"Não"}</TableCell>
                   </TableRow>
               )})}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={10}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        <Box component="span">
+          <Pagination
+            count={nOfPages}
+            page={page}
+            onChange={handleChange}
+          />
+        </Box>
       </Paper>
     </div>
   );

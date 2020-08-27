@@ -93,9 +93,9 @@ const FormClient = (props) => {
   const [values, setValues] = useState({
     name: '',
     phone: '',
-    stars: '',
+    stars: 0,
     opinion: '',
-    recommends: ''
+    recommends: false
   });
   const[error, setError] = useState({
     name: false,
@@ -106,7 +106,33 @@ const FormClient = (props) => {
   });
 
   const handleChange = (event) => {
-    setValues({...values, [event.target.name]: event.target.value });
+    switch(event.target.value){
+      case 'y':
+        setValues({...values, [event.target.name]: true });
+        break;
+      case 'n':
+        setValues({...values, [event.target.name]: false });
+        break;
+      case '1':
+        setValues({...values, [event.target.name]: 1 });
+        break;
+      case '2':
+        setValues({...values, [event.target.name]: 2 });
+        break;
+      case '3':
+        setValues({...values, [event.target.name]: 3 });
+        break;
+      case '4':
+        setValues({...values, [event.target.name]: 4 });
+        break;
+      case '5':
+        setValues({...values, [event.target.name]: 5 });
+        break;
+      default:
+        setValues({...values, [event.target.name]: event.target.value });
+        break;
+    }
+    console.log(event.target.value);
   };
   const checkChange = (event) => {
     setValues({name: '', phone: ''});
@@ -114,6 +140,7 @@ const FormClient = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(values);
     props.submitSuggest(values, infos._id);
   }
 
@@ -158,16 +185,16 @@ const FormClient = (props) => {
         </Box>
         <FormControl component="fieldset" error={error.recommends} className={classes.span}>
           <FormLabel component="legend">Nos recomendaria?</FormLabel>
-          <RadioGroup onChange={handleChange} className={classes.recommends} row aria-label="position" name="recommends" defaultValue="top">
+          <RadioGroup onChange={handleChange} className={classes.recommends} row aria-label="position" name="recommends">
             <FormControlLabel
-              value="Y"
+              value="y"
               control={<Radio color="primary" />}
               label="Sim"
               name="recommends"
               labelPlacement="bottom"
             />
             <FormControlLabel
-              value="N"
+              value="n"
               control={<Radio color="primary" />}
               label="Não"
               name="recommends"

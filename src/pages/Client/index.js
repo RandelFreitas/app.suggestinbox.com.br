@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   list: {
-    width: 220,
+    width: 200,
   },
   center: {
     textAlign: 'center',
@@ -95,18 +95,19 @@ const Client = (props) => {
   const list = (
     <div className={classes.list} onClick={toggleDrawer(false)} role="presentation" onKeyDown={toggleDrawer(false)}>
       <List>
-        <ListItem button>
-          <Button component={Link} to={`/client/?${infos._id}`}>
-            <ListItemIcon><InboxIcon/></ListItemIcon>
-            <ListItemText primary='Início' />
-          </Button>
+        <ListItem button component={Link} to={`/client/?${infos._id}`}>
+          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemText primary='Início' />
         </ListItem>
         <Divider/>
-        <ListItem button>
-          <Button component={Link} to={`/client/sobrenos/?${infos._id}`}>
-            <ListItemIcon><InboxIcon/></ListItemIcon>
-            <ListItemText primary='Sobre nós' />
-          </Button>
+        <ListItem button component={Link} to={`/client/sobrenos/?${infos._id}`}>
+          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemText primary='Sobre nós' />
+        </ListItem>
+        <Divider/>
+        <ListItem button component={Link} to='/'>
+          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemText primary='Sobre o SuggestInBox' />
         </ListItem>
         <Divider/>
       </List>
