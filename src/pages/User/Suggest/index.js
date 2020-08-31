@@ -159,7 +159,7 @@ const MainSuggest = (props) => {
             <Typography component={Link} to='/suggest' variant="h6" color="inherit" noWrap className={classes.title}>
                 SuggestInBox
             </Typography>
-            <div className={classes.profile}>Randel Freitas</div>
+            <div component={Link} to='/user' className={classes.profile}>Randel Freitas</div>
             <IconButton color="inherit">
               <Badge badgeContent={2} color="secondary">
                 <NotificationsIcon />

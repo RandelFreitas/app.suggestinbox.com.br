@@ -18,6 +18,19 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Box from '@material-ui/core/Box';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    secondary:{
+      main: '#FFB701'
+    }
+  },
+});
 
 const Suggest = (props) => {
   const {suggests, infosSuggests} = props;
@@ -65,22 +78,26 @@ const Suggest = (props) => {
                 <TableCell align='center'>Avaliação</TableCell>
                 <TableCell align='center'>Recomenda</TableCell>
                 <TableCell align='center'>Opinião</TableCell>
-                <TableCell align='center'> </TableCell>
+                <TableCell align='center'/>
+                <TableCell align='center'/>
               </TableRow>
             </TableHead>
             <TableBody>
-              { suggests.map( suggest => {
-                return (
-                  <TableRow hover key={suggest._id} role="checkbox" tabIndex={-1}>
-                    <TableCell align='center'>{suggest.createdAt}</TableCell>
-                    <TableCell align='center'>{suggest.name}</TableCell>
-                    <TableCell align='center'>{suggest.phone}</TableCell>
-                    <TableCell align='center'>{suggest.stars}</TableCell>
-                    <TableCell align='center'>{suggest.recommends === true? "Sim":"Não"}</TableCell>
-                    <TableCell align='center'>{suggest.opinion}</TableCell>
-                    <TableCell align='center'>{suggest.favorite === true? "Sim":"Não"}</TableCell>
-                  </TableRow>
-              )})}
+              <MuiThemeProvider theme={theme}>
+                { suggests.map( suggest => {
+                  return (
+                    <TableRow hover key={suggest._id} role="checkbox" tabIndex={-1}>
+                      <TableCell align='center'>{suggest.createdAt}</TableCell>
+                      <TableCell align='center'>{suggest.name}</TableCell>
+                      <TableCell align='center'>{suggest.phone}</TableCell>
+                      <TableCell align='center'>{suggest.stars}</TableCell>
+                      <TableCell align='center'>{suggest.recommends === true? "Sim":"Não"}</TableCell>
+                      <TableCell align='center'>{suggest.opinion}</TableCell>
+                      <TableCell align='center'>{suggest.favorite === true? <StarIcon color='secondary'/>:<StarBorderIcon/>}</TableCell>
+                      <TableCell align='center'>{suggest.outlier === true? <DeleteOutlineIcon color="disabled"/>:<DeleteOutlineIcon/>}</TableCell>
+                    </TableRow>
+                )})}
+              </MuiThemeProvider>
             </TableBody>
           </Table>
         </TableContainer>
