@@ -4,8 +4,9 @@ import { Route, Switch, Redirect, Router } from 'react-router-dom';
 import Site from './Site';
 import Client from './pages/Client';
 import User from './pages/User';
+import Suggest from './pages/User/Suggest';
 import Adm from './pages/Adm';
-import { Login } from './components';
+import { Login, Fogot, Reset } from './components';
 
 import { isAuthenticated } from './services/auth';
 import history from './services/history';
@@ -28,10 +29,13 @@ const Routes = () => (
     <Switch>
       <Route exact path='/' component={Site}/>
       <Route exact path='/login' component={Login}/>
-      <Route exact path="/not-found" component={()=><h1>Página não encontrada 404</h1>}/>
+      <Route exact path='/fogot-password' component={Fogot}/>
+      <Route path='/reset-password' component={Reset}/>
       <Route path='/client' component={Client}/>
       <PrivateRoute path='/user' component={User}/>
+      <PrivateRoute path='/suggest' component={Suggest}/>
       <PrivateRoute path='/adm' component={Adm}/>
+      <Route exact path="/not-found" component={()=><h1>Página não encontrada 404</h1>}/>
       <Redirect to="/not-found" />
     </Switch>
   </Router>

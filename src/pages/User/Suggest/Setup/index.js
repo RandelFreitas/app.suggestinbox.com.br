@@ -2,8 +2,10 @@ import React from 'react';
 
 const SetupUser = () => {
   return(
-    <div>Setup</div>
-  )
+    <div>
+      CONFIGURAÇÕES
+    </div>
+  );
 }
 
 export default SetupUser;

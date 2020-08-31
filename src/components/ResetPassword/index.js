@@ -1,9 +1,8 @@
 import React, { useCallback, useState} from 'react';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
-
+import history from '../../services/history';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
@@ -12,12 +11,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { auth } from '../../store/authReducer';
+import { reset } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,26 +45,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Reset = (props) => {
   const classes = useStyles();
   const [disableSubmit, setDisableSubmit] = useState(true);
+  const [open, setOpen] = React.useState(false);
+  
+  const [ token ] = useState(window.location.href.split('/?$')[1]);
+  const [ email ] = useState(window.location.href.split('/?$')[2]);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    history.push('/login');
+  };
 
   const formik = useFormik ({
-    initialValues: { email: '', password: ''},
+    initialValues: { password: ''},
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email('Email invalido')
-        .required('Email obrigatório!'),
       password: Yup.string()
-        .required('Senha obrigatória!'),
+        .required('Senha não confere')
       }),
       onSubmit: values => {
-        props.auth(values);
+        const user = {
+          password: values.password,
+          token: token,
+          email: email
+        }
+        props.reset(user);
       },
   });
 
   return (
     <div>
+      <div>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Senha recuperada com sucesso!
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
@@ -75,25 +106,9 @@ const Login = (props) => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Recuperar senha
           </Typography> 
           <form onSubmit={formik.handleSubmit}>
-            <TextField 
-              variant="outlined" 
-              type="email" 
-              name="email"
-              margin="normal"
-              fullWidth
-              label="Email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-            />
-            <div>
-              {formik.touched.email && formik.errors.email ? (
-                <Typography className={classes.error}>{formik.errors.email}</Typography>
-              ) : null}
-            </div>
             <TextField 
               variant="outlined" 
               type="password" 
@@ -111,16 +126,9 @@ const Login = (props) => {
               ) : null}
             </div>
             <ReCAPTCHA sitekey="6Lf2OKoZAAAAADMySEr-aZsfTDc1bc3bXjqHVlig" onChange={useCallback(() => setDisableSubmit(false))} />
-            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
-              Entrar
+            <Button type="submit" onClick={handleClickOpen} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+              Salvar
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link className={classes.link} to="/fogot-password" variant="body2">
-                  Esqueci minha senha
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
       </Container>
@@ -129,6 +137,6 @@ const Login = (props) => {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({auth}, dispatch);
+  bindActionCreators({reset}, dispatch);
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Reset);

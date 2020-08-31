@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PromoUser = () => {
+const Promo = () => {
   return(
     <div>
       PROMOÇÕES
@@ -8,4 +8,4 @@ const PromoUser = () => {
   );
 }
 
-export default PromoUser;
+export default Promo;

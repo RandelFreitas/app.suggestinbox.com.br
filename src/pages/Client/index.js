@@ -97,12 +97,12 @@ const Client = (props) => {
       <List>
         <ListItem button component={Link} to={`/client/?${infos._id}`}>
           <ListItemIcon><InboxIcon/></ListItemIcon>
-          <ListItemText primary='Início' />
+          <ListItemText primary='Início'/>
         </ListItem>
         <Divider/>
         <ListItem button component={Link} to={`/client/sobrenos/?${infos._id}`}>
           <ListItemIcon><InboxIcon/></ListItemIcon>
-          <ListItemText primary='Sobre nós' />
+          <ListItemText primary='Sobre nós'/>
         </ListItem>
         <Divider/>
         <ListItem button component={Link} to='/'>
