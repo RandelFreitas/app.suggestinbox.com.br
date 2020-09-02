@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   const formik = useFormik ({
     initialValues: { email: '', password: ''},
@@ -111,7 +111,7 @@ const Login = (props) => {
               ) : null}
             </div>
             <ReCAPTCHA sitekey="6Lf2OKoZAAAAADMySEr-aZsfTDc1bc3bXjqHVlig" onChange={useCallback(() => setDisableSubmit(false))} />
-            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <Button type="submit" disabled={false} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Entrar
             </Button>
             <Grid container>
