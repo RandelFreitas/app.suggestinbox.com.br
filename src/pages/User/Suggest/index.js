@@ -33,6 +33,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Rating from '@material-ui/lab/Rating';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 import RoutesUser from './routesUser';
 
@@ -160,11 +161,6 @@ const MainSuggest = (props) => {
                 SuggestInBox
             </Typography>
             <div component={Link} to='/user' className={classes.profile}>Randel Freitas</div>
-            <IconButton color="inherit">
-              <Badge badgeContent={2} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton component={Link} to='/suggest/setup' color="inherit">
               <SettingsIcon/>
             </IconButton>
@@ -207,6 +203,12 @@ const MainSuggest = (props) => {
                   <EmojiEmotionsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Promoções" />
+              </ListItem>
+              <ListItem button component={Link} to='/suggest/cardapio'>
+                <ListItemIcon>
+                  <MenuBookIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Cardapio" />
               </ListItem>
               <ListItem button component={Link} to='/suggest/setup'>
                 <ListItemIcon>

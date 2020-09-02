@@ -43,7 +43,7 @@ const Companies = (props) => {
   const { companies, infosCompanies } = props;
   const nOfPages = infosCompanies.pages;
   const [page, setPage] = useState(1);
-  const [nOfItems, setNoOfItems] = useState(9);
+  const [nOfItems, setNoOfItems] = useState(10);
 
   useEffect(() => {
     props.listCompanies(page, nOfItems);
@@ -64,7 +64,7 @@ const Companies = (props) => {
             <Grid key={company._id} item md={4} sm={6} xs={12}>
               <div className={classes.item}>  
                 <Card>
-                  <CardActionArea component={Link} to='/suggest'>
+                  <CardActionArea component={Link} to={`/suggest?page=${page}&limit=${nOfItems}`}>
                     <CardMedia className={classes.media}/>
                     <CardContent>
                       <Typography noWrap variant="h5" component="h2">

@@ -12,8 +12,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Container from '@material-ui/core/Container';
@@ -62,11 +60,6 @@ const User = (props) => {
                 SIS Soluções
             </Typography>
             <div className={classes.profile}>Randel</div>
-            <IconButton color="inherit">
-              <Badge badgeContent={2} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton component={Link} to='/user/setup' color="inherit">
               <SettingsIcon/>
             </IconButton>

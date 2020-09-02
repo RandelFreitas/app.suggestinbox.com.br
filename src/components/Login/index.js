@@ -65,7 +65,7 @@ const Login = (props) => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
-          SuggestInBox
+          SIS Soluções
         </Typography>
         </Toolbar>
       </AppBar>

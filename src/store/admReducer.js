@@ -3,7 +3,9 @@ import api from '../services/api';
 
 const ACTIONS = {
   LISTSUGGESTS: 'LISTSUGGESTS',
-  LISTCOMPANIES: 'LISTCOMPANIES'
+  LISTCOMPANIES: 'LISTCOMPANIES',
+  FAVORITE: 'FAVORITE',
+  TOFILE: 'TOFILE'
 }
 const INITIAL_STATE = {
   suggests: [],
@@ -17,6 +19,22 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return {...state, suggests: action.suggests, infosSuggests: action.infosSuggests}
     case ACTIONS.LISTCOMPANIES:
       return {...state, companies: action.companies, infosCompanies: action.infosCompanies}
+    case ACTIONS.FAVORITE:
+      const listUp = [...state.suggests]
+      listUp.forEach(suggest => {
+        if(suggest._id === action._id){
+          suggest.favorite = true;
+        }
+      })
+      return {...state, suggests: listUp}
+    case ACTIONS.TOFILE:
+      const listUpOut = [...state.suggests]
+      listUpOut.forEach(suggest => {
+        if(suggest._id === action._id){
+          suggest.outlier = true;
+        }
+      })
+      return {...state, suggests: listUpOut}
     default:
       return state;
   }
@@ -51,5 +69,27 @@ export const listCompanies = (page, nOfItems) => {
     .catch(error => {
       console.log(error);
     });
+  }
+}
+export const favorite = (suggest) => {
+  return dispatch => {
+    api.put(`/adm/suggest/${suggest._id}`, suggest )
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.FAVORITE,
+        id: suggest._id
+      })
+    })
+  }
+}
+export const outlier = (suggest) => {
+  return dispatch => {
+    api.put(`/adm/suggest/${suggest._id}`, suggest )
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.TOFILE,
+        id: suggest._id
+      })
+    })
   }
 }

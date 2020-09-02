@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listSuggest } from '../../../../store/admReducer';
+import { listSuggest, favorite, outlier } from '../../../../store/admReducer';
 
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -23,6 +23,9 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import CheckIcon from '@material-ui/icons/Check';
 
 const theme = createMuiTheme({
   palette: {
@@ -47,8 +50,25 @@ const Suggest = (props) => {
   }
   const handleNofItems=(event)=>{
     setNoOfItems(event.target.value);
-    console.log(nOfPages);
     setPage(1);
+  }
+  const favoriteUpdate = (suggest) => {
+    if(suggest.favorite){
+      suggest.favorite = false;
+      return props.favorite(suggest)
+    }else{
+      suggest.favorite = true;
+      return props.favorite(suggest)
+    }
+  }
+  const outlierUpdate = (suggest) => {
+    if(suggest.outlier){
+      suggest.outlier = false;
+      return props.outlier(suggest)
+    }else{
+      suggest.outlier = true;
+      return props.outlier(suggest)
+    }
   }
 
   return (
@@ -91,12 +111,21 @@ const Suggest = (props) => {
                       <TableCell align='center'>{suggest.name}</TableCell>
                       <TableCell align='center'>{suggest.phone}</TableCell>
                       <TableCell align='center'>{suggest.stars}</TableCell>
-                      <TableCell align='center'>{suggest.recommends === true? "Sim":"Não"}</TableCell>
+                      <TableCell align='center'>{suggest.recommends? (<CheckIcon/>) :(<CloseIcon/>)}</TableCell>
                       <TableCell align='center'>{suggest.opinion}</TableCell>
-                      <TableCell align='center'>{suggest.favorite === true? <StarIcon color='secondary'/>:<StarBorderIcon/>}</TableCell>
-                      <TableCell align='center'>{suggest.outlier === true? <DeleteOutlineIcon color="disabled"/>:<DeleteOutlineIcon/>}</TableCell>
+                      <TableCell align='center'>
+                        <IconButton onClick={() => favoriteUpdate(suggest)}>
+                          {suggest.favorite? (<StarIcon color='secondary'/>):(<StarBorderIcon/>)}
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align='center'>
+                        <IconButton onClick={() => outlierUpdate(suggest)}>
+                          {suggest.outlier? (<DeleteOutlineIcon color="disabled"/>):(<DeleteOutlineIcon/>)}
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
-                )})}
+                  )
+                })}
               </MuiThemeProvider>
             </TableBody>
           </Table>
@@ -123,6 +152,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({listSuggest}, dispatch);
+  bindActionCreators({listSuggest, favorite, outlier}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Suggest);

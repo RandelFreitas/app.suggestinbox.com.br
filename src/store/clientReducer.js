@@ -29,7 +29,6 @@ export const getInfo = (id) => {
       });
     })
     .catch(error => {
-      history.push('/');
       console.log(error);
     });
   }
@@ -44,7 +43,6 @@ export const submitSuggest = (suggest, id) => {
       });
     }, history.push(`/client/opiniao/sucesso/?${id}`))
     .catch(error => {
-      history.push('/');
       console.log(error);
     });
   }
