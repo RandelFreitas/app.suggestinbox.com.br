@@ -119,7 +119,7 @@ const Fogot = (props) => {
                 <Typography className={classes.error}>{formik.errors.email}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6Lf2OKoZAAAAADMySEr-aZsfTDc1bc3bXjqHVlig" onChange={useCallback(() => setDisableSubmit(false))} />
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={useCallback(() => setDisableSubmit(false))} />
             <Button type="submit" onClick={handleClickOpen} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Enviar link para login
             </Button>

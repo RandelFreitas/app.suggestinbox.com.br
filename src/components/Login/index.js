@@ -110,7 +110,7 @@ const Login = (props) => {
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6Lf2OKoZAAAAADMySEr-aZsfTDc1bc3bXjqHVlig" onChange={useCallback(() => setDisableSubmit(false))} />
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={useCallback(() => setDisableSubmit(false))} />
             <Button type="submit" disabled={false} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Entrar
             </Button>
