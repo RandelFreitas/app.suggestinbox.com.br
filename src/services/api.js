@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 const api = axios.create({
-  baseURL: "http://back.suggestinbox.com.br/api"
+  baseURL: "http://api.suggestinbox.com.br"
 });
 
 api.interceptors.request.use(async config => {
