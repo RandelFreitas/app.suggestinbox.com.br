@@ -26,7 +26,7 @@ export const getInfo = (id) => {
       dispatch({
           type: ACTIONS.INFOS,
           infos: Response.data,
-      });
+      }, console.log(Response.data));
     })
     .catch(error => {
       console.log(error);
