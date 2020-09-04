@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./auth";
 
 const api = axios.create({
-  baseURL: "http://api.suggestinbox.com.br"
+  baseURL: "https://api.suggestinbox.com.br"
   //baseURL: "http://localhost:3001"
 });
 
