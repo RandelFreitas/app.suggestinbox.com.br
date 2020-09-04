@@ -132,12 +132,6 @@ const Client = (props) => {
       <div className={classes.content}>
         <RoutesClient/>
       </div>
-      <AppBar position="fixed" color="secondary" className={classes.appBar}>
-        <Toolbar className={classes.center}>
-          <Typography variant="caption" >SuggestInBox © - 2020 Copyright.</Typography>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.offset} />
     </MuiThemeProvider>
   );
 }
