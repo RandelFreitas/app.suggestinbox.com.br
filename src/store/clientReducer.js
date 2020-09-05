@@ -19,27 +19,29 @@ export const clientReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
+//OBTER INFOS DA COMPANIA
 export const getInfo = (id) => {
   return dispatch => {
     api.get(`/client/${id}`)
     .then(Response => {
       dispatch({
-          type: ACTIONS.INFOS,
-          infos: Response.data,
-      }, console.log(Response.data));
+        type: ACTIONS.INFOS,
+        infos: Response.data,
+      });
     })
     .catch(error => {
       console.log(error);
     });
   }
 }
+//ENVIAR SUGGEST
 export const submitSuggest = (suggest, id) => {
   return dispatch => {
     api.post('/client', suggest)
     .then(Response => {
       dispatch({
-          type: ACTIONS.ADD,
-          suggest: Response.data,
+        type: ACTIONS.ADD,
+        suggest: Response.data,
       });
     }, history.push(`/client/opiniao/sucesso/?${id}`))
     .catch(error => {

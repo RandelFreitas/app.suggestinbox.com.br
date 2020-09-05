@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 
 import { clientReducer } from './clientReducer';
 import { authReducer } from './authReducer';
-import { userReducer } from './userReducer';
 import { admReducer } from './admReducer';
 import { messageReducer } from './messageReducer';
 
@@ -12,7 +11,6 @@ const mainReducer = combineReducers({
   adm: admReducer,
   auth: authReducer,
   message: messageReducer,
-  user: userReducer,
   client: clientReducer,
 });
 

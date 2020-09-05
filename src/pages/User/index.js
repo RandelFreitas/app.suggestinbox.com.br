@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -41,10 +41,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflow: 'auto',
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
 }));
 
 const User = (props) => {
@@ -57,7 +53,7 @@ const User = (props) => {
         <AppBar position="absolute">
           <Toolbar className={classes.toolbar}>
             <Typography component={Link} to='/user' variant="h6" color="inherit" noWrap className={classes.title}>
-                SIS Soluções
+              SuggestInBox
             </Typography>
             <div className={classes.profile}>Randel</div>
             <IconButton component={Link} to='/user/setup' color="inherit">

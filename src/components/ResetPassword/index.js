@@ -1,4 +1,4 @@
-import React, { useCallback, useState} from 'react';
+import React, { useState} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
@@ -125,7 +125,7 @@ const Reset = (props) => {
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={useCallback(() => setDisableSubmit(false))} />
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
             <Button type="submit" onClick={handleClickOpen} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Salvar
             </Button>

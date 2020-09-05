@@ -86,7 +86,7 @@ const Client = (props) => {
     }else{
       history.push('/');
     }
-  },[]);
+  },[idUrl]);
 
   const toggleDrawer = (open) => (event) => {
     setState(open);

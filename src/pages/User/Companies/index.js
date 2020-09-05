@@ -10,7 +10,6 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
@@ -65,7 +64,6 @@ const Companies = (props) => {
               <div className={classes.item}>  
                 <Card>
                   <CardActionArea component={Link} to={`/suggest?page=${page}&limit=${nOfItems}`}>
-                    <CardMedia className={classes.media}/>
                     <CardContent>
                       <Typography noWrap variant="h5" component="h2">
                         {company.name}

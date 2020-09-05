@@ -1,11 +1,13 @@
-import React, { useCallback, useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
-
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+
+import { auth } from '../../store/authReducer';
+import { showMessage, hideMessage } from '../../store/messageReducer';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,9 +17,9 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { auth } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   const formik = useFormik ({
     initialValues: { email: '', password: ''},
@@ -65,7 +67,7 @@ const Login = (props) => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
-          SIS Soluções
+          SuggestInBox
         </Typography>
         </Toolbar>
       </AppBar>
@@ -110,7 +112,7 @@ const Login = (props) => {
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={useCallback(() => setDisableSubmit(false))} />
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
             <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Entrar
             </Button>
@@ -122,13 +124,31 @@ const Login = (props) => {
               </Grid>
             </Grid>
           </form>
+          
+          <Dialog open={props.openDialog} onClose={props.hideMessage}>
+            <DialogTitle>
+              Atenção
+            </DialogTitle>
+            <DialogContent>
+              {props.message}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={props.hideMessage}>Fechar</Button>
+            </DialogActions>
+          </Dialog>
+          
         </div>
       </Container>
     </div>
   );
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({auth}, dispatch);
+const mapStateToProps = state => ({
+  openDialog: state.message.showMessage,
+  message: state.message.message
+});
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({auth, showMessage, hideMessage}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

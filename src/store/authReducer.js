@@ -1,6 +1,7 @@
 import api from '../services/api';
 import history from '../services/history';
 import { setInfosLocalStorage, logoutUser } from '../services/auth';
+import { showMessage } from './messageReducer';
 
 const ACTIONS = {
   AUTH: 'AUTH',
@@ -23,6 +24,7 @@ export const authReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
+//AUTENTICAÇÃO
 export const auth = (login) => {
   return dispatch => {
     api.post('/auth', login)
@@ -36,24 +38,33 @@ export const auth = (login) => {
       );
     })
     .catch(error => {
-      console.log(error);
-    });
+      dispatch(
+        showMessage("Email ou senha inválidos!")
+      )}
+    )
   }
 }
+//ESQUECI SENHA
 export const fogot = (email) => {
   return dispatch => {
     api.post('/auth/fogot', email)
     .then(Response => {
       dispatch({
-          type: ACTIONS.FOGOT,
-          email: Response.data,
-      });
+        type: ACTIONS.FOGOT,
+        email: Response.data,
+      },dispatch(
+          showMessage("Email enviado com sucesso!")
+        ), 
+        history.push('/login'));
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(erro => {
+      dispatch(
+        showMessage("Este email não está atribuido a nenhum usuário!")
+      )}
+    );
   }
 }
+//RESET SENHA
 export const reset = (user) => {
   return dispatch => {
     api.post('/auth/reset_password', user)
@@ -64,10 +75,13 @@ export const reset = (user) => {
       });
     })
     .catch(error => {
-      console.log(error);
-    });
+      dispatch(
+        showMessage("Serviço indisponível, tente mais tarde!")
+      )}
+    );
   }
 }
+//LOGOUT
 export const logout = () =>{
   logoutUser();
   history.push(`/login`);

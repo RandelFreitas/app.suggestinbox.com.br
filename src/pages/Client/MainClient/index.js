@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   center: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+    margin: '20px auto'
+  },
 }));
 
 const theme = createMuiTheme({
@@ -41,15 +42,14 @@ const MainClient = (props) => {
           <h3>{infos.name}</h3>
           <p>{infos.slogan}</p>
         </div>
-        <div className={classes.center}>
-          <Button component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
-            Dar opinião
-          </Button>
-          {/*
-          <Link className={styles.link} to={`/client/cardapio/?${infos._id}`}>Cardápio online</Link>
-          <Link className={styles.link} to={`/client/atencao/?${infos._id}`}>Chamar garçom(a)</Link>
-          */}
-        </div>
+        <Button component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
+          Dar opinião
+        </Button>
+        {/*
+        <Link className={styles.link} to={`/client/cardapio/?${infos._id}`}>Cardápio online</Link>
+        <Link className={styles.link} to={`/client/atencao/?${infos._id}`}>Chamar garçom(a)</Link>
+        */}
+
       </div>
     </MuiThemeProvider>
   );

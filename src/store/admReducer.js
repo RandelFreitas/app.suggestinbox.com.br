@@ -2,8 +2,8 @@ import api from '../services/api';
 //import history from '../services/history';
 
 const ACTIONS = {
-  LISTSUGGESTS: 'LISTSUGGESTS',
-  LISTCOMPANIES: 'LISTCOMPANIES',
+  LIST_SUGGESTS: 'LISTSUGGESTS',
+  LIST_COMPANIES: 'LISTCOMPANIES',
   FAVORITE: 'FAVORITE',
   TOFILE: 'TOFILE'
 }
@@ -15,9 +15,9 @@ const INITIAL_STATE = {
 }
 export const admReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
-    case ACTIONS.LISTSUGGESTS:
+    case ACTIONS.LIST_SUGGESTS:
       return {...state, suggests: action.suggests, infosSuggests: action.infosSuggests}
-    case ACTIONS.LISTCOMPANIES:
+    case ACTIONS.LIST_COMPANIES:
       return {...state, companies: action.companies, infosCompanies: action.infosCompanies}
     case ACTIONS.FAVORITE:
       const listUp = [...state.suggests]
@@ -39,15 +39,16 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 }
+//LISTAR SUGGESTS
 export const listSuggest = (page, nOfItems) => {
   return dispatch => {
     api.get(`/adm/suggest?page=${page}&limit=${nOfItems}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({
-          type: ACTIONS.LISTSUGGESTS,
-          suggests: docs,
-          infosSuggests: infos,
+        type: ACTIONS.LIST_SUGGESTS,
+        suggests: docs,
+        infosSuggests: infos,
       })
     })
     .catch(error => {
@@ -55,15 +56,16 @@ export const listSuggest = (page, nOfItems) => {
     });
   }
 }
+//LISTAR COMPANIAS
 export const listCompanies = (page, nOfItems) => {
   return dispatch => {
     api.get(`/adm/company?page=${page}&limit=${nOfItems}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({
-          type: ACTIONS.LISTCOMPANIES,
-          companies: docs,
-          infosCompanies: infos,
+        type: ACTIONS.LIST_COMPANIES,
+        companies: docs,
+        infosCompanies: infos,
       })
     })
     .catch(error => {
@@ -71,6 +73,7 @@ export const listCompanies = (page, nOfItems) => {
     });
   }
 }
+//FAVORITAR SUGGEST
 export const favorite = (suggest) => {
   return dispatch => {
     api.put(`/adm/suggest/${suggest._id}`, suggest )
@@ -82,6 +85,7 @@ export const favorite = (suggest) => {
     })
   }
 }
+//ARQUIVAR SUGGEST
 export const outlier = (suggest) => {
   return dispatch => {
     api.put(`/adm/suggest/${suggest._id}`, suggest )

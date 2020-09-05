@@ -1,18 +1,17 @@
 import React from 'react';
-import styles from './index.module.css';
 
 const Site = () => {
   return(
-    <div className={styles.wrap}>
-      <header className={styles.colorHeader}>
-        <div className={`${styles.container} ${styles.header}`}>
+    <div>
+      <header>
+        <div>
           <nav>
-            <a className={styles.a} href='/'>LOGO  |</a>
-            <ul className={styles.menu}>
-              <li><a className={styles.a} href='/'>SOBRE</a></li>
-              <li><a className={styles.a} href='/'>SOLUÇÕES</a></li>
-              <li><a className={styles.a} href='/'>CONTATO</a></li>
-              <li><a className={styles.a} href='/'>ARTIGOS</a></li>
+            <a href='/'>LOGO  |</a>
+            <ul>
+              <li><a href='/'>SOBRE</a></li>
+              <li><a href='/'>SOLUÇÕES</a></li>
+              <li><a href='/'>CONTATO</a></li>
+              <li><a href='/'>ARTIGOS</a></li>
             </ul>
           </nav>
           <div>
@@ -24,37 +23,37 @@ const Site = () => {
         </div>
       </header>
 
-      <section className={styles.colorSection1}>
-        <div className={`${styles.container} ${styles.section1}`}>
+      <section>
+        <div>
           <div>
             <h2>Qual a pessoa mais importante para seu negócio?</h2>
             <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>
           </div>
-          <img className={styles.asset} width='304' height='294' alt='logo' src='./assets/cliente-2.png'></img>
+          <img width='304' height='294' alt='logo' src='./assets/cliente-2.png'></img>
         </div>
       </section>
       
-      <section className={styles.colorSection2}>
-        <div className={`${styles.container} ${styles.section1}`}>
-          <img className={styles.asset} width='300' height='160' alt='satisfaction' src='./assets/satisfaction.png'></img>
+      <section>
+        <div>
+          <img width='300' height='160' alt='satisfaction' src='./assets/satisfaction.png'></img>
           <div>
             <h2>Qual a pessoa mais importante para seu negócio?</h2>
             <span>Se a sua resposta foi cliente, temos uma ótima notícia para você...</span>
           </div>
         </div>
       </section>
-      <section className={styles.colorSection1}>
-        <div className={`${styles.container} ${styles.section3}`}>
+      <section>
+        <div>
           
         </div>
       </section>
-      <section className={styles.colorFooter}>
-        <div className={`${styles.container} ${styles.section4}`}>
+      <section>
+        <div>
           
         </div>
       </section>
-      <footer className={styles.colorSection2}>
-        <div className={`${styles.container} ${styles.footer}`}>
+      <footer>
+        <div>
           Rodape
         </div>
       </footer>

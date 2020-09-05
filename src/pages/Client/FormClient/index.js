@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   span: {
+    marginTop: "20px",
     fontSize: "15px",
     textAlign: 'center'
   },
@@ -97,7 +98,7 @@ const FormClient = (props) => {
     opinion: '',
     recommends: false
   });
-  const[error, setError] = useState({
+  const[error] = useState({
     name: false,
     phone: false,
     stars: false,
@@ -132,7 +133,6 @@ const FormClient = (props) => {
         setValues({...values, [event.target.name]: event.target.value });
         break;
     }
-    console.log(event.target.value);
   };
   const checkChange = (event) => {
     setValues({name: '', phone: ''});
@@ -140,7 +140,6 @@ const FormClient = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(values);
     props.submitSuggest(values, infos._id);
   }
 
@@ -169,9 +168,7 @@ const FormClient = (props) => {
         <FormControlLabel className={classes.unknown}
           label={<Typography className={classes.unknownChildren}>Desejo não me identificar</Typography>}
           size="small"
-          control={<Checkbox color="primary" checked={values.checkedA} 
-          onChange={checkChange} 
-          name="checkedA" />}
+          control={<Checkbox color="primary" onChange={checkChange} name="checked" />}
         />
         <Box className={classes.span} component="fieldset" mb={3} borderColor="transparent">
           <FormLabel component="legend">Toque para classificar</FormLabel>
@@ -202,7 +199,7 @@ const FormClient = (props) => {
             />
           </RadioGroup>
         </FormControl>
-        <TextField error
+        <TextField className={classes.span}
           label="Deixe sua opinião"
           error={error.opinion}
           multiline

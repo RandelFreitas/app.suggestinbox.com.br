@@ -8,22 +8,24 @@ export const ACTIONS = {
 }
 export const messageReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
-      case ACTIONS.SHOW_MENSSAGE:
-          return {...state, messager: action.messager, showMessage: true}
-      case ACTIONS.HIDE_MESSAGER:
-          return {...state, message: '', showMessage: false}
-      default:
-          return state;
+    case ACTIONS.SHOW_MESSAGE:
+      return {...state, message: action.message, showMessage: true}
+    case ACTIONS.HIDE_MESSAGE:
+      return {...state, message: '', showMessage: false}
+    default:
+      return state;
   }
 }
+//MOSTAR MENSAGEM CAPTURADA DAS REQUESTS
 export const showMessage = (message) => {
   return{
-      type: ACTIONS.SHOW_MESSAGE,
-      message: message
+    type: ACTIONS.SHOW_MESSAGE,
+    message: message
   }
 }
+//FECHAR MENSAGENS
 export const hideMessage = () => {
   return {
-      type: ACTIONS.HIDE_MESSAGE
+    type: ACTIONS.HIDE_MESSAGE
   }
 }

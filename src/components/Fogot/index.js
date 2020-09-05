@@ -1,10 +1,10 @@
-import React, { useCallback, useState} from 'react';
+import React, { useState} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
-import history from '../../services/history';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { showMessage, hideMessage } from '../../store/messageReducer';
 
 
 import Container from '@material-ui/core/Container';
@@ -17,11 +17,8 @@ import TextField from '@material-ui/core/TextField';
 import { fogot } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-
+import { Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,16 +45,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Fogot = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(true);
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    history.push('/login');
-  };
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [progress, setProgress] = useState(true);
 
   const formik = useFormik ({
     initialValues: { email: ''},
@@ -67,26 +56,24 @@ const Fogot = (props) => {
         .required('Email obrigatório!'),
       }),
       onSubmit: values => {
+        setProgress(false);
         props.fogot(values);
       },
   });
 
   return (
     <div>
-      <div>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Um link de recuperação foi enviado para seu e-mail.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary" autoFocus>
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Dialog open={props.openDialog} onClick={()=> setProgress(true)} onClose={props.hideMessage}>
+        <DialogTitle>
+          Atenção
+        </DialogTitle>
+        <DialogContent>
+          {props.message}
+        </DialogContent>
+        <DialogActions onClick={()=> setProgress(true)}>
+          <Button onClick={props.hideMessage}>Fechar</Button>
+        </DialogActions>
+      </Dialog>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
@@ -119,18 +106,26 @@ const Fogot = (props) => {
                 <Typography className={classes.error}>{formik.errors.email}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={useCallback(() => setDisableSubmit(false))} />
-            <Button type="submit" onClick={handleClickOpen} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
-              Enviar link para login
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
+            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+              Enviar link para email
             </Button>
           </form>
+          <div hidden={progress}>
+            <CircularProgress/>
+          </div>
         </div>
       </Container>
     </div>
   );
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({fogot}, dispatch);
+const mapStateToProps = state => ({
+  openDialog: state.message.showMessage,
+  message: state.message.message
+});
 
-export default connect(null, mapDispatchToProps)(Fogot);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({fogot, showMessage, hideMessage}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Fogot);
