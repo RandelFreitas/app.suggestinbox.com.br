@@ -45,6 +45,12 @@ const MainClient = (props) => {
         <Button component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
           Dar opinião
         </Button>
+        <Button component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
+          Cardápio online
+        </Button>
+        <Button component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
+          Chamar garçom
+        </Button>
         {/*
         <Link className={styles.link} to={`/client/cardapio/?${infos._id}`}>Cardápio online</Link>
         <Link className={styles.link} to={`/client/atencao/?${infos._id}`}>Chamar garçom(a)</Link>
