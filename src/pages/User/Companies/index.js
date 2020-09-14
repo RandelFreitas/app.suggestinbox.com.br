@@ -25,15 +25,14 @@ const useStyles = makeStyles((theme) =>({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
-  media: {
-    height: 20,
-  },
   center: {
     justifyContent: 'center',
+    textAlign: 'center',
+    margin: '20px'
   },
-  clinics: {
-    justifyContent: 'space-between'
-  },
+  button: {
+    margin: '15px'
+  }
 }));
 
 const Companies = (props) => {
@@ -74,10 +73,7 @@ const Companies = (props) => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions className={classes.center}>
-                    <Button component={Link} to='/' variant="contained" color="primary">
-                      Gerenciar
-                    </Button>
-                    <Button component={Link} to='/' variant="contained" color="primary">
+                    <Button component={Link} to={`/user/setup-company/?${company._id}`} variant="contained" color="primary">
                       Configurações
                     </Button>
                   </CardActions>
@@ -91,20 +87,21 @@ const Companies = (props) => {
 
   return(
     <div className={classes.root}>
-      <Grid className={classes.center} container spacing={1}>
-        <Typography noWrap variant="h5" component="h2">Estabelecimentos</Typography>
-        <Grid container item xs={12} spacing={3}>
-          {mapCompanies}
-        </Grid>
-        <Grid className={classes.center} container item xs={12} spacing={3}>
-          <Box component="span">
-            <Pagination
-              count={nOfPages}
-              page={page}
-              onChange={handleChange}
-            />
-          </Box>
-        </Grid>
+      <Typography className={classes.center} variant="h5" component="h2">Estabelecimentos</Typography>
+      <Button className={classes.button} component={Link} to='/user/setup-company' variant="contained" color="primary">
+        Adicionar Estabelecimento
+      </Button>
+      <Grid container item xs={12} spacing={3}>
+        {mapCompanies}
+      </Grid>
+      <Grid className={classes.center} container item xs={12} spacing={3}>
+        <Box component="span">
+          <Pagination
+            count={nOfPages}
+            page={page}
+            onChange={handleChange}
+          />
+        </Box>
       </Grid>
     </div>
   )

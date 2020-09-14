@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logout } from '../../store/authReducer';
+import { getUserById } from '../../store/admReducer';
 import PropTypes from 'prop-types';
 import RoutesUser from './routesUser';
 
@@ -45,6 +46,12 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
   const classes = useStyles();
+  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  const { userById } = props;
+
+  useEffect(() => {
+    props.getUserById(idUrl);
+  },[]);
 
   return (
     <div>
@@ -52,11 +59,11 @@ const User = (props) => {
         <CssBaseline />
         <AppBar position="absolute">
           <Toolbar className={classes.toolbar}>
-            <Typography component={Link} to='/user' variant="h6" color="inherit" noWrap className={classes.title}>
+            <Typography component={Link} to={`?${userById._id}`} variant="h6" color="inherit" noWrap className={classes.title}>
               SuggestInBox
             </Typography>
             <div className={classes.profile}>Randel</div>
-            <IconButton component={Link} to='/user/setup' color="inherit">
+            <IconButton component={Link} to={`/user/setup/?${userById._id}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
             <IconButton onClick={props.logout} color="inherit">
@@ -78,14 +85,14 @@ const User = (props) => {
 };
 
 User.prototypes = {
-  infos: PropTypes.array.isRequired
+  userById: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  infos: state.auth.infos,
+  userById: state.adm.userById,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({logout}, dispatch);
+  bindActionCreators({logout, getUserById}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

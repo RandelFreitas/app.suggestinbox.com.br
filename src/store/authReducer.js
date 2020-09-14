@@ -30,11 +30,11 @@ export const auth = (login) => {
     api.post('/auth', login)
     .then(Response => {
       dispatch({
-          type: ACTIONS.AUTH,
-          infos: Response.data,
-        },
+        type: ACTIONS.AUTH,
+        infos: Response.data,
+      },
         setInfosLocalStorage(Response.data.token, Response.data.user),
-        history.push(`/user?page=1&limit=25`)
+        history.push(`/user?page=1&limit=25/?${Response.data.user._id}`)
       );
     })
     .catch(error => {

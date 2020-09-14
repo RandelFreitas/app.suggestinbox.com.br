@@ -208,12 +208,6 @@ const MainSuggest = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Cardapio" />
               </ListItem>
-              <ListItem button component={Link} to='/suggest/setup'>
-                <ListItemIcon>
-                  <SettingsIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Configurações" />
-              </ListItem>
               <ListItem button component={Link} to='/suggest/finances'>
                 <ListItemIcon>
                   <MonetizationOnIcon />
