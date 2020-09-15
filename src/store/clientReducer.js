@@ -35,15 +35,15 @@ export const getInfo = (id) => {
   }
 }
 //ENVIAR SUGGEST
-export const submitSuggest = (suggest, id) => {
+export const submitSuggest = (suggest, idCompany) => {
   return dispatch => {
-    api.post('/client', suggest)
+    api.post('/client', idCompany, suggest)
     .then(Response => {
       dispatch({
         type: ACTIONS.ADD,
         suggest: Response.data,
       });
-    }, history.push(`/client/opiniao/sucesso/?${id}`))
+    }, history.push(`/client/opiniao/sucesso/?${idCompany}`))
     .catch(error => {
       console.log(error);
     });
