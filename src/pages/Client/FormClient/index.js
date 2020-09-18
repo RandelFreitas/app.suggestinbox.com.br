@@ -90,13 +90,15 @@ NumberFormatCustom.propTypes = {
 const FormClient = (props) => {
   const classes = useStyles();
   const { infos } = props;
+  const [companyId] = useState(window.location.href.split('/?')[1]);
   const [checked, setChecked] = useState(false);
   const [values, setValues] = useState({
     name: '',
     phone: '',
     stars: 0,
     opinion: '',
-    recommends: false
+    recommends: false,
+    companyId
   });
   const[error] = useState({
     name: false,
@@ -140,7 +142,7 @@ const FormClient = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.submitSuggest(values, infos._id);
+    props.submitSuggest(values);
   }
 
   return (

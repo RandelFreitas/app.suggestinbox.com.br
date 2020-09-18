@@ -62,7 +62,7 @@ const Companies = (props) => {
             <Grid key={company._id} item md={4} sm={6} xs={12}>
               <div className={classes.item}>  
                 <Card>
-                  <CardActionArea component={Link} to={`/suggest?page=${page}&limit=${nOfItems}`}>
+                  <CardActionArea component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}`}>
                     <CardContent>
                       <Typography noWrap variant="h5" component="h2">
                         {company.name}

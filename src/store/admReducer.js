@@ -76,9 +76,9 @@ export const admReducer = (state = INITIAL_STATE, action) => {
 }
 //*******************************************SUGGESTS*********************************************
 //LISTAR SUGGESTS
-export const listSuggest = (page, nOfItems) => {
+export const listSuggest = (page, nOfItems, idUrl) => {
   return dispatch => {
-    api.get(`/adm/suggest?page=${page}&limit=${nOfItems}`)
+    api.get(`/adm/all-suggest/${idUrl}?page=${page}&limit=${nOfItems}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({

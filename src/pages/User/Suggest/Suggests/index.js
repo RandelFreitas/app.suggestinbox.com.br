@@ -40,9 +40,10 @@ const Suggest = (props) => {
   const nOfPages = infosSuggests.pages;
   const [page, setPage] = useState(1);
   const [nOfItems, setNoOfItems] = useState(10);
+  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
 
   useEffect(() => {
-    props.listSuggest(page, nOfItems);
+    props.listSuggest(page, nOfItems, idUrl);
   },[page, nOfItems]);
 
   const handleChange=(event, value)=>{
