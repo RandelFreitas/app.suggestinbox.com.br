@@ -3,7 +3,7 @@ import React from 'react';
 const Menu = () => {
   return(
     <div>
-      Cardapio
+     CARDAPIO EM DESENVOLVIMENTO
     </div>
   );
 }

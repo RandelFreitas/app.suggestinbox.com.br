@@ -39,6 +39,7 @@ const Companies = (props) => {
   const classes = useStyles();
 
   const { companies, infosCompanies } = props;
+  const [ idUrl ] = useState(window.location.href.split('/?')[1].split('?')[0]);
   const nOfPages = infosCompanies.pages;
   const [page, setPage] = useState(1);
   const [nOfItems, setNoOfItems] = useState(10);
@@ -62,7 +63,7 @@ const Companies = (props) => {
             <Grid key={company._id} item md={4} sm={6} xs={12}>
               <div className={classes.item}>  
                 <Card>
-                  <CardActionArea component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}`}>
+                  <CardActionArea component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}/?${idUrl}`}>
                     <CardContent>
                       <Typography noWrap variant="h5" component="h2">
                         {company.name}
@@ -73,8 +74,8 @@ const Companies = (props) => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions className={classes.center}>
-                    <Button component={Link} to={`/user/setup-company/?${company._id}`} variant="contained" color="primary">
-                      Configurações
+                    <Button component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}/?${idUrl}`} variant="contained" color="primary">
+                      Gerenciar
                     </Button>
                   </CardActions>
                 </Card>

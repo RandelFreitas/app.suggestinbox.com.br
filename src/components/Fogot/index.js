@@ -100,6 +100,7 @@ const Fogot = (props) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              inputProps={{ maxLength: 70 }}
             />
             <div>
               {formik.touched.email && formik.errors.email ? (

@@ -22,6 +22,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    maxWidth: 300,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -46,16 +49,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   const formik = useFormik ({
     initialValues: { email: '', password: ''},
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Email invalido')
+        .email('Email inválido')
         .required('Email obrigatório!'),
       password: Yup.string()
-        .required('Senha obrigatória!'),
+        .required('Senha obrigatória!')
+        .max(40, 'Senha muito longa'),
       }),
       onSubmit: values => {
         props.auth(values);
@@ -71,7 +75,7 @@ const Login = (props) => {
         </Typography>
         </Toolbar>
       </AppBar>
-      <Container component="main" maxWidth="xs">
+      <Container className={classes.container} component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -90,6 +94,7 @@ const Login = (props) => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              inputProps={{ maxLength: 70 }}
             />
             <div>
               {formik.touched.email && formik.errors.email ? (
@@ -105,14 +110,15 @@ const Login = (props) => {
               label="Senha"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.password} 
+              value={formik.values.password}
+              inputProps={{ maxLength: 40 }}
             />
             <div>
               {formik.touched.password && formik.errors.password ? (
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
+            <ReCAPTCHA sitekey="6LcgjtIZAAAAAANAHsE5_vCGEFFu8nCbHvk5AV7y" onChange={() => setDisableSubmit(false)} />
             <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Entrar
             </Button>

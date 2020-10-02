@@ -46,19 +46,21 @@ const SetupUser = (props) => {
 
   const [idUrl] = useState(window.location.href.split('/?')[1]);
   const defaultFormShape = {
-    name: '',
     email: '',
-    cpf: '',
-    phone: '',
-    address: {
-      state: '',
-      city: '',
-      street: '',
-      number: '',
-      type: '',
-      district: '',
-      zip: '',
-      obs: ''
+    name: '',
+    parentId: {
+      cpf: '',
+      phone: '',
+      address: {
+        state: '',
+        city: '',
+        street: '',
+        number: '',
+        type: '',
+        district: '',
+        zip: '',
+        obs: ''
+      },
     },
   };
 
@@ -72,33 +74,40 @@ const SetupUser = (props) => {
         initialValues= {userById._id? userById : defaultFormShape}
         enableReinitialize
         validationSchema={Yup.object({
-          name: Yup.string()
-            .required('Nome obrigatório!'),
           email: Yup.string()
             .required('Email obrigatório!'),
-          cpf: Yup.string()
-            .required('Cpf obrigatório!'),
-          phone: Yup.string()
-            .required('Telefone obrigatório!'),
-          address: Yup.object({
-            zip: Yup.string()
-              .required('Cep obrigatorio!'),
-            street: Yup.string()
-              .required('Rua obrigatorio!'),
-            district: Yup.string()
-              .required('Bairro obrigatorio!'),
-            city: Yup.string()
-              .required('Cidade obrigatorio!'),
-            state: Yup.string()
-              .required('Estado obrigatorio!'),
-            number: Yup.string()
-              .required('Número obrigatorio!'),
+          name: Yup.string()
+            .required('Nome obrigatório!'),
+          parentId: Yup.object({
+            cpf: Yup.string()
+              .required('Cpf obrigatório!'),
+            phone: Yup.string()
+              .required('Telefone obrigatório!'),
+            address: Yup.object({
+              zip: Yup.string()
+                .required('Cep obrigatorio!'),
+              street: Yup.string()
+                .required('Rua obrigatorio!'),
+              district: Yup.string()
+                .required('Bairro obrigatorio!'),
+              city: Yup.string()
+                .required('Cidade obrigatorio!'),
+              state: Yup.string()
+                .required('Estado obrigatorio!'),
+              number: Yup.string()
+                .required('Número obrigatorio!'),
+              type: Yup.string()
+                .required('Número obrigatorio!'),
+              obs: Yup.string()
+                .required('Número obrigatorio!'),
+            }),
           }),
         })}
 
         onSubmit={(values) => {
-          const { name, email, phone, cpf } = values;
-          const { state, city, street, number, type, district, zip, obs } = values.address;
+          const { name, email } = values;
+          const { phone, cpf } = values.parentId;
+          const { state, city, street, number, type, district, zip, obs } = values.parentId.address;
           const address = {state, city, street, number, type, district, zip, obs};
           const userUpdate = { name, email, cpf, phone, address };
           props.updateCompany(userUpdate, userById._id);
@@ -109,7 +118,7 @@ const SetupUser = (props) => {
               <p style={{margin: 10}}>Dados</p>
               <Grid container>
                 <Grid container item spacing={1} className={classes.grid}>
-                  <Grid item xs={4}>
+                  <Grid item xs={5}>
                     <TextField
                       variant="outlined"
                       label="Nome:"
@@ -125,7 +134,7 @@ const SetupUser = (props) => {
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={2}>
                     <TextField
                       variant="outlined"
                       label="CPF:"
@@ -133,15 +142,15 @@ const SetupUser = (props) => {
                       fullWidth
                       name="cpf"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('cpf')}
+                      {...formik.getFieldProps('parentId.cpf')}
                     />
                     <div>
-                      {formik.touched.cpf && formik.errors.cpf ? (
-                        <Typography className={classes.error}>{formik.errors.cpf}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.cpf}</Typography>
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <TextField
                       variant="outlined"
                       label="Email:"
@@ -165,11 +174,11 @@ const SetupUser = (props) => {
                       fullWidth
                       name="phone"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('phone')}
+                      {...formik.getFieldProps('parentId.phone')}
                     />
                     <div>
-                      {formik.touched.phone && formik.errors.phone ? (
-                        <Typography className={classes.error}>{formik.errors.phone}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.phone}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -182,13 +191,13 @@ const SetupUser = (props) => {
                       label="Cep:"
                       margin="dense"
                       fullWidth
-                      name="address.zip"
+                      name="parentId.address.zip"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.zip')}
+                      {...formik.getFieldProps('parentId.address.zip')}
                     />
                     <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.zip}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.zip}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -198,77 +207,109 @@ const SetupUser = (props) => {
                       label="Rua:"
                       margin="dense"
                       fullWidth
-                      name="address.street"
+                      name="parentId.address.street"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.street')}
+                      {...formik.getFieldProps('parentId.address.street')}
                     />
                     <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.street}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.street}</Typography>
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <TextField
                       variant="outlined"
                       label="Bairro:"
                       margin="dense"
                       fullWidth
-                      name="address.district"
+                      name="parentId.address.district"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.district')}
+                      {...formik.getFieldProps('parentId.address.district')}
                     />
                     <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.district}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.district}</Typography>
+                      ) : null}
+                    </div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <TextField
+                      variant="outlined"
+                      label="Cidade:"
+                      margin="dense"
+                      fullWidth
+                      name="parentId.address.city"
+                      InputLabelProps={{ shrink: true }}
+                      {...formik.getFieldProps('parentId.address.city')}
+                    />
+                    <div>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.city}</Typography>
                       ) : null}
                     </div>
                   </Grid>
                   <Grid item xs={2}>
                     <TextField
                       variant="outlined"
-                      label="Cidade:"
-                      margin="dense"
-                      fullWidth
-                      name="address.city"
-                      InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.city')}
-                    />
-                    <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.city}</Typography>
-                      ) : null}
-                    </div>
-                  </Grid>
-                  <Grid item xs={1}>
-                    <TextField
-                      variant="outlined"
                       label="Estado:"
                       margin="dense"
                       fullWidth
-                      name="address.state"
+                      name="parentId.address.state"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.state')}
+                      {...formik.getFieldProps('parentId.address.state')}
                     />
                     <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.state}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.state}</Typography>
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xs={1}>
+                  <Grid item xs={2}>
                     <TextField
                       variant="outlined"
                       label="Número:"
                       margin="dense"
                       fullWidth
-                      name="address.number"
+                      name="parentId.address.number"
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.number')}
+                      {...formik.getFieldProps('parentId.address.number')}
                     />
                     <div>
-                      {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.number}</Typography>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.number}</Typography>
+                      ) : null}
+                    </div>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <TextField
+                      variant="outlined"
+                      label="Tipo:"
+                      margin="dense"
+                      fullWidth
+                      name="parentId.address.type"
+                      InputLabelProps={{ shrink: true }}
+                      {...formik.getFieldProps('parentId.address.type')}
+                    />
+                    <div>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.type}</Typography>
+                      ) : null}
+                    </div>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      variant="outlined"
+                      label="Complemento:"
+                      margin="dense"
+                      fullWidth
+                      name="parentId.address.obs"
+                      InputLabelProps={{ shrink: true }}
+                      {...formik.getFieldProps('parentId.address.obs')}
+                    />
+                    <div>
+                      {formik.touched.parentId && formik.errors.parentId ? (
+                        <Typography className={classes.error}>{formik.errors.parentId.address.obs}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -278,7 +319,7 @@ const SetupUser = (props) => {
                   <Button type="submit" className={classes.button} variant="contained" color="primary">
                     Atualizar
                   </Button>
-                  <Button className={classes.button} component={Link} to={`/user/?${userById._id}`} variant="outlined" color="primary">
+                  <Button className={classes.button} component={Link} to={`/user/?${userById._id}?page=1&limit=25`} variant="outlined" color="primary">
                     Cancelar
                   </Button>
                 </Grid>

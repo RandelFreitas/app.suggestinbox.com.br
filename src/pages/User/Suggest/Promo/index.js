@@ -3,7 +3,7 @@ import React from 'react';
 const Promo = () => {
   return(
     <div>
-      PROMOÇÕES
+      PROMOÇÕES EM DESENVOLVIMENTO
     </div>
   );
 }

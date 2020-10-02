@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logout } from '../../../store/authReducer';
+import { getCompanyById, getUserById } from '../../../store/admReducer';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
@@ -32,6 +33,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Rating from '@material-ui/lab/Rating';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import BusinessIcon from '@material-ui/icons/Business';
 
 import RoutesUser from './routesUser';
 
@@ -132,6 +134,16 @@ const useStyles = makeStyles((theme) => ({
 
 const MainSuggest = (props) => {
   const classes = useStyles();
+  const { companyById } = props;
+  const { stars, name } = companyById;
+  const [ idUrl ] = useState(window.location.href.split('/?')[1].split('?')[0]);
+  const [ idUser ] = useState(window.location.href.split('/?')[2]);
+
+  useEffect(() => {
+    if(idUrl){
+      props.getCompanyById(idUrl);
+    }
+  },[]);
 
   const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
@@ -155,11 +167,11 @@ const MainSuggest = (props) => {
               className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
               <MenuIcon />
             </IconButton>
-            <Typography component={Link} to='/suggest' variant="h6" color="inherit" noWrap className={classes.title}>
+            <Typography component={Link} to={`/suggest/?${idUrl}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
                 SuggestInBox
             </Typography>
-            <div component={Link} to='/user' className={classes.profile}>Randel Freitas</div>
-            <IconButton component={Link} to='/suggest/setup' color="inherit">
+            <div component={Link} to='/user' className={classes.profile}>{companyById.name}</div>
+            <IconButton component={Link} to={`/suggest/setup/?${idUrl}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
             <IconButton onClick={props.logout} color="inherit">
@@ -178,41 +190,47 @@ const MainSuggest = (props) => {
             <div>      
               <Card className={classes.card}>
                 <div>
-                  <IconButton component={Link} to='/suggest/setup' color="inherit">
-                    <Avatar className={classes.avatar}>S</Avatar>
+                  <IconButton component={Link} to={`/suggest/setup/?${idUrl}`} color="inherit">
+                    <Avatar className={classes.avatar}>{name? name.split('', 1): "..."}</Avatar>
                   </IconButton>
-                  <Typography hidden={!open}>Bar Skinão</Typography>
+                  <Typography hidden={!open}>{companyById.name}</Typography>
                 </div>
                 <CardContent hidden={!open}>
                   <Typography variant="h3" color="textSecondary" component="p">
-                    4,5
+                    {companyById.stars}
                   </Typography>
-                  <Rating name="read-only" precision={0.1} value={4.5} readOnly />
+                  <Rating name="read-only" value={stars? stars: 0} precision={0.5} readOnly/>
                 </CardContent>
               </Card>
-              <ListItem button component={Link} to='/suggest'>
+              <ListItem button component={Link} to={`/suggest/?${idUrl}?page=1&limit=25/?${idUser}`}>
                 <ListItemIcon>
                   <AssessmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Sugestões" />
               </ListItem>
-              <ListItem button component={Link} to='/suggest/promo'>
+              <ListItem button component={Link} to={`/suggest/promo/?${idUrl}`}>
                 <ListItemIcon>
                   <EmojiEmotionsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Promoções" />
               </ListItem>
-              <ListItem button component={Link} to='/suggest/cardapio'>
+              <ListItem button component={Link} to={`/suggest/cardapio/?${idUrl}`}>
                 <ListItemIcon>
                   <MenuBookIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Cardapio" />
               </ListItem>
-              <ListItem button component={Link} to='/suggest/finances'>
+              <ListItem button component={Link} to={`/suggest/finances/?${idUrl}`}>
                 <ListItemIcon>
                   <MonetizationOnIcon />
                 </ListItemIcon>
                 <ListItemText primary="Financeiro" />
+              </ListItem>
+              <ListItem button component={Link} to={`/user/?${idUser}?page=1&limit=25`}>
+                <ListItemIcon>
+                  <BusinessIcon />
+                </ListItemIcon>
+                <ListItemText primary="Companias" />
               </ListItem>
             </div>
           </List>
@@ -237,10 +255,12 @@ MainSuggest.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  infos: state.client.infos,
+  infos: state.auth.infos,
+  companyById: state.adm.companyById,
+  userById: state.adm.userById,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({logout}, dispatch);
+  bindActionCreators({logout, getCompanyById, getUserById}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainSuggest);

@@ -23,6 +23,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    maxWidth: 300,
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -53,19 +56,23 @@ const Reset = (props) => {
   const [ token ] = useState(window.location.href.split('/?$')[1]);
   const [ email ] = useState(window.location.href.split('/?$')[2]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
     history.push('/login');
   };
 
   const formik = useFormik ({
-    initialValues: { password: ''},
+    initialValues: { password: '', passwordConfirmation: ''},
     validationSchema: Yup.object({
       password: Yup.string()
-        .required('Senha não confere')
+        .required('Senha obrigatória!')
+        .matches(/^(?=.*[A-Za-z])(?=.*[0-9])(?=.{6,})/,
+          "A senha deve ter pelo menos uma letra maiuscula, um número e 6 caracteres!"
+        )
+        .max(40, 'Senha muito longa'),
+      passwordConfirmation: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Senha não confere')
+        .required('Confirme a senha!')
       }),
       onSubmit: values => {
         const user = {
@@ -74,6 +81,7 @@ const Reset = (props) => {
           email: email
         }
         props.reset(user);
+        setOpen(true);
       },
   });
 
@@ -100,7 +108,7 @@ const Reset = (props) => {
         </Typography>
         </Toolbar>
       </AppBar>
-      <Container component="main" maxWidth="xs">
+      <Container className={classes.container} component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -118,15 +126,33 @@ const Reset = (props) => {
               label="Nova senha"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.password} 
+              value={formik.values.password}
+              inputProps={{ maxLength: 70 }}
             />
             <div>
               {formik.touched.password && formik.errors.password ? (
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
-            <Button type="submit" onClick={handleClickOpen} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <TextField 
+              variant="outlined" 
+              type="password" 
+              name="passwordConfirmation"
+              margin="normal"
+              fullWidth
+              label="Confirme a senha"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.passwordConfirmation}
+              inputProps={{ maxLength: 70 }}
+            />
+            <div>
+              {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (
+                <Typography className={classes.error}>{formik.errors.passwordConfirmation}</Typography>
+              ) : null}
+            </div>
+            <ReCAPTCHA sitekey="6LcgjtIZAAAAAANAHsE5_vCGEFFu8nCbHvk5AV7y" onChange={() => setDisableSubmit(false)} />
+            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Salvar
             </Button>
           </form>

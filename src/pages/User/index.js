@@ -48,7 +48,7 @@ const User = (props) => {
   const classes = useStyles();
   const [ idUrl ] = useState(window.location.href.split('/?')[1]);
   const { userById } = props;
-
+  
   useEffect(() => {
     props.getUserById(idUrl);
   },[]);
@@ -59,10 +59,10 @@ const User = (props) => {
         <CssBaseline />
         <AppBar position="absolute">
           <Toolbar className={classes.toolbar}>
-            <Typography component={Link} to={`?${userById._id}`} variant="h6" color="inherit" noWrap className={classes.title}>
+            <Typography component={Link} to={`/user/?${userById._id}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
               SuggestInBox
             </Typography>
-            <div className={classes.profile}>Randel</div>
+            <div className={classes.profile}>{userById.name}</div>
             <IconButton component={Link} to={`/user/setup/?${userById._id}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
