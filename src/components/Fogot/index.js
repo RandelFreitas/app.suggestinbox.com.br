@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { showMessage, hideMessage } from '../../store/messageReducer';
-
+import { showMessage, hideMessage, showProgress } from '../../store/messageReducer';
+import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,6 @@ import TextField from '@material-ui/core/TextField';
 import { fogot } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 const Fogot = (props) => {
   const classes = useStyles();
   const [disableSubmit, setDisableSubmit] = useState(false);
-  const [progress, setProgress] = useState(true);
 
   const formik = useFormik ({
     initialValues: { email: ''},
@@ -56,24 +54,13 @@ const Fogot = (props) => {
         .required('Email obrigatório!'),
       }),
       onSubmit: values => {
-        setProgress(false);
         props.fogot(values);
       },
   });
 
   return (
     <div>
-      <Dialog open={props.openDialog} onClick={()=> setProgress(true)} onClose={props.hideMessage}>
-        <DialogTitle>
-          Atenção
-        </DialogTitle>
-        <DialogContent>
-          {props.message}
-        </DialogContent>
-        <DialogActions onClick={()=> setProgress(true)}>
-          <Button onClick={props.hideMessage}>Fechar</Button>
-        </DialogActions>
-      </Dialog>
+      <MessageDialog/>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
@@ -108,11 +95,11 @@ const Fogot = (props) => {
               ) : null}
             </div>
             <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
-            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <Button type="submit" onClick={()=> props.showProgress()} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Enviar link para email
             </Button>
           </form>
-          <div hidden={progress}>
+          <div hidden={props.progress}>
             <CircularProgress/>
           </div>
         </div>
@@ -123,10 +110,11 @@ const Fogot = (props) => {
 
 const mapStateToProps = state => ({
   openDialog: state.message.showMessage,
-  message: state.message.message
+  message: state.message.message,
+  progress: state.message.progress
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({fogot, showMessage, hideMessage}, dispatch);
+  bindActionCreators({fogot, showMessage, hideMessage, showProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Fogot);

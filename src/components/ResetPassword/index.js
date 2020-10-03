@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha"
 import history from '../../services/history';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { showMessage, hideMessage } from '../../store/messageReducer';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,8 +20,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -51,15 +52,10 @@ const useStyles = makeStyles((theme) => ({
 const Reset = (props) => {
   const classes = useStyles();
   const [disableSubmit, setDisableSubmit] = useState(true);
-  const [open, setOpen] = React.useState(false);
+  const [progress, setProgress] = useState(true);
   
   const [ token ] = useState(window.location.href.split('/?$')[1]);
   const [ email ] = useState(window.location.href.split('/?$')[2]);
-
-  const handleClose = () => {
-    setOpen(false);
-    history.push('/login');
-  };
 
   const formik = useFormik ({
     initialValues: { password: '', passwordConfirmation: ''},
@@ -75,32 +71,18 @@ const Reset = (props) => {
         .required('Confirme a senha!')
       }),
       onSubmit: values => {
+        setProgress(false);
         const user = {
           password: values.password,
           token: token,
           email: email
         }
         props.reset(user);
-        setOpen(true);
       },
   });
 
   return (
     <div>
-      <div>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Senha recuperada com sucesso!
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary" autoFocus>
-              Ok
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
         <Typography variant="h6" noWrap>
@@ -156,13 +138,34 @@ const Reset = (props) => {
               Salvar
             </Button>
           </form>
+
+          <Dialog open={props.openDialog} onClick={()=> setProgress(true)} onClose={props.hideMessage}>
+            <DialogTitle>
+              Atenção
+            </DialogTitle>
+            <DialogContent>
+              {props.message}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={props.hideMessage}>Fechar</Button>
+            </DialogActions>
+          </Dialog>
+
+          <div hidden={progress}>
+            <CircularProgress/>
+          </div>
         </div>
       </Container>
     </div>
   );
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({reset}, dispatch);
+const mapStateToProps = state => ({
+  openDialog: state.message.showMessage,
+  message: state.message.message
+});
 
-export default connect(null, mapDispatchToProps)(Reset);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({reset, showMessage, hideMessage}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reset);

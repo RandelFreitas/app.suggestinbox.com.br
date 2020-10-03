@@ -10,7 +10,7 @@ const ACTIONS = {
 const INITIAL_STATE = {
   infos:[],
   email:[],
-  user:[]
+  user:[],
 }
 export const authReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
@@ -32,14 +32,20 @@ export const auth = (login) => {
       dispatch({
         type: ACTIONS.AUTH,
         infos: Response.data,
-      },
-        setInfosLocalStorage(Response.data.token, Response.data.user),
-        history.push(`/user/?${Response.data.user._id}?page=1&limit=25`)
-      );
+      }); 
+      if(!Response.data.token){
+        dispatch(
+          showMessage("Senha ou email inválidos!")
+        )
+      }else{
+        setInfosLocalStorage(Response.data.token, Response.data.user);
+        history.push(`/user/?${Response.data.user._id}?page=1&limit=25`);
+      }
     })
     .catch(error => {
       dispatch(
-        showMessage("Email ou senha inválidos!")
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
       )}
     )
   }
@@ -52,14 +58,19 @@ export const fogot = (email) => {
       dispatch({
         type: ACTIONS.FOGOT,
         email: Response.data,
-      },dispatch(
-          showMessage("Email enviado com sucesso!")
-        ), 
-        history.push('/login'));
+      });
+      if(!Response.data.email){
+        dispatch(
+          showMessage("Usuario não encontrado!")
+        )
+      }else{
+        history.push('/login');
+      }
     })
-    .catch(erro => {
+    .catch(error => {
       dispatch(
-        showMessage("Este email não está atribuido a nenhum usuário!")
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
       )}
     );
   }
@@ -76,7 +87,8 @@ export const reset = (user) => {
     })
     .catch(error => {
       dispatch(
-        showMessage("Serviço indisponível, tente mais tarde!")
+        showMessage("Serviço indisponível, tente mais tarde!"),
+        console.log(error)
       )}
     );
   }

@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 import { auth } from '../../store/authReducer';
-import { showMessage, hideMessage } from '../../store/messageReducer';
+import { showMessage, hideMessage, showProgress } from '../../store/messageReducer';
+import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,7 +20,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12
   },
   link: {
-    fontSize: 15 
+    textAlign: 'end'
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -119,30 +120,26 @@ const Login = (props) => {
               ) : null}
             </div>
             <ReCAPTCHA sitekey="6LcgjtIZAAAAAANAHsE5_vCGEFFu8nCbHvk5AV7y" onChange={() => setDisableSubmit(false)} />
-            <Button type="submit" disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <Button type="submit" onClick={()=>props.showProgress()} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
               Entrar
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link className={classes.link} to="/fogot-password" variant="body2">
+                <Link to="/fogot-password" variant="body2">
                   Esqueci minha senha
+                </Link>
+              </Grid>
+              <Grid className={classes.link} item xs>
+                <Link to="/fogot-password" variant="body2">
+                  Criar conta
                 </Link>
               </Grid>
             </Grid>
           </form>
-          
-          <Dialog open={props.openDialog} onClose={props.hideMessage}>
-            <DialogTitle>
-              Atenção
-            </DialogTitle>
-            <DialogContent>
-              {props.message}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={props.hideMessage}>Fechar</Button>
-            </DialogActions>
-          </Dialog>
-          
+          <div hidden={props.progress}>
+            <CircularProgress/>
+          </div>
+          <MessageDialog/>
         </div>
       </Container>
     </div>
@@ -151,10 +148,11 @@ const Login = (props) => {
 
 const mapStateToProps = state => ({
   openDialog: state.message.showMessage,
-  message: state.message.message
+  message: state.message.message,
+  progress: state.message.progress
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({auth, showMessage, hideMessage}, dispatch);
+  bindActionCreators({auth, showMessage, hideMessage, showProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
