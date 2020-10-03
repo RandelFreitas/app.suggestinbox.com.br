@@ -212,7 +212,7 @@ export const updateUser = (user, id) => {
         type: ACTIONS.UPDATE_USER,
         //user: Response.data
       })
-    }, history.push('/user'))
+    }, history.push(`/user/?${id}?page=1&limit=25`))
     .catch(error => {
       console.log(error)
     })

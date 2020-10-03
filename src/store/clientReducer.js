@@ -22,7 +22,7 @@ export const clientReducer = (state = INITIAL_STATE, action) => {
 //OBTER INFOS DA COMPANIA
 export const getInfo = (id) => {
   return dispatch => {
-    api.get(`/client/${id}`)
+    api.get(`/client/company/${id}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.INFOS,
@@ -37,7 +37,7 @@ export const getInfo = (id) => {
 //ENVIAR SUGGEST
 export const submitSuggest = (suggest) => {
   return dispatch => {
-    api.post(`/client/${suggest.companyId}`, suggest)
+    api.post(`/client/company/${suggest.companyId}`, suggest)
     .then(Response => {
       dispatch({
         type: ACTIONS.ADD,

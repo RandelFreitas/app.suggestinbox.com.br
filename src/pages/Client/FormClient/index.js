@@ -155,7 +155,8 @@ const FormClient = (props) => {
           value={values.name} 
           onChange={handleChange}
           name="name"
-          id="standard-basic" 
+          id="standard-basic"
+          inputProps={{ maxLength: 70 }}
         />
         <TextField
           label="Telefone"

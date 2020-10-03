@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import NumberFormat from 'react-number-format';
 import * as Yup from 'yup';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -40,6 +41,84 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const ZipFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='#####-###'
+    />
+  );
+}
+
+ZipFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+const CpfFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='###.###.###-##'
+    />
+  );
+}
+
+CpfFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+const PhoneFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='(##) #########'
+    />
+  );
+}
+
+PhoneFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
 const SetupUser = (props) => {
   const classes = useStyles();
   const { userById } = props;
@@ -48,19 +127,17 @@ const SetupUser = (props) => {
   const defaultFormShape = {
     email: '',
     name: '',
-    parentId: {
-      cpf: '',
-      phone: '',
-      address: {
-        state: '',
-        city: '',
-        street: '',
-        number: '',
-        type: '',
-        district: '',
-        zip: '',
-        obs: ''
-      },
+    cpf: '',
+    phone: '',
+    address: {
+      state: '',
+      city: '',
+      street: '',
+      number: '',
+      type: '',
+      district: '',
+      zip: '',
+      obs: ''
     },
   };
 
@@ -78,39 +155,36 @@ const SetupUser = (props) => {
             .required('Email obrigatório!'),
           name: Yup.string()
             .required('Nome obrigatório!'),
-          parentId: Yup.object({
-            cpf: Yup.string()
-              .required('Cpf obrigatório!'),
-            phone: Yup.string()
-              .required('Telefone obrigatório!'),
-            address: Yup.object({
-              zip: Yup.string()
-                .required('Cep obrigatorio!'),
-              street: Yup.string()
-                .required('Rua obrigatorio!'),
-              district: Yup.string()
-                .required('Bairro obrigatorio!'),
-              city: Yup.string()
-                .required('Cidade obrigatorio!'),
-              state: Yup.string()
-                .required('Estado obrigatorio!'),
-              number: Yup.string()
-                .required('Número obrigatorio!'),
-              type: Yup.string()
-                .required('Número obrigatorio!'),
-              obs: Yup.string()
-                .required('Número obrigatorio!'),
-            }),
+          cpf: Yup.string()
+            .required('Cpf obrigatório!'),
+          phone: Yup.string()
+            .required('Telefone obrigatório!'),
+          address: Yup.object({
+            zip: Yup.string()
+              .required('Cep obrigatorio!'),
+            street: Yup.string()
+              .required('Rua obrigatorio!'),
+            district: Yup.string()
+              .required('Bairro obrigatorio!'),
+            city: Yup.string()
+              .required('Cidade obrigatorio!'),
+            state: Yup.string()
+              .required('Estado obrigatorio!'),
+            number: Yup.string()
+              .required('Número obrigatorio!'),
+            type: Yup.string()
+              .required('Número obrigatorio!'),
+            obs: Yup.string()
+              .required('Número obrigatorio!'),
           }),
         })}
 
         onSubmit={(values) => {
-          const { name, email } = values;
-          const { phone, cpf } = values.parentId;
-          const { state, city, street, number, type, district, zip, obs } = values.parentId.address;
+          const { name, email, phone, cpf } = values;
+          const { state, city, street, number, type, district, zip, obs } = values.address;
           const address = {state, city, street, number, type, district, zip, obs};
           const userUpdate = { name, email, cpf, phone, address };
-          props.updateCompany(userUpdate, userById._id);
+          props.updateUser(userUpdate, userById._id);
         }}>
         {formik => (
           <Card >
@@ -125,6 +199,7 @@ const SetupUser = (props) => {
                       margin="dense"
                       fullWidth
                       name="name"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('name')}
                     />
@@ -141,12 +216,13 @@ const SetupUser = (props) => {
                       margin="dense"
                       fullWidth
                       name="cpf"
+                      InputProps={{inputComponent: CpfFormatCustom}}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.cpf')}
+                      {...formik.getFieldProps('cpf')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.cpf}</Typography>
+                      {formik.touched.cpf && formik.errors.cpf ? (
+                        <Typography className={classes.error}>{formik.errors.cpf}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -157,6 +233,7 @@ const SetupUser = (props) => {
                       margin="dense"
                       fullWidth
                       name="email"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('email')}
                     />
@@ -173,12 +250,13 @@ const SetupUser = (props) => {
                       margin="dense"
                       fullWidth
                       name="phone"
+                      InputProps={{inputComponent: PhoneFormatCustom}}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.phone')}
+                      {...formik.getFieldProps('phone')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.phone}</Typography>
+                      {formik.touched.phone && formik.errors.phone ? (
+                        <Typography className={classes.error}>{formik.errors.phone}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -191,13 +269,14 @@ const SetupUser = (props) => {
                       label="Cep:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.zip"
+                      name="address.zip"
+                      InputProps={{inputComponent: ZipFormatCustom}}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.zip')}
+                      {...formik.getFieldProps('address.zip')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.zip}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.zip}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -207,13 +286,14 @@ const SetupUser = (props) => {
                       label="Rua:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.street"
+                      name="address.street"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.street')}
+                      {...formik.getFieldProps('address.street')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.street}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.street}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -223,13 +303,14 @@ const SetupUser = (props) => {
                       label="Bairro:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.district"
+                      name="address.district"
+                      inputProps={{ maxLength: 40 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.district')}
+                      {...formik.getFieldProps('address.district')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.district}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.district}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -239,13 +320,14 @@ const SetupUser = (props) => {
                       label="Cidade:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.city"
+                      name="address.city"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.city')}
+                      {...formik.getFieldProps('address.city')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.city}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.city}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -255,13 +337,14 @@ const SetupUser = (props) => {
                       label="Estado:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.state"
+                      name="address.state"
+                      inputProps={{ maxLength: 30 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.state')}
+                      {...formik.getFieldProps('address.state')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.state}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.state}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -271,13 +354,14 @@ const SetupUser = (props) => {
                       label="Número:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.number"
+                      name="address.number"
+                      inputProps={{ maxLength: 6 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.number')}
+                      {...formik.getFieldProps('address.number')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.number}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.number}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -287,13 +371,14 @@ const SetupUser = (props) => {
                       label="Tipo:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.type"
+                      name="address.type"
+                      inputProps={{ maxLength: 20 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.type')}
+                      {...formik.getFieldProps('address.type')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.type}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.type}</Typography>
                       ) : null}
                     </div>
                   </Grid>
@@ -303,13 +388,14 @@ const SetupUser = (props) => {
                       label="Complemento:"
                       margin="dense"
                       fullWidth
-                      name="parentId.address.obs"
+                      name="address.obs"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('parentId.address.obs')}
+                      {...formik.getFieldProps('address.obs')}
                     />
                     <div>
-                      {formik.touched.parentId && formik.errors.parentId ? (
-                        <Typography className={classes.error}>{formik.errors.parentId.address.obs}</Typography>
+                      {formik.touched.address && formik.errors.address ? (
+                        <Typography className={classes.error}>{formik.errors.address.obs}</Typography>
                       ) : null}
                     </div>
                   </Grid>
