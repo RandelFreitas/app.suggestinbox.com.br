@@ -21,6 +21,8 @@ import Typography from '@material-ui/core/Typography';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
@@ -35,15 +37,24 @@ const theme = createMuiTheme({
   },
 });
 
+const useStyles = makeStyles((theme) =>({
+  center: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    margin: '20px'
+  },
+}));
+
 const Suggest = (props) => {
+  const classes = useStyles();
   const {suggests, infosSuggests} = props;
   const nOfPages = infosSuggests.pages;
   const [page, setPage] = useState(1);
-  const [nOfItems, setNoOfItems] = useState(10);
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  const [nOfItems, setNoOfItems] = useState(25);
+  const [ idCompany ] = useState(window.location.href.split('/?')[2]);
 
   useEffect(() => {
-    props.listSuggest(page, nOfItems, idUrl);
+    props.listSuggest(page, nOfItems, idCompany);
   },[page, nOfItems]);
 
   const handleChange=(event, value)=>{
@@ -83,8 +94,8 @@ const Suggest = (props) => {
             onChange={handleNofItems}
             inputProps={{ 'aria-label': 'Without label' }}>
             <MenuItem value={10}>10</MenuItem>
-            <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -131,13 +142,15 @@ const Suggest = (props) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box component="span">
-          <Pagination
-            count={nOfPages}
-            page={page}
-            onChange={handleChange}
-          />
-        </Box>
+        <Grid className={classes.center} container item xs={12} spacing={3}>
+          <Box component="span">
+            <Pagination
+              count={nOfPages}
+              page={page}
+              onChange={handleChange}
+            />
+          </Box>
+        </Grid>
       </Paper>
     </div>
   );

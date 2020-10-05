@@ -46,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
   const classes = useStyles();
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  const [ idUser ] = useState(window.location.href.split('/?')[1]);
   const { userById } = props;
   
   useEffect(() => {
-    props.getUserById(idUrl);
+    props.getUserById(idUser);
   },[]);
 
   return (

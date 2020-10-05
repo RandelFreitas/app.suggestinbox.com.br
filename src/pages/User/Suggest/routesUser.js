@@ -5,6 +5,7 @@ import Suggest from './Suggests';
 import Promo from './Promo';
 import Menu from './Menu';
 import Finances from './Finances';
+import SetupCompany from '../SetupCompany';
 
 const RoutesUser = () => {
   return(
@@ -13,6 +14,7 @@ const RoutesUser = () => {
       <Route exact path='/suggest/promo' component={Promo}/>
       <Route exact path='/suggest/cardapio' component={Menu}/>
       <Route exact path='/suggest/finances' component={Finances}/>
+      <Route exact path='/suggest/setup-company' component={SetupCompany}/>
     </Switch>
   );
 }

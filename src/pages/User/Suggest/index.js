@@ -136,12 +136,12 @@ const MainSuggest = (props) => {
   const classes = useStyles();
   const { companyById } = props;
   const { stars, name } = companyById;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1].split('?')[0]);
-  const [ idUser ] = useState(window.location.href.split('/?')[2]);
+  const [ idUser ] = useState(window.location.href.split('/?')[1]);
+  const [ idCompany ] = useState(window.location.href.split('/?')[2].split('?')[0]);
 
   useEffect(() => {
-    if(idUrl){
-      props.getCompanyById(idUrl);
+    if(idCompany){
+      props.getCompanyById(idCompany);
     }
   },[]);
 
@@ -167,11 +167,11 @@ const MainSuggest = (props) => {
               className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
               <MenuIcon />
             </IconButton>
-            <Typography component={Link} to={`/suggest/?${idUrl}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
+            <Typography component={Link} to={`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
                 SuggestInBox
             </Typography>
             <div component={Link} to='/user' className={classes.profile}>{companyById.name}</div>
-            <IconButton component={Link} to={`/suggest/setup/?${idUrl}`} color="inherit">
+            <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
             <IconButton onClick={props.logout} color="inherit">
@@ -190,7 +190,7 @@ const MainSuggest = (props) => {
             <div>      
               <Card className={classes.card}>
                 <div>
-                  <IconButton component={Link} to={`/suggest/setup/?${idUrl}`} color="inherit">
+                  <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
                     <Avatar className={classes.avatar}>{name? name.split('', 1): "..."}</Avatar>
                   </IconButton>
                   <Typography hidden={!open}>{companyById.name}</Typography>
@@ -202,25 +202,25 @@ const MainSuggest = (props) => {
                   <Rating name="read-only" value={stars? stars: 0} precision={0.5} readOnly/>
                 </CardContent>
               </Card>
-              <ListItem button component={Link} to={`/suggest/?${idUrl}?page=1&limit=25/?${idUser}`}>
+              <ListItem button component={Link} to={`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`}>
                 <ListItemIcon>
                   <AssessmentIcon />
                 </ListItemIcon>
                 <ListItemText primary="Sugestões" />
               </ListItem>
-              <ListItem button component={Link} to={`/suggest/promo/?${idUrl}`}>
+              <ListItem button component={Link} to={`/suggest/promo/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
                   <EmojiEmotionsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Promoções" />
               </ListItem>
-              <ListItem button component={Link} to={`/suggest/cardapio/?${idUrl}`}>
+              <ListItem button component={Link} to={`/suggest/cardapio/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
                   <MenuBookIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Cardapio" />
               </ListItem>
-              <ListItem button component={Link} to={`/suggest/finances/?${idUrl}`}>
+              <ListItem button component={Link} to={`/suggest/finances/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
                   <MonetizationOnIcon />
                 </ListItemIcon>

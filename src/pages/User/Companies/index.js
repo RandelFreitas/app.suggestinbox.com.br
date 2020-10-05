@@ -63,7 +63,7 @@ const Companies = (props) => {
             <Grid key={company._id} item md={4} sm={6} xs={12}>
               <div className={classes.item}>  
                 <Card>
-                  <CardActionArea component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}/?${idUrl}`}>
+                  <CardActionArea component={Link} to={`/suggest/?${idUrl}/?${company._id}?page=${page}&limit=${nOfItems}`}>
                     <CardContent>
                       <Typography noWrap variant="h5" component="h2">
                         {company.name}
@@ -74,7 +74,7 @@ const Companies = (props) => {
                     </CardContent>
                   </CardActionArea>
                   <CardActions className={classes.center}>
-                    <Button component={Link} to={`/suggest/?${company._id}?page=${page}&limit=${nOfItems}/?${idUrl}`} variant="contained" color="primary">
+                    <Button component={Link} to={`/suggest/?${idUrl}/?${company._id}?page=${page}&limit=${nOfItems}`} variant="contained" color="primary">
                       Gerenciar
                     </Button>
                   </CardActions>
@@ -89,7 +89,7 @@ const Companies = (props) => {
   return(
     <div className={classes.root}>
       <Typography className={classes.center} variant="h5" component="h2">Estabelecimentos</Typography>
-      <Button className={classes.button} component={Link} to='/user/setup-company' variant="contained" color="primary">
+      <Button className={classes.button} component={Link} to={`/user/setup-company/?${idUrl}`} variant="contained" color="primary">
         Adicionar Estabelecimento
       </Button>
       <Grid container item xs={12} spacing={3}>

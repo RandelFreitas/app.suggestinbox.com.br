@@ -36,6 +36,11 @@ export const getInfo = (id) => {
 }
 //ENVIAR SUGGEST
 export const submitSuggest = (suggest) => {
+  if(suggest.recommends === 'y'){
+    suggest.recommends = true;
+  }else{
+    suggest.recommends = false;
+  }
   return dispatch => {
     api.post(`/client/company/${suggest.companyId}`, suggest)
     .then(Response => {

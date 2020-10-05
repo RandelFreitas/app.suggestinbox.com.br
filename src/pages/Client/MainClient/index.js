@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,51 +15,41 @@ const useStyles = makeStyles((theme) => ({
   },
   center: {
     textAlign: 'center',
-    margin: '20px auto'
+    margin: 'auto',
+    marginBottom: '20px',
   },
   button: {
     marginBottom: "20px"
+  },
+  hidden: {
+    display: 'none'
   }
 }));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#1769aa',
-    },
-    secondary:{
-      main: '#FFB701'
-    }
-  },
-});
 
 const MainClient = (props) => {
   const { infos } = props;
   const classes = useStyles();
 
   return(
-    <MuiThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <div className={classes.center}>
-          <h3>{infos.name}</h3>
-          <p>{infos.slogan}</p>
-        </div>
-        <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
-          Dar opinião
-        </Button>
-        <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
-          Cardápio online
-        </Button>
-        <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
-          Chamar garçom
-        </Button>
-        {/*
-        <Link className={styles.link} to={`/client/cardapio/?${infos._id}`}>Cardápio online</Link>
-        <Link className={styles.link} to={`/client/atencao/?${infos._id}`}>Chamar garçom(a)</Link>
-        */}
-
+    <div className={classes.root}>
+      <div className={classes.center}>
+        <h3>{infos.name}</h3>
+        <p>{infos.slogan}</p>
       </div>
-    </MuiThemeProvider>
+      <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
+        Dar opinião
+      </Button>
+      <Button className={props.infos.menu? classes.button : classes.hidden} 
+              component={Link} to={`/client/opiniao/?${infos._id}`} 
+              variant="contained" color="primary">
+        Cardápio online
+      </Button>
+      <Button className={props.infos.tables? classes.button : classes.hidden} 
+              component={Link} to={`/client/opiniao/?${infos._id}`} 
+              variant="contained" color="primary">
+        Chamar garçom
+      </Button>
+    </div>
   );
 }
 

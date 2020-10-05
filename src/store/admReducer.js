@@ -166,7 +166,7 @@ export const getCompanyById = (id) => {
   }
 }
 //UPDATE COMPANY
-export const updateCompany = (company, id) => {
+export const updateCompany = (company, id, idUser) => {
   return dispatch => {
     api.put(`/adm/company/${id}`, company)
     .then(Response => {
@@ -174,7 +174,7 @@ export const updateCompany = (company, id) => {
         type: ACTIONS.UPDATE_COMPANY,
         //company: Response.data
       })
-    }, history.push('/user'))
+    }, history.push(`/suggest/?${idUser}/?${id}`))
     .catch(error => {
       console.log(error)
     })

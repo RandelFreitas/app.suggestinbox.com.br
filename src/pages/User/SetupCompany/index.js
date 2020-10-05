@@ -44,7 +44,8 @@ const SetupCompany = (props) => {
   const classes = useStyles();
   const { companyById } = props;
 
-  const [idUrl] = useState(window.location.href.split('/?')[1]);
+  const [idUser] = useState(window.location.href.split('/?')[1]);
+  const [idCompany] = useState(window.location.href.split('/?')[2]);
   const defaultFormShape = {
     name: '',
     cnpj: '',
@@ -66,8 +67,8 @@ const SetupCompany = (props) => {
   };
 
   useEffect(()=>{
-    if(idUrl){
-      props.getCompanyById(idUrl);
+    if(idCompany){
+      props.getCompanyById(idCompany);
     }else{
       props.cleanCompany();
     }
@@ -115,7 +116,7 @@ const SetupCompany = (props) => {
             const { state, city, street, number, type, district, zip, obs } = values.address;
             const address = {state, city, street, number, type, district, zip, obs};
             const companyUpdate = { name, slogan, history, localization, email, cnpj, phone, address };
-            props.updateCompany(companyUpdate, companyById._id);
+            props.updateCompany(companyUpdate, companyById._id, idUser);
           }else{
             props.addCompany(values);
           }
@@ -343,7 +344,8 @@ const SetupCompany = (props) => {
                   <Button type="submit" className={classes.button} variant="contained" color="primary">
                     {companyById._id? 'Atualizar': 'Salvar'}
                   </Button>
-                  <Button className={classes.button} component={Link} to={'/user'} variant="outlined" color="primary">
+                  <Button className={classes.button} component={Link} 
+                          to={companyById._id? `/suggest/?${idUser}/?${idCompany}?page=1&limit=25` : `/user/?${idUser}?page=1&limit=25`} variant="outlined" color="primary">
                     Cancelar
                   </Button>
                 </Grid>

@@ -14,10 +14,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,10 +27,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
-  header:{
-    background: '#FFB701',
-    textAlign: 'center',
-  },
   img:{
     padding: '10px'
   },
@@ -60,19 +58,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     paddingTop: '30px'
   },
-  offset: theme.mixins.toolbar,
 }));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#FED200',
-    },
-    secondary:{
-      main: '#FFB701'
-    }
-  },
-});
 
 const Client = (props) => {
   const { infos } = props;
@@ -96,17 +82,17 @@ const Client = (props) => {
     <div className={classes.list} onClick={toggleDrawer(false)} role="presentation" onKeyDown={toggleDrawer(false)}>
       <List>
         <ListItem button component={Link} to={`/client/?${infos._id}`}>
-          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemIcon><HomeIcon/></ListItemIcon>
           <ListItemText primary='Início'/>
         </ListItem>
         <Divider/>
         <ListItem button component={Link} to={`/client/sobrenos/?${infos._id}`}>
-          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemIcon><InfoIcon/></ListItemIcon>
           <ListItemText primary='Sobre nós'/>
         </ListItem>
         <Divider/>
         <ListItem button component={Link} to='/'>
-          <ListItemIcon><InboxIcon/></ListItemIcon>
+          <ListItemIcon><MarkunreadMailboxIcon/></ListItemIcon>
           <ListItemText primary='Sobre o SuggestInBox' />
         </ListItem>
         <Divider/>
@@ -114,10 +100,10 @@ const Client = (props) => {
     </div>
   )
   return(
-    <MuiThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
       <AppBar position="static">
-        <Toolbar color="primary">
+        <Toolbar>
           <IconButton onClick={toggleDrawer(true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
@@ -125,14 +111,14 @@ const Client = (props) => {
             {list}
           </Drawer>
           <Typography variant="button" className={classes.links}>
-            <Button component={Link} to={`/client/?${infos._id}`}>SuggestInBox</Button>
+            <Button color="inherit" component={Link} to={`/client/?${infos._id}`}>SuggestInBox</Button>
           </Typography>
         </Toolbar>
       </AppBar>
       <div className={classes.content}>
         <RoutesClient/>
       </div>
-    </MuiThemeProvider>
+    </div>
   );
 }
 

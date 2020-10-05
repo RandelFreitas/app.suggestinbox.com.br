@@ -20,7 +20,6 @@ import Star from '@material-ui/icons/Star';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
@@ -29,44 +28,40 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: 'auto',
       width: '100%',
+      background: '#fafafa',
     },
   },
-  span: {
-    marginTop: "20px",
-    fontSize: "15px",
+  name: {
+    textAlign: 'center',
+  },
+  span: {  
     textAlign: 'center'
   },
   unknown: {
-    margin: 0,
-  },
-  unknownChildren: {
-    margin: 0,
-    justifyContent: 'start',
     fontSize: "12px",
   },
+  center: {
+    alignItems: 'center',
+    textAlign: 'center',
+    minHeight: '150px'
+  },
+  stars: {
+    padding: '28px',
+    alignItems: 'center',
+    textAlign: 'center',
+    minHeight: '150px'
+  },
   recommends: {
-    justifyContent: 'center'
+    padding: '28px',
+    alignItems: 'center',
+    textAlign: 'center',
+    minHeight: '150px'
   },
   button: {
-    marginTop: '20px',
+    margin: '8px',
     marginBottom: '20px'
   }
 }));
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#1769aa',
-    },
-    secondary:{
-      main: '#FFB701'
-    }
-  },
-});
-
-function getSteps() {
-  return ["", "", "", ""];
-}
 
 const NumberFormatCustom = (props) => {
   const { inputRef, onChange, ...other } = props;
@@ -99,9 +94,9 @@ const FormClient = (props) => {
   const { infos } = props;
   const [companyId] = useState(window.location.href.split('/?')[1]);
   const [checked, setChecked] = useState(false);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
-  const steps = getSteps();
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set());
+  const steps = ["", "", "", ""];
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -127,25 +122,12 @@ const FormClient = (props) => {
     phone: '',
     stars: 0,
     opinion: '',
-    recommends: false,
+    recommends: '',
     companyId
-  });
-  const[error] = useState({
-    name: false,
-    phone: false,
-    stars: false,
-    opinion: false,
-    recommends: false,
   });
 
   const handleChange = (event) => {
     switch(event.target.value){
-      case 'y':
-        setValues({...values, [event.target.name]: true });
-        break;
-      case 'n':
-        setValues({...values, [event.target.name]: false });
-        break;
       case '1':
         setValues({...values, [event.target.name]: 1 });
         break;
@@ -179,10 +161,9 @@ const FormClient = (props) => {
     switch (step) {
       case 0:
         return (
-          <div>
+          <div className={classes.center}>
             <TextField
               label="Nome"
-              error={error.name}
               disabled={checked}
               value={values.name} 
               onChange={handleChange}
@@ -192,7 +173,6 @@ const FormClient = (props) => {
             />
             <TextField
               label="Telefone"
-              error={error.phone}
               disabled={checked}
               value={values.phone}
               onChange={handleChange}
@@ -200,8 +180,8 @@ const FormClient = (props) => {
               id="formatted-numberformat-input"
               InputProps={{inputComponent: NumberFormatCustom}}
             />
-            <FormControlLabel className={classes.unknown}
-            label={<Typography className={classes.unknownChildren}>Desejo não me identificar</Typography>}
+            <FormControlLabel
+            label={<Typography className={classes.unknown}>Desejo não me identificar</Typography>}
             size="small"
             control={<Checkbox color="primary" onChange={checkChange} name="checked" />}
           />
@@ -209,13 +189,14 @@ const FormClient = (props) => {
         );
       case 1:
         return (
-          <div>
-            <Box className={classes.span} component="fieldset" mb={3} borderColor="transparent">
+          <div className={classes.stars}>
+            <Box component="fieldset" mb={3} borderColor="transparent">
               <FormLabel component="legend">Toque para classificar</FormLabel>
               <Rating
                 name="stars"
                 onChange={handleChange}
                 defaultValue={0}
+                value={values.stars}
                 icon={<Star fontSize="large" />}
                 emptyIcon={<StarBorderIcon fontSize="large" />}
               />
@@ -224,10 +205,10 @@ const FormClient = (props) => {
         );
       case 2:
         return (
-          <div>
-            <FormControl component="fieldset" error={error.recommends} className={classes.span}>
+          <div className={classes.recommends}>
+            <FormControl component="fieldset">
               <FormLabel component="legend">Nos recomendaria?</FormLabel>
-              <RadioGroup onChange={handleChange} className={classes.recommends} row aria-label="position" name="recommends">
+              <RadioGroup onChange={handleChange} value={values.recommends} row aria-label="position" name="recommends">
                 <FormControlLabel
                   value="y"
                   control={<Radio color="primary" />}
@@ -248,22 +229,18 @@ const FormClient = (props) => {
         );
       case 3:
         return (
-          <div>
-            <TextField className={classes.span}
+          <div className={classes.center}>
+            <TextField
             label="Deixe sua opinião"
-            error={error.opinion}
             multiline
             rows={4}
-            rowsMax={6}
+            rowsMax={7}
             variant="outlined"
             value={values.opinion} 
             onChange={handleChange}
             name="opinion"
             id="text-basic" 
             />
-            <Button className={classes.button} type="submit" variant="contained" color="primary">
-              Enviar
-            </Button>
           </div>
         );
       default:
@@ -274,44 +251,44 @@ const FormClient = (props) => {
         );
     }
   }
-
   return (
-    <MuiThemeProvider theme={theme}>
+    <div>
+      <h3 className={classes.name}>{props.infos.name}</h3>
+      <p className={classes.name}>{props.infos.slogan}</p>
       <form className={classes.root} onSubmit={handleSubmit}>
-
         <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
+          <Step>
+            <StepLabel/>
+          </Step>
+          <Step>
+            <StepLabel/>
+          </Step>
+          <Step>
+            <StepLabel/>
+          </Step>
+          <Step>
+            <StepLabel/>
+          </Step>
         </Stepper>
-
-        <div>
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Voltar
+        <div className={classes.center}>
+          {getStepContent(activeStep)}
+          <div className={classes.buttons}>
+            <Button variant="contained" disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+              Voltar
+            </Button>
+            {activeStep === steps.length? (
+              <Button className={classes.button} variant="contained" color="secondary" type="submit">
+                Enviar
               </Button>
-              <Button variant="contained" color="primary" onClick={handleNext} className={classes.button}>
-                {activeStep === steps.length - 1 ? "Enviar" : "Proxima"}
-              </Button>
-            </div>
+            ) : (
+              <Button className={classes.button} variant="contained" color="primary" onClick={handleNext}>
+                {activeStep === steps.length -1 ? "Enviar" : "Próximo"}
+              </Button>)
+            }
           </div>
         </div>
       </form>
-    </MuiThemeProvider>
+    </div>
   );
 }
 
