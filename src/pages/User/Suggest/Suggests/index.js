@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { listSuggest, favorite, outlier } from '../../../../store/admReducer';
+import { parseISO } from 'date-fns';
+import { format, addHours, zonedTimeToUtc } from 'date-fns-tz';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { ptBR } from "date-fns/locale";
 
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -21,6 +26,7 @@ import Typography from '@material-ui/core/Typography';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -43,6 +49,14 @@ const useStyles = makeStyles((theme) =>({
     textAlign: 'center',
     margin: '20px'
   },
+  filter: {
+    minWidth: '110px',
+    marginLeft: '9px'
+  },
+  data: {
+    margin: '9px',
+    maxWidth: '140px'
+  }
 }));
 
 const Suggest = (props) => {
@@ -82,10 +96,18 @@ const Suggest = (props) => {
       return props.outlier(suggest)
     }
   }
+  const [selectedDate, setSelectedDate] = useState(Date.now);
+
+  const handleDateChange = (date) => {
+    const znDate = zonedTimeToUtc(date, 'America/Sao_Paulo');
+    //setSelectedDate(date);
+    console.log(znDate);
+    console.log(date);
+  };
 
   return (
     <div>
-      <Typography variant="h5" component="h2">Suggestões</Typography>
+      <Typography variant="h5" component="h2">Sugestões</Typography>
        <div>
         <FormControl>
           <FormHelperText>Número por página:</FormHelperText>
@@ -98,6 +120,51 @@ const Suggest = (props) => {
             <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
+        <FormControl className={classes.filter}>
+          <FormHelperText>Filtrar por:</FormHelperText>
+          <Select
+            value={nOfItems}
+            onChange={handleNofItems}
+            inputProps={{ 'aria-label': 'Without label' }}>
+            <MenuItem value={10}>Todas</MenuItem>
+            <MenuItem value={25}>Favoritas</MenuItem>
+            <MenuItem value={50}>Arquivadas</MenuItem>
+          </Select>
+        </FormControl>
+        <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            className={classes.data}
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="De"
+            size="small"
+            invalidDateMessage="Data inválida."
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+          <KeyboardDatePicker
+            className={classes.data}
+            disableToolbar
+            variant="inline"
+            format="dd/MM/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Até"
+            size="small"
+            invalidDateMessage="Data inválida."
+            value={selectedDate}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </MuiPickersUtilsProvider>
       </div>
       <Paper>
         <TableContainer>
@@ -119,11 +186,13 @@ const Suggest = (props) => {
                 { suggests.map( suggest => {
                   return (
                     <TableRow hover key={suggest._id} role="checkbox" tabIndex={-1}>
-                      <TableCell align='center'>{suggest.createdAt}</TableCell>
+                      <TableCell align='center'>{format(parseISO(suggest.createdAt), 'dd/MM/yyyy HH:mm', {timeZone: 'America/Sao_Paulo'} )}</TableCell>
                       <TableCell align='center'>{suggest.name}</TableCell>
                       <TableCell align='center'>{suggest.phone}</TableCell>
-                      <TableCell align='center'>{suggest.stars}</TableCell>
-                      <TableCell align='center'>{suggest.recommends? (<CheckIcon/>) :(<CloseIcon/>)}</TableCell>
+                      <TableCell align='center'>
+                        <Rating name="read-only" size="small" value={suggest.stars? suggest.stars: 0} precision={0.5} readOnly/>
+                      </TableCell>
+                      <TableCell align='center'>{suggest.recommends? (<CheckIcon/>) : (<CloseIcon/>)}</TableCell>
                       <TableCell align='center'>{suggest.opinion}</TableCell>
                       <TableCell align='center'>
                         <IconButton onClick={() => favoriteUpdate(suggest)}>

@@ -197,7 +197,10 @@ const MainSuggest = (props) => {
                 </div>
                 <CardContent hidden={!open}>
                   <Typography variant="h3" color="textSecondary" component="p">
-                    {companyById.stars}
+                    {parseFloat(companyById.stars).toFixed(1)}
+                  </Typography>
+                  <Typography color="textSecondary" component="p">
+                    {companyById.nStars} classificações
                   </Typography>
                   <Rating name="read-only" value={stars? stars: 0} precision={0.5} readOnly/>
                 </CardContent>
