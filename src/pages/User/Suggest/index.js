@@ -26,14 +26,16 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MoodIcon from '@material-ui/icons/Mood';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Rating from '@material-ui/lab/Rating';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import BusinessIcon from '@material-ui/icons/Business';
+import AlarmOnIcon from '@material-ui/icons/AlarmOn';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import RoutesUser from './routesUser';
 
@@ -145,7 +147,7 @@ const MainSuggest = (props) => {
     }
   },[]);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true );
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -197,7 +199,7 @@ const MainSuggest = (props) => {
                 </div>
                 <CardContent hidden={!open}>
                   <Typography variant="h3" color="textSecondary" component="p">
-                    {parseFloat(companyById.stars).toFixed(1)}
+                    {companyById.stars? parseFloat(companyById.stars).toFixed(1): "..."}
                   </Typography>
                   <Typography color="textSecondary" component="p">
                     {companyById.nStars} classificações
@@ -207,13 +209,13 @@ const MainSuggest = (props) => {
               </Card>
               <ListItem button component={Link} to={`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`}>
                 <ListItemIcon>
-                  <AssessmentIcon />
+                  <EqualizerIcon />
                 </ListItemIcon>
                 <ListItemText primary="Sugestões" />
               </ListItem>
               <ListItem button component={Link} to={`/suggest/promo/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
-                  <EmojiEmotionsIcon />
+                  <MoodIcon />
                 </ListItemIcon>
                 <ListItemText primary="Promoções" />
               </ListItem>
@@ -223,9 +225,21 @@ const MainSuggest = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Cardapio" />
               </ListItem>
+              <ListItem button component={Link} to={`/suggest/request/?${idUser}/?${idCompany}`}>
+                <ListItemIcon>
+                  <ShoppingCartIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Pedidos" />
+              </ListItem>
+              <ListItem button component={Link} to={`/suggest/reservation/?${idUser}/?${idCompany}`}>
+                <ListItemIcon>
+                  <AlarmOnIcon />
+                </ListItemIcon>
+                <ListItemText primary="Reservas" />
+              </ListItem>
               <ListItem button component={Link} to={`/suggest/finances/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
-                  <MonetizationOnIcon />
+                  <AttachMoneyIcon />
                 </ListItemIcon>
                 <ListItemText primary="Financeiro" />
               </ListItem>

@@ -34,8 +34,16 @@ const useStyles = makeStyles((theme) => ({
   name: {
     textAlign: 'center',
   },
+
   span: {  
     textAlign: 'center'
+  },
+  namePhone: {
+    width: '250px'
+  },
+  ident: {
+    marginTop: '10px',
+    maxWidth: "200px",
   },
   unknown: {
     fontSize: "12px",
@@ -59,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: '8px',
-    marginBottom: '20px'
+    marginTop: '25px'
   }
 }));
 
@@ -161,8 +169,8 @@ const FormClient = (props) => {
     switch (step) {
       case 0:
         return (
-          <div className={classes.center}>
-            <TextField
+          <div >
+            <TextField className={classes.namePhone}
               label="Nome"
               disabled={checked}
               value={values.name} 
@@ -171,7 +179,7 @@ const FormClient = (props) => {
               id="standard-basic"
               inputProps={{ maxLength: 70 }}
             />
-            <TextField
+            <TextField className={classes.namePhone}
               label="Telefone"
               disabled={checked}
               value={values.phone}
@@ -180,11 +188,11 @@ const FormClient = (props) => {
               id="formatted-numberformat-input"
               InputProps={{inputComponent: NumberFormatCustom}}
             />
-            <FormControlLabel
-            label={<Typography className={classes.unknown}>Desejo não me identificar</Typography>}
-            size="small"
-            control={<Checkbox color="primary" onChange={checkChange} name="checked" />}
-          />
+            <FormControlLabel className={classes.ident}
+              label={<Typography className={classes.unknown}>Desejo não me identificar{infos.promo? " e não participar da promoção": ""}</Typography>}
+              size="small"
+              control={<Checkbox color="primary" onChange={checkChange} name="checked" />}
+            />
           </div>
         );
       case 1:

@@ -10,6 +10,8 @@ const ACTIONS = {
   LIST_COMPANIES: 'LISTCOMPANIES',
   BY_ID_COMPANY: 'BYIDCOMPANY',
   UPDATE_COMPANY: 'UPDATECOMPANY',
+  ATV_MENU: 'ATVMENU',
+  ATV_PROMO: 'ATVPROMO',
   CLEAN_COMPANY: 'CLEANCOMPANY',
   ADD_COMPANY: 'ADDCOMPANY',
   //USER
@@ -28,6 +30,9 @@ const INITIAL_STATE = {
   infosCompanies: [],
   companyById: [],
   loadingCompany: false,
+  companyAtv: [],
+  //PROMO
+
   //USER
   userById: [],
   loadingUser: false,
@@ -62,8 +67,10 @@ export const admReducer = (state = INITIAL_STATE, action) => {
       return {...state, companyById: action.companyById, loadingCompany: action.loadingCompany}
     case ACTIONS.UPDATE_COMPANY:
       return state;
-    case ACTIONS.CLEAN_COMPANY:
-      return {...state, companyById: []}
+    case ACTIONS.ATV_MENU:
+      return {...state, companyById: action.companyById}
+    case ACTIONS.ATV_PROMO:
+      return {...state, companyById: action.companyById}
     //*********************COMPANIES*********************
     case ACTIONS.BY_ID_USER:
       return {...state, userById: action.userById, loadingUser: action.loadingUser}
@@ -174,9 +181,21 @@ export const updateCompany = (company, id, idUser) => {
         type: ACTIONS.UPDATE_COMPANY,
         //company: Response.data
       })
-    }, history.push(`/suggest/?${idUser}/?${id}`))
+    }, history.push(`/suggest/?${idUser}/?${id}?page=1&limit=25`))
     .catch(error => {
       console.log(error)
+    })
+  }
+}
+//ATIVAR MENU
+export const atvMenu = (company) => {
+  return dispatch => {
+    api.put(`/adm/company/${company._id}`, company)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.ATV_MENU,
+        companyById: company
+      })
     })
   }
 }
@@ -215,6 +234,19 @@ export const updateUser = (user, id) => {
     }, history.push(`/user/?${id}?page=1&limit=25`))
     .catch(error => {
       console.log(error)
+    })
+  }
+}
+//*******************************************PROMO*********************************************
+//ATIVAR PROMO
+export const atvPromo = (company) => {
+  return dispatch => {
+    api.put(`/adm/company/${company._id}`, company)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.ATV_PROMO,
+        companyById: company
+      })
     })
   }
 }

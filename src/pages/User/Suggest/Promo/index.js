@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { atvPromo, getCompanyById } from '../../../../store/admReducer';
 
-import Switch from "@material-ui/core/Switch";
 import { makeStyles } from '@material-ui/core/styles';
+import Switch from "@material-ui/core/Switch";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
@@ -14,15 +19,24 @@ const useStyles = makeStyles((theme) =>({
   },
 }));
 
-const Promo = () => {
+const Promo = (props) => {
   const classes = useStyles();
-  const [state, setState] = useState({
-    checkedA: false,
-  });
+  const { companyById } = props;
+  const [ promo, setPromo ] = useState({
+    check: companyById.promo
+  })
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  const atvPromo = (companyById) => {
+    if(companyById.promo){
+      companyById.promo = false;
+      setPromo({check: companyById.promo});
+      return props.atvPromo(companyById);
+    }else{
+      companyById.promo = true;
+      setPromo({check: companyById.promo});
+      return props.atvPromo(companyById);
+    }
+  }
 
   return(
     <div>
@@ -33,8 +47,8 @@ const Promo = () => {
           <FormControlLabel
             control={
               <Switch
-                checked={state.checkedB}
-                onChange={handleChange}
+                checked={promo.check}
+                onClick={()=>atvPromo(companyById)}
                 name="checkedA"
                 color="primary"
               />
@@ -43,7 +57,7 @@ const Promo = () => {
           />
           </FormGroup>
           <Button className={classes.button} variant="contained" color="primary">
-            Criar Promoção
+            Criar
           </Button>
         </Grid>
       </Grid>
@@ -51,4 +65,15 @@ const Promo = () => {
   );
 }
 
-export default Promo;
+Promo.prototypes = {
+  companyById: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  companyById: state.adm.companyById,
+});
+
+const mapsDispatchToProps = dispatch => 
+  bindActionCreators({atvPromo, getCompanyById}, dispatch);
+
+export default connect(mapStateToProps, mapsDispatchToProps)(Promo);

@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { atvMenu, getCompanyById } from '../../../../store/admReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -15,15 +19,24 @@ const useStyles = makeStyles((theme) =>({
   },
 }));
 
-const Menu = () => {
+const Menu = (props) => {
   const classes = useStyles();
-  const [state, setState] = useState({
-    checkedA: false,
-  });
+  const { companyById } = props;
+  const [ menu, setMenu ] = useState({
+    check: companyById.menu
+  })
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  const atvMenu = (companyById) => {
+    if(companyById.menu){
+      companyById.menu = false;
+      setMenu({check: companyById.menu});
+      return props.atvMenu(companyById);
+    }else{
+      companyById.menu = true;
+      setMenu({check: companyById.menu});
+      return props.atvMenu(companyById);
+    }
+  }
 
   return(
     <div>
@@ -34,8 +47,8 @@ const Menu = () => {
           <FormControlLabel
             control={
               <Switch
-                checked={state.checkedA}
-                onChange={handleChange}
+                checked={menu.check}
+                onClick={()=>atvMenu(companyById)}
                 name="checkedA"
                 color="primary"
               />
@@ -44,7 +57,7 @@ const Menu = () => {
           />
           </FormGroup>
           <Button className={classes.button} variant="contained" color="primary">
-            Criar Cardápio / Catálogo
+            Criar
           </Button>
         </Grid>
       </Grid>
@@ -52,4 +65,15 @@ const Menu = () => {
   );
 }
 
-export default Menu;
+Menu.prototypes = {
+  companyById: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  companyById: state.adm.companyById,
+});
+
+const mapsDispatchToProps = dispatch => 
+  bindActionCreators({atvMenu, getCompanyById}, dispatch);
+
+export default connect(mapStateToProps, mapsDispatchToProps)(Menu);

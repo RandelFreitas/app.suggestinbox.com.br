@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  title: {
+    flexGrow: 1,
+  },
   error: {
     color: 'red',
     fontSize: 12
@@ -69,11 +72,12 @@ const Login = (props) => {
 
   return (
     <div>
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="static">
         <Toolbar>
-        <Typography variant="h6" noWrap>
-          SuggestInBox
-        </Typography>
+          <Typography variant="h6" className={classes.title}>
+            SuggestInBox
+          </Typography>
+          <Button component={Link} to={`/`} color="inherit">Site</Button>
         </Toolbar>
       </AppBar>
       <Container className={classes.container} component="main" maxWidth="xs">
@@ -130,7 +134,7 @@ const Login = (props) => {
                 </Link>
               </Grid>
               <Grid className={classes.link} item xs>
-                <Link to="/fogot-password" variant="body2">
+                <Link to="#" variant="body2">
                   Criar conta
                 </Link>
               </Grid>

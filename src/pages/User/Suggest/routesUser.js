@@ -5,6 +5,8 @@ import Suggest from './Suggests';
 import Promo from './Promo';
 import Menu from './Menu';
 import Finances from './Finances';
+import Reservation from './Reservation';
+import Request from './Request';
 import SetupCompany from '../SetupCompany';
 
 const RoutesUser = () => {
@@ -14,6 +16,8 @@ const RoutesUser = () => {
       <Route exact path='/suggest/promo' component={Promo}/>
       <Route exact path='/suggest/cardapio' component={Menu}/>
       <Route exact path='/suggest/finances' component={Finances}/>
+      <Route exact path='/suggest/reservation' component={Reservation}/>
+      <Route exact path='/suggest/request' component={Request}/>
       <Route exact path='/suggest/setup-company' component={SetupCompany}/>
     </Switch>
   );

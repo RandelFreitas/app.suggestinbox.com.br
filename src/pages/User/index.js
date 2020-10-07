@@ -17,6 +17,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +65,11 @@ const User = (props) => {
               SuggestInBox
             </Typography>
             <div className={classes.profile}>{userById.name}</div>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={1} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <IconButton component={Link} to={`/user/setup/?${userById._id}`} color="inherit">
               <SettingsIcon/>
             </IconButton>

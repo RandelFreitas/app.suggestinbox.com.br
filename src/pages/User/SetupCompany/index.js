@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import NumberFormat from 'react-number-format';
 import * as Yup from 'yup';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -39,6 +40,84 @@ const useStyles = makeStyles((theme) => ({
     padding: 8
   }
 }));
+
+const ZipFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='#####-###'
+    />
+  );
+}
+
+ZipFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+const CnpjFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='##.###.###/####-##'
+    />
+  );
+}
+
+CnpjFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+const PhoneFormatCustom = (props) => {
+  const { inputRef, onChange, ...other } = props;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      isNumericString
+      format='(##) #########'
+    />
+  );
+}
+
+PhoneFormatCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 const SetupCompany = (props) => {
   const classes = useStyles();
@@ -134,6 +213,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="name"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('name')}
                     />
@@ -150,6 +230,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="slogan"
+                      inputProps={{ maxLength: 50 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('slogan')}
                     />
@@ -166,6 +247,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="history"
+                      inputProps={{ maxLength: 250 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('history')}
                     />
@@ -182,6 +264,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="localization"
+                      inputProps={{ maxLength: 250 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('localization')}
                     />
@@ -198,6 +281,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="email"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('email')}
                     />
@@ -214,6 +298,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="phone"
+                      InputProps={{inputComponent: PhoneFormatCustom}}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('phone')}
                     />
@@ -230,6 +315,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="cnpj"
+                      InputProps={{inputComponent: CnpjFormatCustom}}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('cnpj')}
                     />
@@ -249,6 +335,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.zip"
+                      InputProps={{inputComponent: ZipFormatCustom}}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.zip')}
                     />
@@ -265,6 +352,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.street"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.street')}
                     />
@@ -281,6 +369,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.district"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.district')}
                     />
@@ -297,6 +386,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.city"
+                      inputProps={{ maxLength: 70 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.city')}
                     />
@@ -313,6 +403,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.state"
+                      inputProps={{ maxLength: 30 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.state')}
                     />
@@ -329,6 +420,7 @@ const SetupCompany = (props) => {
                       margin="dense"
                       fullWidth
                       name="address.number"
+                      inputProps={{ maxLength: 10 }}
                       InputLabelProps={{ shrink: true }}
                       {...formik.getFieldProps('address.number')}
                     />

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { listSuggest, favorite, outlier } from '../../../../store/admReducer';
 import { parseISO } from 'date-fns';
-import { format, addHours, zonedTimeToUtc } from 'date-fns-tz';
+import { format } from 'date-fns-tz';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { ptBR } from "date-fns/locale";
 
 import Paper from '@material-ui/core/Paper';
@@ -29,6 +29,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
@@ -56,28 +57,47 @@ const useStyles = makeStyles((theme) =>({
   data: {
     margin: '9px',
     maxWidth: '140px'
-  }
+  },
+  button: {
+    marginTop: '20px',
+  },
 }));
 
 const Suggest = (props) => {
   const classes = useStyles();
+  const [ idCompany ] = useState(window.location.href.split('/?')[2]);
   const {suggests, infosSuggests} = props;
   const nOfPages = infosSuggests.pages;
   const [page, setPage] = useState(1);
+  const [typeSuggests, setTypeSuggests] = useState('All');
   const [nOfItems, setNoOfItems] = useState(25);
-  const [ idCompany ] = useState(window.location.href.split('/?')[2]);
-
+  
   useEffect(() => {
     props.listSuggest(page, nOfItems, idCompany);
   },[page, nOfItems]);
 
-  const handleChange=(event, value)=>{
+  //FILTERS
+  const [selectedDateFrom, setSelectedDateFrom] = useState(Date.now);
+  const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
+
+  const handleChangePage=(event, value)=>{
     setPage(value);
   }
   const handleNofItems=(event)=>{
     setNoOfItems(event.target.value);
     setPage(1);
   }
+  const handleChangSuggest=(event, value)=>{
+    setTypeSuggests(value);
+  }
+  const handleDateChangeFrom = (date) => {
+    setSelectedDateFrom(date);
+  };
+  const handleDateChangeTo = (date) => {
+    setSelectedDateTo(date);
+  };
+
+  //FAV E ARQ
   const favoriteUpdate = (suggest) => {
     if(suggest.favorite){
       suggest.favorite = false;
@@ -96,14 +116,6 @@ const Suggest = (props) => {
       return props.outlier(suggest)
     }
   }
-  const [selectedDate, setSelectedDate] = useState(Date.now);
-
-  const handleDateChange = (date) => {
-    const znDate = zonedTimeToUtc(date, 'America/Sao_Paulo');
-    //setSelectedDate(date);
-    console.log(znDate);
-    console.log(date);
-  };
 
   return (
     <div>
@@ -115,20 +127,20 @@ const Suggest = (props) => {
             value={nOfItems}
             onChange={handleNofItems}
             inputProps={{ 'aria-label': 'Without label' }}>
-            <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
             <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={75}>75</MenuItem>
           </Select>
         </FormControl>
         <FormControl className={classes.filter}>
           <FormHelperText>Filtrar por:</FormHelperText>
           <Select
-            value={nOfItems}
-            onChange={handleNofItems}
+            value={typeSuggests}
+            onChange={handleChangSuggest}
             inputProps={{ 'aria-label': 'Without label' }}>
-            <MenuItem value={10}>Todas</MenuItem>
-            <MenuItem value={25}>Favoritas</MenuItem>
-            <MenuItem value={50}>Arquivadas</MenuItem>
+            <MenuItem value={'All'}>Todas</MenuItem>
+            <MenuItem value={'Fav'}>Favoritas</MenuItem>
+            <MenuItem value={'Arq'}>Arquivadas</MenuItem>
           </Select>
         </FormControl>
         <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
@@ -142,8 +154,8 @@ const Suggest = (props) => {
             label="De"
             size="small"
             invalidDateMessage="Data inválida."
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={selectedDateFrom}
+            onChange={handleDateChangeFrom}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
@@ -154,17 +166,20 @@ const Suggest = (props) => {
             variant="inline"
             format="dd/MM/yyyy"
             margin="normal"
-            id="date-picker-inline"
+            id="date-picker-dialog"
             label="Até"
             size="small"
             invalidDateMessage="Data inválida."
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={selectedDateTo}
+            onChange={handleDateChangeTo}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
           />
         </MuiPickersUtilsProvider>
+        <Button className={classes.button} variant="contained" color="primary">
+          Filtrar
+        </Button>
       </div>
       <Paper>
         <TableContainer>
@@ -216,7 +231,7 @@ const Suggest = (props) => {
             <Pagination
               count={nOfPages}
               page={page}
-              onChange={handleChange}
+              onChange={handleChangePage}
             />
           </Box>
         </Grid>

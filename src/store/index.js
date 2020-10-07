@@ -5,10 +5,12 @@ import thunk from 'redux-thunk';
 import { clientReducer } from './clientReducer';
 import { authReducer } from './authReducer';
 import { admReducer } from './admReducer';
+import { menuReducer } from './menuReducer';
 import { messageReducer } from './messageReducer';
 
 const mainReducer = combineReducers({
   adm: admReducer,
+  menu: menuReducer,
   auth: authReducer,
   message: messageReducer,
   client: clientReducer,
