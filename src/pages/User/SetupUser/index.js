@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, TextField, Card, Typography, Grid} from '@material-ui/core';
-import { getUserById, updateUser } from '../../../store/admReducer';
+import { getUserById, updateUser } from '../../../store/userReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -423,7 +423,7 @@ SetupUser.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  userById: state.adm.userById,
+  userById: state.user.userById,
 });
 
 const mapDispatchToProps = dispatch =>

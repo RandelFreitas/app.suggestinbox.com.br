@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logout } from '../../../store/authReducer';
-import { getCompanyById, getUserById } from '../../../store/admReducer';
+import { getCompanyById } from '../../../store/companyReducer';
+import { getUserById } from '../../../store/userReducer';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
@@ -273,8 +274,8 @@ MainSuggest.prototypes = {
 
 const mapStateToProps = state => ({
   infos: state.auth.infos,
-  companyById: state.adm.companyById,
-  userById: state.adm.userById,
+  companyById: state.company.companyById,
+  userById: state.user.userById,
 });
 
 const mapDispatchToProps = dispatch =>

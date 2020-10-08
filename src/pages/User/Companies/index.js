@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listCompanies } from '../../../store/admReducer' 
+import { listCompanies } from '../../../store/companyReducer' 
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -114,8 +114,8 @@ Companies.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  companies: state.adm.companies,
-  infosCompanies: state.adm.infosCompanies,
+  companies: state.company.companies,
+  infosCompanies: state.company.infosCompanies,
 });
 
 const mapDispatchToProps = dispatch =>

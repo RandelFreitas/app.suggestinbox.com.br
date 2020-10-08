@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listSuggest, favorite, outlier } from '../../../../store/admReducer';
+import { listSuggest, favorite, outlier } from '../../../../store/suggestReducer';
 import { parseISO } from 'date-fns';
 import { format } from 'date-fns-tz';
 import DateFnsUtils from '@date-io/date-fns';
@@ -29,7 +29,6 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
@@ -57,9 +56,6 @@ const useStyles = makeStyles((theme) =>({
   data: {
     margin: '9px',
     maxWidth: '140px'
-  },
-  button: {
-    marginTop: '20px',
   },
 }));
 
@@ -177,9 +173,6 @@ const Suggest = (props) => {
             }}
           />
         </MuiPickersUtilsProvider>
-        <Button className={classes.button} variant="contained" color="primary">
-          Filtrar
-        </Button>
       </div>
       <Paper>
         <TableContainer>
@@ -245,8 +238,8 @@ Suggest.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  suggests: state.adm.suggests,
-  infosSuggests: state.adm.infosSuggests,
+  suggests: state.suggest.suggests,
+  infosSuggests: state.suggest.infosSuggests,
 });
 
 const mapsDispatchToProps = dispatch => 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { atvMenu, getCompanyById } from '../../../../store/admReducer';
+import { atvMenu, getCompanyById } from '../../../../store/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -70,7 +70,7 @@ Menu.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  companyById: state.adm.companyById,
+  companyById: state.company.companyById,
 });
 
 const mapsDispatchToProps = dispatch => 

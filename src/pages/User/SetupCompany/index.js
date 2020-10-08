@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, TextField, Card, Typography, Grid} from '@material-ui/core';
-import { addCompany, getCompanyById, updateCompany, cleanCompany } from '../../../store/admReducer';
+import { addCompany, getCompanyById, updateCompany, cleanCompany } from '../../../store/companyReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -455,7 +455,7 @@ SetupCompany.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  companyById: state.adm.companyById,
+  companyById: state.company.companyById,
 });
 
 const mapDispatchToProps = dispatch =>

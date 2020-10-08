@@ -4,16 +4,22 @@ import thunk from 'redux-thunk';
 
 import { clientReducer } from './clientReducer';
 import { authReducer } from './authReducer';
-import { admReducer } from './admReducer';
+import { companyReducer } from './companyReducer';
+import { suggestReducer } from './suggestReducer';
+import { promoReducer } from './promoReducer';
 import { menuReducer } from './menuReducer';
 import { messageReducer } from './messageReducer';
+import { userReducer } from './userReducer';
 
 const mainReducer = combineReducers({
-  adm: admReducer,
-  menu: menuReducer,
   auth: authReducer,
-  message: messageReducer,
   client: clientReducer,
+  user: userReducer,
+  company: companyReducer,
+  suggest: suggestReducer,
+  menu: menuReducer,
+  promo: promoReducer,
+  message: messageReducer,
 });
 
 export const store = applyMiddleware(thunk)(createStore)(mainReducer);

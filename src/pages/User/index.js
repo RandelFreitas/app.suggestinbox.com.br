@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logout } from '../../store/authReducer';
-import { getUserById } from '../../store/admReducer';
+import { getUserById } from '../../store/userReducer';
 import PropTypes from 'prop-types';
 import RoutesUser from './routesUser';
 
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
   const classes = useStyles();
-  const [ idUser ] = useState(window.location.href.split('/?')[1]);
+  const [ idUser ] = useState(window.location.href.split('/?')[1].split('?')[0]);
   const { userById } = props;
   
   useEffect(() => {
@@ -96,7 +96,7 @@ User.prototypes = {
 };
 
 const mapStateToProps = state => ({
-  userById: state.adm.userById,
+  userById: state.user.userById,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -6,19 +6,18 @@ const ACTIONS = {
 }
 const INITIAL_STATE = {
   menu: [],
+  menuById: [],
 }
 export const menuReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.LIST_MENU:
       return {...state, menu: action.menu, infosMenu: action.infosMenu}
-    case ACTIONS.ATV_MENU:
-      const menuUp = [...state.menu];
-      if(menuUp.atv === true){
-        menuUp.atv = false;
-      }else{
-        menuUp.atv = true;
-      }
-      return {...state, menu: menuUp}
+    case ACTIONS.ADD_MENU:
+      return {...state, menu: action.menu}
+    case ACTIONS.BY_ID_MENU:
+      return {...state, menuById: action.menuById}
+    case ACTIONS.UPDATE_MENU:
+      return state;
     default:
       return state;
   }
@@ -39,14 +38,48 @@ export const listMenu = (idCompany) => {
     });
   }
 }
-//ATIVAR MENU
-export const atvMenu = (company, id, idUser) => {
+//ADICIONAR MENU
+export const addMenu = (menu, id) => {
   return dispatch => {
-    api.put(`/adm/company/${id}`, company)
+    api.post('/adm/menu', menu)
     .then(Response => {
       dispatch({
-        type: ACTIONS.ATV_MENU,
+        type: ACTIONS.ADD_MENU,
+        menu: Response.data,
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}
+//GET BY ID MENU
+export const getMenuById = (id) => {
+  return dispatch => {
+    api.get(`/adm/menu/${id}`)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.BY_ID_MENU,
+        menuById: Response.data,
       })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+}
+//UPDATE COMPANY
+export const updateMenu = (menu, id, idUser) => {
+  return dispatch => {
+    api.put(`/adm/menu/${id}`, menu)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.UPDATE_MENU,
+        //company: Response.data
+      })
+    })
+    .catch(error => {
+      console.log(error)
     })
   }
 }
