@@ -39,9 +39,9 @@ export const suggestReducer = (state = INITIAL_STATE, action) => {
 }
 //*******************************************SUGGESTS*********************************************
 //LISTAR SUGGESTS
-export const listSuggest = (page, nOfItems, idUrl) => {
+export const listSuggest = (idUrl, page, limit, type, fromDate, toDate) => {
   return dispatch => {
-    api.get(`/adm/all-suggest/${idUrl}?page=${page}&limit=${nOfItems}`)
+    api.get(`/adm/all-suggest/${idUrl}?page=${page}&limit=${limit}&type=${type}&fromDate=${fromDate}&toDate=${toDate}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({

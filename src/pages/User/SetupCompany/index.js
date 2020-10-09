@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import NumberFormat from 'react-number-format';
 import * as Yup from 'yup';
+import QRCode from 'qrcode.react';
 
+import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, TextField, Card, Typography, Grid} from '@material-ui/core';
 import { addCompany, getCompanyById, updateCompany, cleanCompany } from '../../../store/companyReducer';
@@ -16,17 +18,45 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginBottom: 8
   },
+  qrCode:{
+    textAlign: 'center',
+    maxWidth: '200px',
+    margin: '15px'
+  },
   button: {
     float: 'right',
     margin: 8,
+  },
+  buttonQr: {
+    margin: '5px',
+    padding: '5px',
+    fontSize: '12px',
+    width: '90px'
+  },
+  buttonPhoto:{
+    margin: '5px',
+    padding: '5px',
+    fontSize: '12px',
+    width: '110px'
   },
   media: {
     margin: 'auto',
     width: 140,
     height: 140,
   },
+  cardMain: {
+    marginBottom: '10px'
+  },
   card: {
     marginBottom: 10,
+  },
+  sectionImg: {
+    justifyContent: 'center'
+  },
+  photo: {
+    marginBottom: '5px',
+    width: 128,
+    height: 128,
   },
   center: {
     margin: 'auto',
@@ -125,6 +155,8 @@ const SetupCompany = (props) => {
 
   const [idUser] = useState(window.location.href.split('/?')[1]);
   const [idCompany] = useState(window.location.href.split('/?')[2]);
+
+  const url = `https://suggestinbox.com.br/client/?${idCompany}?table=0`;
   const defaultFormShape = {
     name: '',
     cnpj: '',
@@ -155,6 +187,39 @@ const SetupCompany = (props) => {
 
   return (
     <div>
+      <Card className={classes.cardMain}>
+        <Grid container className={classes.sectionImg}>
+          <Grid className={classes.qrCode} item>
+            <CardMedia
+              className={classes.photo}
+              image="/assets/logoBar.png"
+              title="Contemplative Reptile"
+            />
+            <input
+              accept="image/*"
+              className={classes.input}
+              style={{ display: 'none' }}
+              id="raised-button-file"
+              multiple
+              type="file"
+            />
+            <label htmlFor="raised-button-file">
+              <Button className={classes.buttonPhoto} variant="outlined" component="span" color="primary">
+                Alterar Foto
+              </Button>
+            </label>
+          </Grid>
+          <Grid className={classes.qrCode} item>
+            <QRCode value={`${url}`}/>
+            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="contained" color="primary">
+              Ver Perfil
+            </Button>
+            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="outlined" color="primary">
+              Imprimir
+            </Button>
+          </Grid>
+        </Grid>
+      </Card>
       <Formik 
         initialValues= {companyById._id? companyById : defaultFormShape}
         enableReinitialize

@@ -61,36 +61,40 @@ const useStyles = makeStyles((theme) =>({
 
 const Suggest = (props) => {
   const classes = useStyles();
-  const [ idCompany ] = useState(window.location.href.split('/?')[2]);
+  const [ idCompany ] = useState(window.location.href.split('/?')[2].split('?')[0]);
   const {suggests, infosSuggests} = props;
-  const nOfPages = infosSuggests.pages;
-  const [page, setPage] = useState(1);
+  const pages = infosSuggests.pages;
+  
+  const [ page, setPage ] = useState(1);
+  const [ limit, setLimit ] = useState(25);
   const [typeSuggests, setTypeSuggests] = useState('All');
-  const [nOfItems, setNoOfItems] = useState(25);
+  const [selectedDateFrom, setSelectedDateFrom] = useState(new Date('2020-01-01T00:00:00'));
+  const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
   
   useEffect(() => {
-    props.listSuggest(page, nOfItems, idCompany);
-  },[page, nOfItems]);
-
-  //FILTERS
-  const [selectedDateFrom, setSelectedDateFrom] = useState(Date.now);
-  const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
+    props.listSuggest(idCompany, page, limit, typeSuggests, selectedDateFrom, selectedDateTo);
+  },[]);
 
   const handleChangePage=(event, value)=>{
     setPage(value);
+    props.listSuggest(idCompany, value, limit, typeSuggests, selectedDateFrom, selectedDateTo);
   }
-  const handleNofItems=(event)=>{
-    setNoOfItems(event.target.value);
+  const handleLimit=(event)=>{
+    setLimit(event.target.value);
+    props.listSuggest(idCompany, page, event.target.value, typeSuggests, selectedDateFrom, selectedDateTo);
     setPage(1);
   }
-  const handleChangSuggest=(event, value)=>{
-    setTypeSuggests(value);
+  const handleChangSuggest=(event)=>{
+    setTypeSuggests(event.target.value);
+    props.listSuggest(idCompany, page, limit, event.target.value, selectedDateFrom, selectedDateTo);
   }
   const handleDateChangeFrom = (date) => {
     setSelectedDateFrom(date);
+    console.log(date);
   };
   const handleDateChangeTo = (date) => {
     setSelectedDateTo(date);
+    props.listSuggest(idCompany, page, limit, typeSuggests, selectedDateFrom, date);
   };
 
   //FAV E ARQ
@@ -120,8 +124,8 @@ const Suggest = (props) => {
         <FormControl>
           <FormHelperText>Número por página:</FormHelperText>
           <Select
-            value={nOfItems}
-            onChange={handleNofItems}
+            value={limit}
+            onChange={handleLimit}
             inputProps={{ 'aria-label': 'Without label' }}>
             <MenuItem value={25}>25</MenuItem>
             <MenuItem value={50}>50</MenuItem>
@@ -222,7 +226,7 @@ const Suggest = (props) => {
         <Grid className={classes.center} container item xs={12} spacing={3}>
           <Box component="span">
             <Pagination
-              count={nOfPages}
+              count={pages}
               page={page}
               onChange={handleChangePage}
             />

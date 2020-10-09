@@ -7,12 +7,13 @@ const ACTIONS = {
 }
 const INITIAL_STATE = {
   infos:[],
+  idTable: [],
   suggest:[]
 }
 export const clientReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.INFOS:
-      return {...state, infos: action.infos}
+      return {...state, infos: action.infos, idTable: action.idTable}
     case ACTIONS.ADD:
       return {...state, suggest: action.suggest}
     default:
@@ -20,13 +21,14 @@ export const clientReducer = (state = INITIAL_STATE, action) => {
   }
 }
 //OBTER INFOS DA COMPANIA
-export const getInfo = (id) => {
+export const getInfo = (idCompany, idTable) => {
   return dispatch => {
-    api.get(`/client/company/${id}`)
+    api.get(`/client/company/${idCompany}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.INFOS,
         infos: Response.data,
+        idTable: idTable
       });
     })
     .catch(error => {

@@ -62,17 +62,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Client = (props) => {
   const { infos } = props;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  const [ idCompany ] = useState(window.location.href.split('/?')[1]);
+  const [ idTable ] = useState(window.location.href.split('table=')[1]);
+
   const [state, setState] = React.useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    if(idUrl){
-      props.getInfo(idUrl);
-    }else{
-      history.push('/');
-    }
-  },[idUrl]);
+    props.getInfo(idCompany, idTable);
+  },[idCompany]);
 
   const toggleDrawer = (open) => (event) => {
     setState(open);
@@ -81,12 +79,12 @@ const Client = (props) => {
   const list = (
     <div className={classes.list} onClick={toggleDrawer(false)} role="presentation" onKeyDown={toggleDrawer(false)}>
       <List>
-        <ListItem button component={Link} to={`/client/?${infos._id}`}>
+        <ListItem button component={Link} to={`/client/?${infos._id}?table=${idTable? idTable: 0}`}>
           <ListItemIcon><HomeIcon/></ListItemIcon>
           <ListItemText primary='Início'/>
         </ListItem>
         <Divider/>
-        <ListItem button component={Link} to={`/client/sobrenos/?${infos._id}`}>
+        <ListItem button component={Link} to={`/client/sobrenos/?${infos._id}?table=${idTable? idTable: 0}`}>
           <ListItemIcon><InfoIcon/></ListItemIcon>
           <ListItemText primary='Sobre nós'/>
         </ListItem>
@@ -111,7 +109,7 @@ const Client = (props) => {
             {list}
           </Drawer>
           <Typography variant="button" className={classes.links}>
-            <Button color="inherit" component={Link} to={`/client/?${infos._id}`}>SuggestInBox</Button>
+            <Button color="inherit" component={Link} to={`/client/?${infos._id}?table=${idTable? idTable: 0}`}>SuggestInBox</Button>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -123,11 +121,13 @@ const Client = (props) => {
 }
 
 Client.prototypes = {
-  infos: PropTypes.array.isRequired
+  infos: PropTypes.array.isRequired,
+  idTable: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  infos: state.client.infos
+  infos: state.client.infos,
+  idTable: state.client.idTable
 });
 
 const mapDispatchToProps = dispatch =>

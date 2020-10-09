@@ -65,8 +65,8 @@ const User = (props) => {
               SuggestInBox
             </Typography>
             <div className={classes.profile}>{userById.name}</div>
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={1} color="secondary">
+            <IconButton aria-label="Ver notificações" color="inherit">
+              <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

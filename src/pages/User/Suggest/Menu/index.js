@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { atvMenu, getCompanyById } from '../../../../store/companyReducer';
+import { atvCompany, getCompanyById } from '../../../../store/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -30,11 +30,11 @@ const Menu = (props) => {
     if(companyById.menu){
       companyById.menu = false;
       setMenu({check: companyById.menu});
-      return props.atvMenu(companyById);
+      return props.atvCompany(companyById);
     }else{
       companyById.menu = true;
       setMenu({check: companyById.menu});
-      return props.atvMenu(companyById);
+      return props.atvCompany(companyById);
     }
   }
 
@@ -56,9 +56,6 @@ const Menu = (props) => {
             label="Ativar/Desativar"
           />
           </FormGroup>
-          <Button className={classes.button} variant="contained" color="primary">
-            Criar
-          </Button>
         </Grid>
       </Grid>
     </div>
@@ -74,6 +71,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({atvMenu, getCompanyById}, dispatch);
+  bindActionCreators({atvCompany, getCompanyById}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Menu);

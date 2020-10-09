@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { atvCompany, getCompanyById } from '../../../../store/companyReducer';
 
-import Switch from "@material-ui/core/Switch";
 import { makeStyles } from '@material-ui/core/styles';
+import Switch from "@material-ui/core/Switch";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
@@ -14,15 +19,24 @@ const useStyles = makeStyles((theme) =>({
   },
 }));
 
-const Reservation = () => {
+const Reservation = (props) => {
   const classes = useStyles();
-  const [state, setState] = useState({
-    checkedA: false,
-  });
+  const { companyById } = props;
+  const [ reservation, setReservation ] = useState({
+    check: companyById.reservation
+  })
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  const atvReservation = (companyById) => {
+    if(companyById.reservation){
+      companyById.reservation = false;
+      setReservation({check: companyById.reservation});
+      return props.atvCompany(companyById);
+    }else{
+      companyById.reservation = true;
+      setReservation({check: companyById.reservation});
+      return props.atvCompany(companyById);
+    }
+  }
 
   return(
     <div>
@@ -33,8 +47,8 @@ const Reservation = () => {
           <FormControlLabel
             control={
               <Switch
-                checked={state.checkedB}
-                onChange={handleChange}
+                checked={reservation.check}
+                onClick={()=>atvReservation(companyById)}
                 name="checkedA"
                 color="primary"
               />
@@ -42,13 +56,21 @@ const Reservation = () => {
             label="Ativar/Desativar"
           />
           </FormGroup>
-          <Button className={classes.button} variant="contained" color="primary">
-            Criar
-          </Button>
         </Grid>
       </Grid>
     </div>
   );
 }
 
-export default Reservation;
+Reservation.prototypes = {
+  companyById: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  companyById: state.company.companyById,
+});
+
+const mapsDispatchToProps = dispatch => 
+  bindActionCreators({atvCompany, getCompanyById}, dispatch);
+
+export default connect(mapStateToProps, mapsDispatchToProps)(Reservation);

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import CardMedia from '@material-ui/core/CardMedia';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,6 +13,13 @@ const useStyles = makeStyles((theme) => ({
       margin: 'auto',
       width: '100%',
     },
+  },
+  photo: {
+    margin: '0 auto',
+    marginBottom: '10px',
+    marginTop: '20px',
+    width: 128,
+    height: 128,
   },
   center: {
     textAlign: 'center',
@@ -27,25 +35,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainClient = (props) => {
-  const { infos } = props;
+  const { infos, idTable } = props;
   const classes = useStyles();
 
   return(
     <div className={classes.root}>
+      <CardMedia className={classes.photo} image={infos.urlImg? infos.urlImg : "..."} title="Contemplative Reptile"/>
       <div className={classes.center}>
         <h3>{infos.name}</h3>
         <p>{infos.slogan}</p>
       </div>
-      <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}`} variant="contained" color="primary">
+      <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} variant="contained" color="primary">
         Dar opinião
       </Button>
       <Button className={props.infos.menu? classes.button : classes.hidden} 
-              component={Link} to={`/client/opiniao/?${infos._id}`} 
+              component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} 
               variant="contained" color="primary">
         Cardápio online
       </Button>
-      <Button className={props.infos.tables? classes.button : classes.hidden} 
-              component={Link} to={`/client/opiniao/?${infos._id}`} 
+      <Button className={props.infos.call? classes.button : classes.hidden} 
+              component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} 
               variant="contained" color="primary">
         Chamar garçom
       </Button>
@@ -54,11 +63,13 @@ const MainClient = (props) => {
 }
 
 MainClient.prototypes = {
-  infos: PropTypes.array.isRequired
+  infos: PropTypes.array.isRequired,
+  idTable: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  infos: state.client.infos
+  infos: state.client.infos,
+  idTable: state.client.idTable
 });
 
 export default connect(mapStateToProps)(MainClient);

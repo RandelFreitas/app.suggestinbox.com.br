@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { atvPromo, getCompanyById } from '../../../../store/companyReducer';
+import { atvCompany, getCompanyById } from '../../../../store/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -30,11 +30,11 @@ const Promo = (props) => {
     if(companyById.promo){
       companyById.promo = false;
       setPromo({check: companyById.promo});
-      return props.atvPromo(companyById);
+      return props.atvCompany(companyById);
     }else{
       companyById.promo = true;
       setPromo({check: companyById.promo});
-      return props.atvPromo(companyById);
+      return props.atvCompany(companyById);
     }
   }
 
@@ -56,9 +56,6 @@ const Promo = (props) => {
             label="Ativar/Desativar"
           />
           </FormGroup>
-          <Button className={classes.button} variant="contained" color="primary">
-            Criar
-          </Button>
         </Grid>
       </Grid>
     </div>
@@ -74,6 +71,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({atvPromo, getCompanyById}, dispatch);
+  bindActionCreators({atvCompany, getCompanyById}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Promo);

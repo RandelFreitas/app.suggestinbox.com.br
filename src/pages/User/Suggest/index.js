@@ -33,10 +33,14 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Rating from '@material-ui/lab/Rating';
+import CardMedia from '@material-ui/core/CardMedia';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import BusinessIcon from '@material-ui/icons/Business';
 import AlarmOnIcon from '@material-ui/icons/AlarmOn';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import MotorcycleIcon from '@material-ui/icons/Motorcycle';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
 
 import RoutesUser from './routesUser';
 
@@ -127,8 +131,18 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 17
   },
   avatar: {
+    fontSize: '12px',
+    width: '22px',
+    height: '22px',
     backgroundColor: '#f50057',
     textAlign: 'center',
+  },
+  photo: {
+    margin: '0 auto',
+    marginBottom: '5px',
+    marginTop: '20px',
+    width: 128,
+    height: 128,
   },
   card:{
     textAlign: 'center',
@@ -173,7 +187,14 @@ const MainSuggest = (props) => {
             <Typography component={Link} to={`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
                 SuggestInBox
             </Typography>
-            <div component={Link} to='/user' className={classes.profile}>{companyById.name}</div>
+            <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
+              <Avatar className={classes.avatar}>{name? name.split('', 1): "..."}</Avatar>
+            </IconButton>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={0} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
@@ -192,11 +213,9 @@ const MainSuggest = (props) => {
           <List>
             <div>      
               <Card className={classes.card}>
-                <div>
-                  <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
-                    <Avatar className={classes.avatar}>{name? name.split('', 1): "..."}</Avatar>
-                  </IconButton>
-                  <Typography hidden={!open}>{companyById.name}</Typography>
+                <div hidden={!open}>
+                  <CardMedia className={classes.photo} image={companyById.urlImg? companyById.urlImg : "..."} title="Contemplative Reptile"/>
+                  <Typography>{companyById.name}</Typography>
                 </div>
                 <CardContent hidden={!open}>
                   <Typography variant="h3" color="textSecondary" component="p">
@@ -214,6 +233,12 @@ const MainSuggest = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Sugestões" />
               </ListItem>
+              <ListItem button component={Link} to={`/suggest/call/?${idUser}/?${idCompany}?page=1&limit=25`}>
+                <ListItemIcon>
+                  <EmojiPeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Chamadas" />
+              </ListItem>
               <ListItem button component={Link} to={`/suggest/promo/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
                   <MoodIcon />
@@ -226,11 +251,11 @@ const MainSuggest = (props) => {
                 </ListItemIcon>
                 <ListItemText primary="Cardapio" />
               </ListItem>
-              <ListItem button component={Link} to={`/suggest/request/?${idUser}/?${idCompany}`}>
+              <ListItem button component={Link} to={`/suggest/delivery/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>
-                  <ShoppingCartIcon/>
+                  <MotorcycleIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Pedidos" />
+                <ListItemText primary="Delivery" />
               </ListItem>
               <ListItem button component={Link} to={`/suggest/reservation/?${idUser}/?${idCompany}`}>
                 <ListItemIcon>

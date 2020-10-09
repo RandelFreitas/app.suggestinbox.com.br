@@ -5,8 +5,7 @@ const ACTIONS = {
   LIST_COMPANIES: 'LISTCOMPANIES',
   BY_ID_COMPANY: 'BYIDCOMPANY',
   UPDATE_COMPANY: 'UPDATECOMPANY',
-  ATV_MENU: 'ATVMENU',
-  ATV_PROMO: 'ATVPROMO',
+  ATV_COMPANY: 'ATVCOMPANY',
   CLEAN_COMPANY: 'CLEANCOMPANY',
   ADD_COMPANY: 'ADDCOMPANY',
 }
@@ -26,9 +25,7 @@ export const companyReducer = (state = INITIAL_STATE, action) => {
       return {...state, companyById: action.companyById}
     case ACTIONS.UPDATE_COMPANY:
       return state;
-    case ACTIONS.ATV_MENU:
-      return {...state, companyById: action.companyById}
-    case ACTIONS.ATV_PROMO:
+    case ACTIONS.ATV_COMPANY:
       return {...state, companyById: action.companyById}
     //DEFAULT
     default:
@@ -103,27 +100,13 @@ export const cleanCompany = () => {
     type: ACTIONS.CLEAN_COMPANY,
   }
 }
-//*******************************************PROMO*********************************************
-//ATIVAR PROMO
-export const atvPromo = (company) => {
+//ATIVAR / DESATIVAR: MENU, PROMO, CALL
+export const atvCompany = (company) => {
   return dispatch => {
     api.put(`/adm/company/${company._id}`, company)
     .then(Response => {
       dispatch({
-        type: ACTIONS.ATV_PROMO,
-        companyById: company
-      })
-    })
-  }
-}
-//*******************************************MENU*********************************************
-//ATIVAR MENU
-export const atvMenu = (company) => {
-  return dispatch => {
-    api.put(`/adm/company/${company._id}`, company)
-    .then(Response => {
-      dispatch({
-        type: ACTIONS.ATV_MENU,
+        type: ACTIONS.ATV_COMPANY,
         companyById: company
       })
     })
