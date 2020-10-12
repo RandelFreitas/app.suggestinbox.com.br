@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 import { auth } from '../../store/authReducer';
-import { showMessage, hideMessage, showProgress } from '../../store/messageReducer';
+import { showMessage, hideMessage, showProgress, hideProgress } from '../../store/messageReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const classes = useStyles();
   const [disableSubmit, setDisableSubmit] = useState(true);
+
+  useEffect(()=>{
+    props.hideProgress();
+  },[])
 
   const formik = useFormik ({
     initialValues: { email: '', password: ''},
@@ -157,6 +161,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({auth, showMessage, hideMessage, showProgress}, dispatch);
+  bindActionCreators({auth, showMessage, hideMessage, showProgress, hideProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

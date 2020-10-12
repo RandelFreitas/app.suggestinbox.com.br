@@ -45,6 +45,6 @@ export const showProgress = () => {
 //FECHAR PROGRESSO
 export const hideProgress = () => {
   return {
-    type: ACTIONS.HIDE_MESSAGE
+    type: ACTIONS.HIDE_PROGRESS
   }
 }

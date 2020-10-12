@@ -9,6 +9,7 @@ import { suggestReducer } from './suggestReducer';
 import { promoReducer } from './promoReducer';
 import { menuReducer } from './menuReducer';
 import { messageReducer } from './messageReducer';
+import { callReducer } from './callReducer';
 import { userReducer } from './userReducer';
 
 const mainReducer = combineReducers({
@@ -19,6 +20,7 @@ const mainReducer = combineReducers({
   suggest: suggestReducer,
   menu: menuReducer,
   promo: promoReducer,
+  call: callReducer,
   message: messageReducer,
 });
 

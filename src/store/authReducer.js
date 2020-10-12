@@ -1,6 +1,6 @@
 import api from '../services/api';
 import history from '../services/history';
-import { setInfosLocalStorage, logoutUser } from '../services/auth';
+import { setInfosLocalStorage } from '../services/auth';
 import { showMessage } from './messageReducer';
 
 const ACTIONS = {
@@ -64,7 +64,10 @@ export const fogot = (email) => {
           showMessage("Usuario não encontrado!")
         )
       }else{
-        history.push('/login');
+        dispatch(
+          showMessage("Email enviado com sucesso!"),
+          history.push('/login')
+        )
       }
     })
     .catch(error => {
@@ -78,12 +81,22 @@ export const fogot = (email) => {
 //RESET SENHA
 export const reset = (user) => {
   return dispatch => {
-    api.post('/auth/reset_password', user)
+    api.post('/auth/reset-password', user)
     .then(Response => {
       dispatch({
           type: ACTIONS.FOGOT,
           user: Response.data,
       });
+      if(!Response.data.success){
+        dispatch(
+          showMessage("Usuario não encontrado!")
+        )
+      }else{
+        dispatch(
+          showMessage("Senha recuperada com sucesso!"),
+          history.push('/login')
+        )
+      }
     })
     .catch(error => {
       dispatch(
@@ -92,9 +105,4 @@ export const reset = (user) => {
       )}
     );
   }
-}
-//LOGOUT
-export const logout = () =>{
-  logoutUser();
-  history.push(`/login`);
 }

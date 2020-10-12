@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { logout } from '../../../store/authReducer';
+import { logoutUser } from '../../../services/auth';
 import { getCompanyById } from '../../../store/companyReducer';
 import { getUserById } from '../../../store/userReducer';
 import PropTypes from 'prop-types';
@@ -198,7 +198,7 @@ const MainSuggest = (props) => {
             <IconButton component={Link} to={`/suggest/setup-company/?${idUser}/?${idCompany}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
-            <IconButton onClick={props.logout} color="inherit">
+            <IconButton onClick={()=>logoutUser()} color="inherit">
               <ExitToAppIcon />
             </IconButton>
           </Toolbar>
@@ -273,7 +273,7 @@ const MainSuggest = (props) => {
                 <ListItemIcon>
                   <BusinessIcon />
                 </ListItemIcon>
-                <ListItemText primary="Companias" />
+                <ListItemText primary="Companhias" />
               </ListItem>
             </div>
           </List>
@@ -304,6 +304,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({logout, getCompanyById, getUserById}, dispatch);
+  bindActionCreators({getCompanyById, getUserById}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainSuggest);

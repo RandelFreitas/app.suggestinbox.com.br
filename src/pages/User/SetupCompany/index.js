@@ -68,6 +68,20 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     justifyContent: 'center',
     padding: 8
+  },
+  hide: {
+    display: 'none',
+  },
+  qrCodeTable: {
+    textAlign: 'center',
+    maxWidth: '300px',
+    margin: '15px'
+  },
+  nTable: {
+    width: '90px'
+  },
+  title: {
+    margin: '15px'
   }
 }));
 
@@ -156,7 +170,6 @@ const SetupCompany = (props) => {
   const [idUser] = useState(window.location.href.split('/?')[1]);
   const [idCompany] = useState(window.location.href.split('/?')[2]);
 
-  const url = `https://suggestinbox.com.br/client/?${idCompany}?table=0`;
   const defaultFormShape = {
     name: '',
     cnpj: '',
@@ -176,6 +189,11 @@ const SetupCompany = (props) => {
       obs: ''
     },
   };
+  
+  const [ nTable, setNTable ] = useState(0);
+  const tableChange = (event) => {
+    setNTable(event.target.value);
+  }
 
   useEffect(()=>{
     if(idCompany){
@@ -203,14 +221,16 @@ const SetupCompany = (props) => {
               multiple
               type="file"
             />
+            <Typography className={classes.title}>Foto perfil</Typography>
             <label htmlFor="raised-button-file">
               <Button className={classes.buttonPhoto} variant="outlined" component="span" color="primary">
                 Alterar Foto
               </Button>
             </label>
           </Grid>
-          <Grid className={classes.qrCode} item>
-            <QRCode value={`${url}`}/>
+          <Grid className={idCompany?  classes.qrCode : classes.hide} item>
+            <QRCode value={`https://suggestinbox.com.br/client/?${idCompany}?table=0`}/>
+            <Typography className={classes.title}>QR Code geral</Typography>
             <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="contained" color="primary">
               Ver Perfil
             </Button>
@@ -218,10 +238,30 @@ const SetupCompany = (props) => {
               Imprimir
             </Button>
           </Grid>
+          <Grid className={idCompany?  classes.qrCodeTable : classes.hide} item>
+            <QRCode value={`https://suggestinbox.com.br/client/?${idCompany}?table=${nTable}`}/>
+            <Typography className={classes.title}>QR Code por mesa</Typography>
+            <TextField
+              className={classes.nTable}
+              id="standard-number"
+              label="Nº da mesa"
+              type="number"
+              value={nTable}
+              onChange={tableChange}
+              size="small"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="outlined" color="primary">
+              Imprimir
+            </Button>
+          </Grid>
         </Grid>
       </Card>
+
       <Formik 
-        initialValues= {companyById._id? companyById : defaultFormShape}
+        initialValues= {idCompany? companyById : defaultFormShape}
         enableReinitialize
         validationSchema={Yup.object({
           name: Yup.string()
@@ -268,7 +308,7 @@ const SetupCompany = (props) => {
         {formik => (
           <Card >
             <form onSubmit={formik.handleSubmit}>
-              <p style={{margin: 10}}>Dados</p>
+              <p style={{margin: 10}}>Dados da companhia</p>
               <Grid container>
                 <Grid container item spacing={1} className={classes.grid}>
                   <Grid item xs={4}>
@@ -499,10 +539,10 @@ const SetupCompany = (props) => {
                 <Grid item xs={12}>
                   <Divider/>
                   <Button type="submit" className={classes.button} variant="contained" color="primary">
-                    {companyById._id? 'Atualizar': 'Salvar'}
+                    {idCompany? 'Atualizar': 'Salvar'}
                   </Button>
                   <Button className={classes.button} component={Link} 
-                          to={companyById._id? `/suggest/?${idUser}/?${idCompany}?page=1&limit=25` : `/user/?${idUser}?page=1&limit=25`} variant="outlined" color="primary">
+                    to={idCompany? `/suggest/?${idUser}/?${idCompany}?page=1&limit=25` : `/user/?${idUser}?page=1&limit=25`} variant="outlined" color="primary">
                     Cancelar
                   </Button>
                 </Grid>

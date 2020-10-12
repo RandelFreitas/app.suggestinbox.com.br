@@ -56,3 +56,22 @@ export const submitSuggest = (suggest) => {
     });
   }
 }
+//ENVIAR CALL
+export const addCall = (idCompany, idTable) => {
+  const call = {
+    table: idTable,
+    companyId: idCompany
+  };
+  console.log(call);
+  return dispatch => {
+    api.post(`/client/company/call/${idCompany}`, call)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.ADD_CALL,
+      });
+    }) //history.push(`/suggest/call/success`))
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}

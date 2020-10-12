@@ -1,3 +1,4 @@
+import history from './history';
 export const TOKEN_KEY = "@token";
 export const INFOS = "@infos";
 
@@ -15,5 +16,6 @@ export const setTokenLocalStorage = (token) => {
 };
 export const logoutUser = () => {
   localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(INFOS);  
+  localStorage.removeItem(INFOS);
+  history.push('/login');
 };

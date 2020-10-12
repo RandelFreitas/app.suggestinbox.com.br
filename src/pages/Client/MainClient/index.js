@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import CardMedia from '@material-ui/core/CardMedia';
+import { addCall } from '../../../store/clientReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginBottom: "20px"
   },
-  hidden: {
+  hide: {
     display: 'none'
   }
 }));
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const MainClient = (props) => {
   const { infos, idTable } = props;
   const classes = useStyles();
-
+  console.log(idTable == 0);
   return(
     <div className={classes.root}>
       <CardMedia className={classes.photo} image={infos.urlImg? infos.urlImg : "..."} title="Contemplative Reptile"/>
@@ -48,14 +50,15 @@ const MainClient = (props) => {
       <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} variant="contained" color="primary">
         Dar opinião
       </Button>
-      <Button className={props.infos.menu? classes.button : classes.hidden} 
-              component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} 
-              variant="contained" color="primary">
+      <Button className={props.infos.menu? classes.button : classes.hide} 
+        component={Link} to={`/client/cardapio/?${infos._id}?table=${idTable? idTable: 0}`} 
+        variant="contained" color="primary">
         Cardápio online
       </Button>
-      <Button className={props.infos.call? classes.button : classes.hidden} 
-              component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} 
-              variant="contained" color="primary">
+      <Button className={props.infos.call && idTable != 0? classes.button : classes.hide} 
+        onClick={() => props.addCall(infos._id, idTable)}
+        component={Link} to={`/client/atencao/?${infos._id}?table=${idTable? idTable: 0}`} 
+        variant="contained" color="primary">
         Chamar garçom
       </Button>
     </div>
@@ -72,4 +75,7 @@ const mapStateToProps = state => ({
   idTable: state.client.idTable
 });
 
-export default connect(mapStateToProps)(MainClient);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({addCall}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainClient);

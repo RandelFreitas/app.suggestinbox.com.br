@@ -54,8 +54,8 @@ const Reset = (props) => {
   const [disableSubmit, setDisableSubmit] = useState(true);
   const [progress, setProgress] = useState(true);
   
-  const [ token ] = useState(window.location.href.split('/?$')[1]);
-  const [ email ] = useState(window.location.href.split('/?$')[2]);
+  const [ token ] = useState(window.location.href.split('/?')[1]);
+  const [ email ] = useState(window.location.href.split('/?')[2]);
 
   const formik = useFormik ({
     initialValues: { password: '', passwordConfirmation: ''},

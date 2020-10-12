@@ -88,9 +88,9 @@ const Companies = (props) => {
 
   return(
     <div className={classes.root}>
-      <Typography className={classes.center} variant="h5" component="h2">Estabelecimentos</Typography>
+      <Typography className={classes.center} variant="h5" component="h2">Companhias</Typography>
       <Button className={classes.button} component={Link} to={`/user/setup-company/?${idUrl}`} variant="contained" color="primary">
-        Adicionar Estabelecimento
+        Adicionar Companhia
       </Button>
       <Grid container item xs={12} spacing={3}>
         {mapCompanies}

@@ -189,7 +189,7 @@ const SetupUser = (props) => {
         {formik => (
           <Card >
             <form onSubmit={formik.handleSubmit}>
-              <p style={{margin: 10}}>Dados</p>
+              <p style={{margin: 10}}>Dados do Administrador</p>
               <Grid container>
                 <Grid container item spacing={1} className={classes.grid}>
                   <Grid item xs={5}>

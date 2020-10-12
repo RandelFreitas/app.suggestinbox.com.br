@@ -20,14 +20,13 @@ export const companyReducer = (state = INITIAL_STATE, action) => {
     case ACTIONS.LIST_COMPANIES:
       return {...state, companies: action.companies, infosCompanies: action.infosCompanies}
     case ACTIONS.ADD_COMPANY:
-      return {...state, companyById: action.companyById}
+      return {...state}
     case ACTIONS.BY_ID_COMPANY:
       return {...state, companyById: action.companyById}
     case ACTIONS.UPDATE_COMPANY:
       return state;
     case ACTIONS.ATV_COMPANY:
-      return {...state, companyById: action.companyById}
-    //DEFAULT
+      return {...state}
     default:
       return state;
   }
@@ -56,7 +55,6 @@ export const addCompany = (company, id) => {
     .then(Response => {
       dispatch({
         type: ACTIONS.ADD_COMPANY,
-        companyById: Response.data,
       });
     }, history.push(`/user`))
     .catch(error => {
@@ -86,7 +84,6 @@ export const updateCompany = (company, id, idUser) => {
     .then(Response => {
       dispatch({
         type: ACTIONS.UPDATE_COMPANY,
-        //company: Response.data
       })
     }, history.push(`/suggest/?${idUser}/?${id}?page=1&limit=25`))
     .catch(error => {
@@ -107,7 +104,6 @@ export const atvCompany = (company) => {
     .then(Response => {
       dispatch({
         type: ACTIONS.ATV_COMPANY,
-        companyById: company
       })
     })
   }
