@@ -214,7 +214,7 @@ const MainSuggest = (props) => {
             <div>      
               <Card className={classes.card}>
                 <div hidden={!open}>
-                  <CardMedia className={classes.photo} image={companyById.urlImg? companyById.urlImg : "..."} title="Contemplative Reptile"/>
+                  <CardMedia className={classes.photo} image="/assets/logoBar.png" title="Contemplative Reptile"/>
                   <Typography>{companyById.name}</Typography>
                 </div>
                 <CardContent hidden={!open}>

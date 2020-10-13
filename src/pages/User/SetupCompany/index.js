@@ -229,7 +229,7 @@ const SetupCompany = (props) => {
             </label>
           </Grid>
           <Grid className={idCompany?  classes.qrCode : classes.hide} item>
-            <QRCode value={`https://suggestinbox.com.br/client/?${idCompany}?table=0`}/>
+            <QRCode value={`https://app.suggestinbox.com.br/client/?${idCompany}?table=0`}/>
             <Typography className={classes.title}>QR Code geral</Typography>
             <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="contained" color="primary">
               Ver Perfil
@@ -239,7 +239,7 @@ const SetupCompany = (props) => {
             </Button>
           </Grid>
           <Grid className={idCompany?  classes.qrCodeTable : classes.hide} item>
-            <QRCode value={`https://suggestinbox.com.br/client/?${idCompany}?table=${nTable}`}/>
+            <QRCode value={`https://app.suggestinbox.com.br/client/?${idCompany}?table=${nTable}`}/>
             <Typography className={classes.title}>QR Code por mesa</Typography>
             <TextField
               className={classes.nTable}
