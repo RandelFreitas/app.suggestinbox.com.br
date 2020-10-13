@@ -42,7 +42,7 @@ const MainClient = (props) => {
   console.log(idTable == 0);
   return(
     <div className={classes.root}>
-      <CardMedia className={classes.photo} image={infos.urlImg? infos.urlImg : "..."} title="Contemplative Reptile"/>
+      <CardMedia className={classes.photo} image="/assets/logoBar.png" title="Contemplative Reptile"/>
       <div className={classes.center}>
         <h3>{infos.name}</h3>
         <p>{infos.slogan}</p>
