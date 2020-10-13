@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RoutesClient from './routesClient';
 import { getInfo } from '../../store/clientReducer';
-import history from '../../services/history';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,7 +12,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import MarkunreadMailboxIcon from '@material-ui/icons/MarkunreadMailbox';

@@ -1,5 +1,4 @@
 import api from '../services/api';
-import history from '../services/history';
 
 const ACTIONS = {
   LIST_SUGGESTS: 'LISTSUGGESTS',

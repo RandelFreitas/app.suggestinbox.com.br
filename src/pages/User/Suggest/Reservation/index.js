@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,7 +10,6 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) =>({
   button: {
@@ -20,7 +18,7 @@ const useStyles = makeStyles((theme) =>({
 }));
 
 const Reservation = (props) => {
-  const classes = useStyles();
+  //const classes = useStyles();
   const { companyById } = props;
   const [ reservation, setReservation ] = useState({
     check: companyById.reservation

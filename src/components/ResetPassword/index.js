@@ -2,7 +2,6 @@ import React, { useState} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
-import history from '../../services/history';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { showMessage, hideMessage } from '../../store/messageReducer';
