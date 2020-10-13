@@ -231,10 +231,10 @@ const SetupCompany = (props) => {
           <Grid className={idCompany?  classes.qrCode : classes.hide} item>
             <QRCode value={`https://app.suggestinbox.com.br/client/?${idCompany}?table=0`}/>
             <Typography className={classes.title}>QR Code geral</Typography>
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="contained" color="primary">
+            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} variant="contained" color="primary">
               Ver Perfil
             </Button>
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="outlined" color="primary">
+            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} variant="outlined" color="primary">
               Imprimir
             </Button>
           </Grid>
