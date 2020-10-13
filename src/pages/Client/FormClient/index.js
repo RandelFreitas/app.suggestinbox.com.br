@@ -100,7 +100,7 @@ NumberFormatCustom.propTypes = {
 const FormClient = (props) => {
   const classes = useStyles();
   const { infos } = props;
-  const [companyId] = useState(window.location.href.split('/?')[1]);
+  const [companyId] = useState(window.location.href.split('?')[1]);
   const [checked, setChecked] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
