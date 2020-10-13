@@ -5,7 +5,7 @@ import { getInfo } from '../../../store/clientReducer';
 
 const AboutClient = (props) => {
   const { infos } = props;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1]);
+  const [ idUrl ] = useState(window.location.href.split('?')[1]);
 
   useEffect(()=> {
     console.log(idUrl);
@@ -21,11 +21,6 @@ const AboutClient = (props) => {
     </div>
   );
 }
-
-
-
-
-
 
 const mapStateToProps = state => ({
   infos: state.client.infos

@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Client = (props) => {
   const { infos } = props;
-  const [ idCompany ] = useState(window.location.href.split('/?')[1]);
+  const [ idCompany ] = useState(window.location.href.split('?')[1]);
   const [ idTable ] = useState(window.location.href.split('table=')[1]);
 
   const [state, setState] = React.useState(false);
