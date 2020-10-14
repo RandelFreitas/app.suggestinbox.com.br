@@ -302,7 +302,7 @@ const SetupCompany = (props) => {
             const companyUpdate = { name, slogan, history, localization, email, cnpj, phone, address };
             props.updateCompany(companyUpdate, companyById._id, idUser);
           }else{
-            props.addCompany(values);
+            props.addCompany(values, idUser);
           }
         }}>
         {formik => (

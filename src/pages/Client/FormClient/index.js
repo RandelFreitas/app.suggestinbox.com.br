@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
   name: {
     textAlign: 'center',
   },
-
   span: {  
     textAlign: 'center'
   },

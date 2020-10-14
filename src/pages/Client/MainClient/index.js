@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const MainClient = (props) => {
   const { infos, idTable } = props;
   const classes = useStyles();
-  console.log(idTable == 0);
+
   return(
     <div className={classes.root}>
       <CardMedia className={classes.photo} image="/assets/logoBar.png" title="Contemplative Reptile"/>

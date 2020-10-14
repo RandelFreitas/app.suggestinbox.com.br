@@ -56,7 +56,7 @@ export const addCompany = (company, id) => {
       dispatch({
         type: ACTIONS.ADD_COMPANY,
       });
-    }, history.push(`/user`))
+    }, history.push(`/user/?${id}??page=1&limit=25`))
     .catch(error => {
       console.log(error);
     });

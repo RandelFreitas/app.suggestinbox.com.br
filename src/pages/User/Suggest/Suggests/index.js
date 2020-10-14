@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useLayoutEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { listSuggest, favorite, outlier } from '../../../../store/suggestReducer';
+import { atvCompany } from '../../../../store/companyReducer';
 import { parseISO } from 'date-fns';
 import { format } from 'date-fns-tz';
 import DateFnsUtils from '@date-io/date-fns';
@@ -34,6 +35,9 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import CheckIcon from '@material-ui/icons/Check';
+import Switch from "@material-ui/core/Switch";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const theme = createMuiTheme({
   palette: {
@@ -57,12 +61,18 @@ const useStyles = makeStyles((theme) =>({
     margin: '9px',
     maxWidth: '140px'
   },
+  hide: {
+    display: 'none'
+  },
+  buttonAtv: {
+    margin: '15px 0'
+  }
 }));
 
 const Suggest = (props) => {
   const classes = useStyles();
   const [ idCompany ] = useState(window.location.href.split('/?')[2].split('?')[0]);
-  const {suggests, infosSuggests} = props;
+  const {suggests, infosSuggests, companyById} = props;
   const pages = infosSuggests.pages;
   
   const [ page, setPage ] = useState(1);
@@ -70,10 +80,18 @@ const Suggest = (props) => {
   const [typeSuggests, setTypeSuggests] = useState('All');
   const [selectedDateFrom, setSelectedDateFrom] = useState(new Date('2020-01-01T00:00:00'));
   const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
+
+  const [ suggestAtv, setSuggestAtv ] = useState({
+    check: false
+  });
   
   useEffect(() => {
     props.listSuggest(idCompany, page, limit, typeSuggests, selectedDateFrom, selectedDateTo);
   },[]);
+
+  useEffect(() => {
+    setSuggestAtv({check: companyById.suggest});
+  },[companyById.suggest])
 
   const handleChangePage=(event, value)=>{
     setPage(value);
@@ -117,10 +135,41 @@ const Suggest = (props) => {
     }
   }
 
+  const atvSuggest = (companyById) => {
+    if(companyById.suggest){
+      companyById.suggest = false;
+      setSuggestAtv({check: companyById.suggest});
+      console.log("if")
+      return props.atvCompany(companyById);
+    }else{
+      companyById.suggest = true;
+      setSuggestAtv({check: companyById.suggest});
+      console.log("else")
+      return props.atvCompany(companyById);
+    }
+  }
+
   return (
     <div>
       <Typography variant="h5" component="h2">Sugestões</Typography>
        <div>
+        <Grid container>
+          <Grid item className={suggestAtv.check? classes.buttonAtv: classes.hide}>
+            <FormGroup row>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={suggestAtv.check? suggestAtv.check: false}
+                  onClick={()=>atvSuggest(companyById)}
+                  name="checkedA"
+                  color="primary"
+                />
+              }
+              label="Ativar/Desativar"
+            />
+            </FormGroup>
+          </Grid>
+        </Grid>
         <FormControl>
           <FormHelperText>Número por página:</FormHelperText>
           <Select
@@ -242,11 +291,12 @@ Suggest.prototypes = {
 };
 
 const mapStateToProps = state => ({
+  companyById: state.company.companyById,
   suggests: state.suggest.suggests,
   infosSuggests: state.suggest.infosSuggests,
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({listSuggest, favorite, outlier}, dispatch);
+  bindActionCreators({listSuggest, favorite, outlier, atvCompany}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Suggest);

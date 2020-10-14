@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Fogot = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   const formik = useFormik ({
     initialValues: { email: ''},

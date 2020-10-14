@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   useEffect(()=>{
     props.hideProgress();

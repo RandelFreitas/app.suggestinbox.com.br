@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Reset = (props) => {
   const classes = useStyles();
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(false);
   const [progress, setProgress] = useState(true);
   
   const [ token ] = useState(window.location.href.split('/?')[1]);

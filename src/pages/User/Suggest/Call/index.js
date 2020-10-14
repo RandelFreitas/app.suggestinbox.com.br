@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -17,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Pagination from '@material-ui/lab/Pagination';
 
-import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -25,7 +24,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles(() =>({
   tables: {
     marginTop: '25px'
   },
@@ -34,6 +33,12 @@ const useStyles = makeStyles((theme) =>({
     textAlign: 'center',
     margin: '20px'
   },
+  hide: {
+    display: 'none'
+  },
+  buttonAtv: {
+    margin: '15px 0'
+  }
 }));
 
 const Call = (props) => {
@@ -50,6 +55,10 @@ const Call = (props) => {
   useEffect(() => {
     props.listCalls(1, 25)
   },[]);
+
+  useEffect(() => {
+    setCall({check: companyById.call});
+  },[companyById.call])
 
   const atvCall = (companyById) => {
     if(companyById.call){
@@ -71,12 +80,12 @@ const Call = (props) => {
     <div>
       <Typography variant="h5" component="h2">Chamada por mesa</Typography>
       <Grid container>
-        <Grid item>
+        <Grid item className={call.check? classes.buttonAtv: classes.hide}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={call.check}
+                checked={call.check? call.check: false}
                 onClick={()=>atvCall(companyById)}
                 name="checkedA"
                 color="primary"

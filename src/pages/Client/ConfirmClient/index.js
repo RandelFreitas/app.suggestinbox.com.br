@@ -1,22 +1,61 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styles from './index.module.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import ScratchCard from 'react-scratchcard';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: 'auto',
+      width: '100%',
+      touchAction: 'none',
+    },
+  },
+  centerText: {
+    border: '2px solid',
+    textAlign: 'center',
+    padding: '55px 0'
+  },
+  okText: {
+    textAlign: 'center',
+    margin: '15px'
+  },
+  button: {
+    marginTop: '15px'
+  },
+  
+}));
 
 const ConfirmClient = (props) => {
+  const classes = useStyles();
   const { infos } = props;
 
+  const settings = {
+    width: 200,
+    height: 200,
+    image: "/assets/scratch.jpg",
+    finishPercent: 50,
+    onComplete: () => console.log('The card is now clear!')
+  };
+  
   return (
-    <div className={styles.center}>
-      <h3>Obrigado pela sua opinião!</h3>
-      <p>Parabéns vocês ganhou uma caipirinha na sua proxima visita!</p>
-      <div className={styles.cupom}>
-        <h4>Cupom: 49FBA</h4>
-        <p>Cupom disponível em 24h.</p>
-      </div>
-      <Link className={styles.link} to={`/client/?${infos._id}`}>Voltar ao inicio</Link>
-    </div>
+    <Grid container className={classes.root}>
+      <Typography className={classes.okText} variant="h5">Obrigado pela sua opinião!</Typography>
+      <ScratchCard {...settings}>
+        <Typography className={classes.centerText}>
+          Tente novamente na sua próxima visita!
+        </Typography>
+      </ScratchCard>
+      <Button className={classes.button} component={Link} to={`/client/?${infos._id}?table=${infos.idTable? infos.idTable: 0}`} variant="contained" color="primary">
+        Voltar ao início
+      </Button>
+    </Grid>
   );
 }
 
