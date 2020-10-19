@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -22,6 +22,9 @@ const useStyles = makeStyles(() =>({
   },
   formControl: {
     padding: '15px 0'
+  },
+  buttonAtv: {
+    margin: '15px 0'
   }
 }));
 
@@ -30,7 +33,11 @@ const Menu = (props) => {
   const { companyById } = props;
   const [ menu, setMenu ] = useState({
     check: companyById.menu
-  })
+  });
+
+  useEffect(() => {
+    setMenu({check: companyById.menu});
+  },[companyById.menu])
 
   const atvMenu = (companyById) => {
     if(companyById.menu){
@@ -54,12 +61,12 @@ const Menu = (props) => {
     <div>
       <Typography variant="h5" component="h2">Cardápio / Catálogo</Typography>
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.buttonAtv}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={menu.check}
+                checked={menu.check? menu.check : false}
                 onClick={()=>atvMenu(companyById)}
                 name="checkedA"
                 color="primary"

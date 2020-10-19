@@ -23,7 +23,7 @@ export const menuReducer = (state = INITIAL_STATE, action) => {
   }
 }
 //LISTAR MENU
-export const listMenu = (idCompany) => {
+export const getMenu = (idCompany) => {
   return dispatch => {
     api.get(`/adm/menu/${idCompany}`)
     .then(Response => {

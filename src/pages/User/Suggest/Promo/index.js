@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,18 +11,29 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles(() =>({
   button: {
     marginTop: '25px',
   },
+  hide: {
+    display: 'none'
+  },
+  buttonAtv: {
+    margin: '15px 0'
+  }
 }));
 
 const Promo = (props) => {
-  //const classes = useStyles();
+  const classes = useStyles();
   const { companyById } = props;
+  
   const [ promo, setPromo ] = useState({
     check: companyById.promo
-  })
+  });
+
+  useEffect(() => {
+    setPromo({check: companyById.promo});
+  },[companyById.promo])
 
   const atvPromo = (companyById) => {
     if(companyById.promo){
@@ -40,12 +51,12 @@ const Promo = (props) => {
     <div>
       <Typography variant="h5" component="h2">Promoção</Typography>
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.buttonAtv}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={promo.check}
+                checked={promo.check? promo.check : false}
                 onClick={()=>atvPromo(companyById)}
                 name="checkedA"
                 color="primary"

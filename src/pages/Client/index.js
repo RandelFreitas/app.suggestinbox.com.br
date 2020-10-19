@@ -52,9 +52,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center'
   },
   content: {
-    width: '275px',
     margin: 'auto',
-    paddingTop: '30px'
+    padding: '30px',
+    maxWidth: '450px',
   },
 }));
 

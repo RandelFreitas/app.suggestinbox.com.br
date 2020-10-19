@@ -21,7 +21,6 @@ import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   center: {
     alignItems: 'center',
     textAlign: 'center',
-    minHeight: '150px'
+    minHeight: '160px'
   },
   stars: {
     padding: '28px',
@@ -59,10 +58,13 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '150px'
   },
   recommends: {
-    padding: '28px',
+    padding: '20px',
     alignItems: 'center',
     textAlign: 'center',
     minHeight: '150px'
+  },
+  yesNo: {
+    margin: '0 auto',
   },
   button: {
     margin: '8px',
@@ -168,7 +170,7 @@ const FormClient = (props) => {
     switch (step) {
       case 0:
         return (
-          <div >
+          <div className={classes.center}>
             <TextField className={classes.namePhone}
               label="Nome"
               disabled={checked}
@@ -196,9 +198,9 @@ const FormClient = (props) => {
         );
       case 1:
         return (
-          <div className={classes.stars}>
-            <Box component="fieldset" mb={3} borderColor="transparent">
-              <FormLabel component="legend">Toque para classificar</FormLabel>
+          <div className={classes.center}>
+            <Box className={classes.stars} component="fieldset" mb={3} borderColor="transparent">
+              <Typography>Toque para classificar nosso estabelecimento</Typography>
               <Rating
                 name="stars"
                 onChange={handleChange}
@@ -212,10 +214,10 @@ const FormClient = (props) => {
         );
       case 2:
         return (
-          <div className={classes.recommends}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Nos recomendaria?</FormLabel>
-              <RadioGroup onChange={handleChange} value={values.recommends} row aria-label="position" name="recommends">
+          <div className={classes.center}>
+            <FormControl className={classes.recommends} component="fieldset">
+              <Typography>Nos recomendaria a um amigo?</Typography>
+              <RadioGroup className={classes.yesNo} onChange={handleChange} value={values.recommends} row aria-label="position" name="recommends">
                 <FormControlLabel
                   value="y"
                   control={<Radio color="primary" />}

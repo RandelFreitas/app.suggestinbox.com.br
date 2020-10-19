@@ -50,6 +50,9 @@ const AtentionClient = (props) => {
       <Button className={classes.button} component={Link} to={`/client/cardapio/?${infos._id}?table=${infos.idTable? infos.idTable: 0}`} variant="contained" color="primary">
         Cardápio online
       </Button>
+      <Button className={classes.button} component={Link} to={`/client/?${infos._id}?table=${infos.idTable}`} variant="contained" color="primary">
+        Voltar ao Menu
+      </Button>
     </Grid>
   );
 }

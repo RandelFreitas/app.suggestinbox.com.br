@@ -10,6 +10,7 @@ import { promoReducer } from './promoReducer';
 import { menuReducer } from './menuReducer';
 import { messageReducer } from './messageReducer';
 import { callReducer } from './callReducer';
+import { notificationReducer } from './notificationReducer';
 import { userReducer } from './userReducer';
 
 const mainReducer = combineReducers({
@@ -22,6 +23,7 @@ const mainReducer = combineReducers({
   promo: promoReducer,
   call: callReducer,
   message: messageReducer,
+  notification: notificationReducer,
 });
 
 export const store = applyMiddleware(thunk)(createStore)(mainReducer);

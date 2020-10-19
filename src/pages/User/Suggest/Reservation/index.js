@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,14 +15,21 @@ const useStyles = makeStyles((theme) =>({
   button: {
     marginTop: '25px',
   },
+  buttonAtv: {
+    margin: '15px 0'
+  }
 }));
 
 const Reservation = (props) => {
-  //const classes = useStyles();
+  const classes = useStyles();
   const { companyById } = props;
   const [ reservation, setReservation ] = useState({
     check: companyById.reservation
-  })
+  });
+
+  useEffect(() => {
+    setReservation({check: companyById.reservation});
+  },[companyById.reservation])
 
   const atvReservation = (companyById) => {
     if(companyById.reservation){
@@ -40,12 +47,12 @@ const Reservation = (props) => {
     <div>
       <Typography variant="h5" component="h2">Reservas</Typography>
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.buttonAtv}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={reservation.check}
+                checked={reservation.check? reservation.check : false}
                 onClick={()=>atvReservation(companyById)}
                 name="checkedA"
                 color="primary"

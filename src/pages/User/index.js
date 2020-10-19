@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
   const classes = useStyles();
-  const [ idUser ] = useState(window.location.href.split('/?')[1].split('?')[0]);
+  const [ idUser ] = useState(window.location.href.split('?')[1].split('?')[0]);
   const { userById } = props;
   
   useEffect(() => {

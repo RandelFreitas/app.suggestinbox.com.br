@@ -47,7 +47,7 @@ const MainClient = (props) => {
         <h3>{infos.name}</h3>
         <p>{infos.slogan}</p>
       </div>
-      <Button className={classes.button} component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} variant="contained" color="primary">
+      <Button className={props.infos.suggest? classes.button : classes.hide} component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} variant="contained" color="primary">
         Dar opinião
       </Button>
       <Button className={props.infos.menu? classes.button : classes.hide} 

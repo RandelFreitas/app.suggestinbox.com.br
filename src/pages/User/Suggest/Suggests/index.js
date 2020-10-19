@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -82,7 +82,7 @@ const Suggest = (props) => {
   const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
 
   const [ suggestAtv, setSuggestAtv ] = useState({
-    check: false
+    check: companyById.suggest
   });
   
   useEffect(() => {
@@ -139,12 +139,10 @@ const Suggest = (props) => {
     if(companyById.suggest){
       companyById.suggest = false;
       setSuggestAtv({check: companyById.suggest});
-      console.log("if")
       return props.atvCompany(companyById);
     }else{
       companyById.suggest = true;
       setSuggestAtv({check: companyById.suggest});
-      console.log("else")
       return props.atvCompany(companyById);
     }
   }
@@ -154,7 +152,7 @@ const Suggest = (props) => {
       <Typography variant="h5" component="h2">Sugestões</Typography>
        <div>
         <Grid container>
-          <Grid item className={suggestAtv.check? classes.buttonAtv: classes.hide}>
+          <Grid item className={classes.buttonAtv}>
             <FormGroup row>
             <FormControlLabel
               control={

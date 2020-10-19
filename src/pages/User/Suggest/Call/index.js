@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listCalls } from '../../../../store/callReducer';
+import { listCalls, destroyCall } from '../../../../store/callReducer';
 import { atvCompany } from '../../../../store/companyReducer';
 import { parseISO } from 'date-fns';
 import { format } from 'date-fns-tz';
@@ -11,10 +11,9 @@ import Switch from "@material-ui/core/Switch";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Pagination from '@material-ui/lab/Pagination';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -26,7 +25,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles(() =>({
   tables: {
-    marginTop: '25px'
+    marginBottom: '25px',
   },
   center: {
     justifyContent: 'center',
@@ -44,9 +43,6 @@ const useStyles = makeStyles(() =>({
 const Call = (props) => {
   const classes = useStyles();
   const { companyById, calls } = props;
-  const pages = 1;
-  const [ page, setPage ] = useState(1);
-  const [ limit, setLimit ] = useState(25);
 
   const [ call, setCall ] = useState({
     check: companyById.call
@@ -72,20 +68,16 @@ const Call = (props) => {
     }
   }
 
-  const handleChangePage=(event, value)=>{
-    setPage(value);
-  }
-
   return(
     <div>
       <Typography variant="h5" component="h2">Chamada por mesa</Typography>
       <Grid container>
-        <Grid item className={call.check? classes.buttonAtv: classes.hide}>
+        <Grid item className={classes.buttonAtv}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={call.check? call.check: false}
+                checked={call.check? call.check : false}
                 onClick={()=>atvCall(companyById)}
                 name="checkedA"
                 color="primary"
@@ -109,7 +101,7 @@ const Call = (props) => {
               <TableRow>
                 <TableCell align='center'>Mesa</TableCell>
                 <TableCell align='center'>Hora</TableCell>
-                <TableCell align='center'>Status</TableCell>
+                <TableCell align='center'></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -118,22 +110,17 @@ const Call = (props) => {
                   <TableRow hover key={call.createdAt} role="checkbox" tabIndex={-1}>
                     <TableCell align='center'>{call.table}</TableCell>
                     <TableCell align='center'>{format(parseISO(call.createdAt), 'dd/MM/yyyy HH:mm', {timeZone: 'America/Sao_Paulo'} )}</TableCell>
-                    <TableCell align='center'>{call.status? "Atendita" : "Esperando"}</TableCell>
+                    <TableCell align='center'>
+                      <Button className={classes.button} onClick={()=>props.destroyCall(call._id)} variant="contained" color="primary">
+                        Atendida
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 )
               })}
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid className={classes.center} container item xs={12} spacing={3}>
-          <Box component="span">
-            <Pagination
-              count={pages}
-              page={page}
-              onChange={handleChangePage}
-            />
-          </Box>
-        </Grid>
       </Paper>
     </div>
   );
@@ -149,6 +136,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({listCalls, atvCompany}, dispatch);
+  bindActionCreators({listCalls, atvCompany, destroyCall}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Call);

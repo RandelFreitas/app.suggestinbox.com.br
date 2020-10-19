@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,14 +15,21 @@ const useStyles = makeStyles((theme) =>({
   button: {
     marginTop: '25px',
   },
+  buttonAtv: {
+    margin: '15px 0'
+  }
 }));
 
 const Delivery = (props) => {
-  //const classes = useStyles();
+  const classes = useStyles();
   const { companyById } = props;
   const [ delivery, setDelivery ] = useState({
     check: companyById.delivery
-  })
+  });
+
+  useEffect(() => {
+    setDelivery({check: companyById.delivery});
+  },[companyById.delivery])
 
   const atvDelivery = (companyById) => {
     if(companyById.delivery){
@@ -40,12 +47,12 @@ const Delivery = (props) => {
     <div>
       <Typography variant="h5" component="h2">Delivery</Typography>
       <Grid container>
-        <Grid item>
+        <Grid item className={classes.buttonAtv}>
           <FormGroup row>
           <FormControlLabel
             control={
               <Switch
-                checked={delivery.check}
+                checked={delivery.check? delivery.check : false}
                 onClick={()=>atvDelivery(companyById)}
                 name="checkedA"
                 color="primary"

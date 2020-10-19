@@ -3,17 +3,22 @@ import history from "../services/history";
 
 const ACTIONS = {
   INFOS: 'INFOS',
-  ADD: 'ADD_SUGGEST'
+  ADD: 'ADD_SUGGEST',
+  GET_MENU: 'GET_MENU'
 }
 const INITIAL_STATE = {
   infos:[],
   idTable: [],
-  suggest:[]
+  suggest:[],
+  menu: [],
+  sectionMenu: [],
 }
 export const clientReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.INFOS:
       return {...state, infos: action.infos, idTable: action.idTable}
+    case ACTIONS.GET_MENU:
+      return {...state, menu: action.menu, sectionMenu: action.sectionMenu}
     case ACTIONS.ADD:
       return {...state, suggest: action.suggest}
     default:
@@ -51,6 +56,22 @@ export const submitSuggest = (suggest) => {
         suggest: Response.data,
       });
     }, history.push(`/client/opiniao/sucesso/?${suggest.companyId}`))
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}
+//LISTAR MENU
+export const getMenu = (idCompany) => {
+  return dispatch => {
+    api.get(`/client/company/menu/${idCompany}`)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.GET_MENU,
+        menu: Response.data,
+        sectionMenu: Response.data.sectionMenu,
+      })
+    })
     .catch(error => {
       console.log(error);
     });

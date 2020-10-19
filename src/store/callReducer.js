@@ -6,6 +6,7 @@ const ACTIONS = {
   BY_ID_CALL: 'BYIDCALL',
   ADD_CALL: 'ADDCALL',
   UPDATE_CALL: 'UPDATECALL',
+  DELETE_CALL: 'DELETECALL',
 }
 const INITIAL_STATE = {
   calls: [],
@@ -22,11 +23,16 @@ export const callReducer = (state = INITIAL_STATE, action) => {
       return {...state, callById: action.callById}
     case ACTIONS.UPDATE_CALL:
       return state;
+    case ACTIONS.DELETE_CALL:
+      const id = action.id;
+      const calls = state.calls.filter( call => call._id !== id);
+      console.log(calls);
+      return {...state, calls: calls}
     default:
       return state;
   }
 }
-//LISTAR COMPANIAS
+//LISTAR CALLS
 export const listCalls = (page, nOfItems) => {
   return dispatch => {
     api.get(`/adm/all-calls?page=${page}&limit=${nOfItems}`)
@@ -43,7 +49,7 @@ export const listCalls = (page, nOfItems) => {
     });
   }
 }
-//GET BY ID COMPANY
+//GET BY ID CALL
 export const getCallById = (id) => {
   return dispatch => {
     api.get(`/adm/call/${id}`)
@@ -58,7 +64,7 @@ export const getCallById = (id) => {
     })
   }
 }
-//UPDATE COMPANY
+//UPDATE CALL
 export const updateCall = (company, id, idUser) => {
   return dispatch => {
     api.put(`/adm/call/${id}`, company)
@@ -67,6 +73,21 @@ export const updateCall = (company, id, idUser) => {
         type: ACTIONS.UPDATE_CALL,
       })
     }, history.push(`/suggest/call/?${idUser}/?${id}?page=1&limit=25`))
+    .catch(error => {
+      console.log(error)
+    })
+  }
+}
+//DELETE CALL
+export const destroyCall = (id) => {
+  return dispatch => {
+    api.delete(`/adm/call/${id}`)
+    .then(Response => {
+      dispatch({
+        type: ACTIONS.DELETE_CALL,
+        id: id
+      })
+    })
     .catch(error => {
       console.log(error)
     })
