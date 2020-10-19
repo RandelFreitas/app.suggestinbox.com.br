@@ -59,7 +59,11 @@ const MainClient = (props) => {
         onClick={() => props.addCall(infos._id, idTable)}
         component={Link} to={`/client/atencao/?${infos._id}?table=${idTable? idTable: 0}`} 
         variant="contained" color="primary">
-        Chamar garçom
+        Chamar Garçom
+      </Button>
+      <Button className={props.infos.delivery? classes.button : classes.hide} 
+        component={Link} to={`/client/opiniao/?${infos._id}?table=${idTable? idTable: 0}`} variant="contained" color="primary">
+        Delivery
       </Button>
     </div>
   );

@@ -1,12 +1,14 @@
 import api from '../services/api';
 
 const ACTIONS = {
-  LIST_MENU: 'LISTMENU',
-  ATV_MENU: 'ATVMENU'
+  LIST_MENU: 'LIST_MENU',
+  ATV_MENU: 'ATV_MENU',
+  BY_ID_MENU: 'BY_ID_MENU'
 }
 const INITIAL_STATE = {
   menu: [],
-  menuById: [],
+  sectionMenu: [],
+  infosMenu: [],
 }
 export const menuReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
@@ -15,14 +17,14 @@ export const menuReducer = (state = INITIAL_STATE, action) => {
     case ACTIONS.ADD_MENU:
       return {...state, menu: action.menu}
     case ACTIONS.BY_ID_MENU:
-      return {...state, menuById: action.menuById}
+      return {...state, menu: action.menu, sectionMenu: action.sectionMenu}
     case ACTIONS.UPDATE_MENU:
       return state;
     default:
       return state;
   }
 }
-//LISTAR MENU
+//LISTAR TODOS OS MENUS
 export const getMenu = (idCompany) => {
   return dispatch => {
     api.get(`/adm/menu/${idCompany}`)
@@ -54,13 +56,14 @@ export const addMenu = (menu, id) => {
   }
 }
 //GET BY ID MENU
-export const getMenuById = (id) => {
+export const getMenuById = (idCompany) => {
   return dispatch => {
-    api.get(`/adm/menu/${id}`)
+    api.get(`/adm/menu/${idCompany}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.BY_ID_MENU,
-        menuById: Response.data,
+        menu: Response.data,
+        sectionMenu: Response.data.sectionMenu,
       })
     })
     .catch(error => {

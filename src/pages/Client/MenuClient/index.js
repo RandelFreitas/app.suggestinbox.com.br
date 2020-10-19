@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getMenu } from '../../../store/clientReducer';
+import { getMenu, addCall } from '../../../store/clientReducer';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,7 +73,7 @@ const MenuClient = (props) =>{
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={2} align='center'>
-                      <h4>{section.type}</h4>
+                      <h4>{section.name}</h4>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -99,8 +99,9 @@ const MenuClient = (props) =>{
           variant="contained" color="primary">
           Voltar ao Menu
         </Button>
-        <Button className={classes.buttonEnd}
-          component={Link} to={`/client/atencao/?${infos._id}?table=${idTable}`} 
+        <Button className={props.infos.call && idTable != 0? classes.buttonEnd : classes.hide} 
+          onClick={() => props.addCall(infos._id, idTable)}
+          component={Link} to={`/client/atencao/?${infos._id}?table=${idTable? idTable: 0}`} 
           variant="contained" color="primary">
           Chamar garçom
         </Button>
@@ -118,10 +119,9 @@ const mapStateToProps = state => ({
   idTable: state.client.idTable,
   menu: state.client.menu,
   sectionMenu: state.client.sectionMenu,
-  itemMenu: state.client.itemMenu
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({getMenu}, dispatch);
+  bindActionCreators({getMenu, addCall}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuClient);

@@ -70,7 +70,7 @@ const Call = (props) => {
 
   return(
     <div>
-      <Typography variant="h5" component="h2">Chamada por mesa</Typography>
+      <Typography variant="h5" component="h2">Chamadas</Typography>
       <Grid container>
         <Grid item className={classes.buttonAtv}>
           <FormGroup row>
@@ -90,7 +90,7 @@ const Call = (props) => {
       </Grid>
       <Grid container>
         <Grid className={classes.tables} item>
-          <Typography variant="h6">Chamados</Typography>
+          <Typography variant="h6">Chamados por mesa</Typography>
         </Grid>
       </Grid>
 
@@ -99,7 +99,7 @@ const Call = (props) => {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align='center'>Mesa</TableCell>
+                <TableCell align='center'>Local</TableCell>
                 <TableCell align='center'>Hora</TableCell>
                 <TableCell align='center'></TableCell>
               </TableRow>
@@ -108,7 +108,7 @@ const Call = (props) => {
               { calls.map( call => {
                 return (
                   <TableRow hover key={call.createdAt} role="checkbox" tabIndex={-1}>
-                    <TableCell align='center'>{call.table}</TableCell>
+                    <TableCell align='center'>Mesa {call.table}</TableCell>
                     <TableCell align='center'>{format(parseISO(call.createdAt), 'dd/MM/yyyy HH:mm', {timeZone: 'America/Sao_Paulo'} )}</TableCell>
                     <TableCell align='center'>
                       <Button className={classes.button} onClick={()=>props.destroyCall(call._id)} variant="contained" color="primary">
