@@ -18,6 +18,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -67,6 +72,10 @@ const useStyles = makeStyles(() =>({
   },
   tableHead: {
     background: 'black'
+  },
+  centerButton: {
+    textAlign: 'end',
+    margin: 'auto',
   }
 }));
 
@@ -143,39 +152,25 @@ const Menu = (props) => {
           <MenuItem value={2}>Catálogo</MenuItem>
         </Select>
       </FormControl>
+
       <Paper className={classes.paper}>
         <Grid container>
-          <Grid className={classes.sectionName} item xs={1}>
+          <Grid className={classes.sectionName} item xs={2}>
             <Typography>Seção:</Typography>
           </Grid>
           <Grid className={classes.center} item xs={6}>
             <TextField
-                variant="outlined"
-                label="Nome:"
-                margin="dense"
-                fullWidth
-                name="name"
-                inputProps={{ maxLength: 70 }}
-                InputLabelProps={{ shrink: true }}
-              />
+              variant="outlined"
+              label="Nome:"
+              margin="dense"
+              fullWidth
+              name="name"
+              inputProps={{ maxLength: 70 }}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
-          <Grid className={classes.center} item xs={3}>
-            <FormControl>
-              <FormHelperText>Posição:</FormHelperText>
-              <Select
-                value={menuType}
-                onChange={handleChange}
-                displayEmpty
-                className={classes.selectEmpty}
-                inputProps={{ 'aria-label': 'Without label' }}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid className={classes.center} item xs={2}>
-            <Button variant="contained" color="primary">
+          <Grid className={classes.centerButton} item xs={4}>
+            <Button variant="contained" color="primary" endIcon={<AddCircleOutlineIcon/>}>
               Adicionar
             </Button>
           </Grid>
@@ -186,22 +181,13 @@ const Menu = (props) => {
           <Grid className={classes.sectionName} item xs={1}>
             <Typography>Item:</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid className={classes.center} item xs={5}>
             <TextField
               variant="outlined"
               label="Nome:"
               margin="dense"
               fullWidth
               name="name"
-              inputProps={{ maxLength: 70 }}
-              InputLabelProps={{ shrink: true }}
-            />
-            <TextField
-              variant="outlined"
-              label="Valor:"
-              margin="dense"
-              fullWidth
-              name="value"
               inputProps={{ maxLength: 70 }}
               InputLabelProps={{ shrink: true }}
             />
@@ -215,24 +201,20 @@ const Menu = (props) => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid className={classes.center} item xs={2}>
-            <FormControl>
-              <FormHelperText>Seção:</FormHelperText>
-              <Select
-                value={menuType}
-                onChange={handleChange}
-                displayEmpty
-                className={classes.selectEmpty}
-                inputProps={{ 'aria-label': 'Without label' }}
-              >
-                <MenuItem value={1}>Comida</MenuItem>
-                <MenuItem value={2}>Bebida</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
           <Grid className={classes.center} item xs={1}>
+            <TextField
+              variant="outlined"
+              label="Valor:"
+              margin="dense"
+              fullWidth
+              name="value"
+              inputProps={{ maxLength: 70 }}
+              InputLabelProps={{ shrink: true }}
+            />
+          </Grid>
+          <Grid className={classes.center} item xs={2}>
             <FormControl>
-              <FormHelperText>Posição:</FormHelperText>
+              <FormHelperText>Seção do item:</FormHelperText>
               <Select
                 value={menuType}
                 onChange={handleChange}
@@ -240,13 +222,16 @@ const Menu = (props) => {
                 className={classes.selectEmpty}
                 inputProps={{ 'aria-label': 'Without label' }}
               >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
+              {sectionMenu.map(section => {
+                return (
+                  <MenuItem key={section._id} value={section.name}>{section.name}</MenuItem>
+                )
+              })}
               </Select>
             </FormControl>
           </Grid>
-          <Grid className={classes.center} item xs={2}>
-            <Button variant="contained" color="primary">
+          <Grid className={classes.centerButton} item xs={2}>
+            <Button variant="contained" color="primary" endIcon={<AddCircleOutlineIcon/>}>
               Adicionar
             </Button>
           </Grid>
@@ -254,13 +239,16 @@ const Menu = (props) => {
       </Paper>
 
       <div className={classes.center}> 
-        <Button rel="noopener noreferrer" className={edit? classes.buttonEdit : classes.hide} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=1`} variant="contained" color="primary">
+        <Button rel="noopener noreferrer" className={edit? classes.buttonEdit : classes.hide} 
+          target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=1`} 
+          variant="contained" color="primary"
+          endIcon={<VisibilityIcon/>}>
           Vizualiar
         </Button>
-        <Button className={classes.buttonEdit} onClick={()=> editMenu()} variant="outlined" color={edit? "default" : "secondary" }>
+        <Button className={classes.buttonEdit} onClick={()=> editMenu()} variant="outlined" color={edit? "default" : "secondary"} endIcon={edit? <EditIcon/> : <CancelIcon/> }>
           {edit? "Editar":"Cancelar"}
         </Button>
-        <Button className={edit? classes.hide: classes.buttonEdit} onClick={()=> editMenu()} variant="contained" color="primary">
+        <Button className={edit? classes.hide: classes.buttonEdit} onClick={()=> editMenu()} variant="contained" color="primary" endIcon={<SaveIcon />}>
           Salvar
         </Button>
       </div>
