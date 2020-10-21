@@ -33,9 +33,9 @@ export const auth = (login) => {
         type: ACTIONS.AUTH,
         infos: Response.data,
       }); 
-      if(!Response.data.token){
+      if(Response.data.error){
         dispatch(
-          showMessage("Senha ou email inválidos!")
+          showMessage(Response.data.error)
         )
       }else{
         setInfosLocalStorage(Response.data.token, Response.data.user);
@@ -46,8 +46,8 @@ export const auth = (login) => {
       dispatch(
         showMessage("Servidor indisponível, tente mais tarde!"),
         console.log(error)
-      )}
-    )
+      )
+    });
   }
 }
 //ESQUECI SENHA
@@ -59,13 +59,13 @@ export const fogot = (email) => {
         type: ACTIONS.FOGOT,
         email: Response.data,
       });
-      if(!Response.data.email){
+      if(Response.data.error){
         dispatch(
-          showMessage("Usuario não encontrado!")
+          showMessage(Response.data.error)
         )
       }else{
         dispatch(
-          showMessage("Email enviado com sucesso!"),
+          showMessage(Response.data.msg),
           history.push('/login')
         )
       }
@@ -87,13 +87,13 @@ export const reset = (user) => {
           type: ACTIONS.FOGOT,
           user: Response.data,
       });
-      if(!Response.data.success){
+      if(Response.data.error){
         dispatch(
-          showMessage("Usuario não encontrado!")
+          showMessage(Response.data.error)
         )
       }else{
         dispatch(
-          showMessage("Senha recuperada com sucesso!"),
+          showMessage(Response.data.msg),
           history.push('/login')
         )
       }

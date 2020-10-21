@@ -1,5 +1,6 @@
 import api from '../services/api';
 import history from '../services/history';
+import { showMessage } from './messageReducer';
 
 const ACTIONS = {
   LIST_CALLS: 'LISTCALLS',
@@ -26,7 +27,6 @@ export const callReducer = (state = INITIAL_STATE, action) => {
     case ACTIONS.DELETE_CALL:
       const id = action.id;
       const calls = state.calls.filter( call => call._id !== id);
-      console.log(calls);
       return {...state, calls: calls}
     default:
       return state;
@@ -45,7 +45,10 @@ export const listCalls = (page, nOfItems) => {
       })
     })
     .catch(error => {
-      console.log(error);
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )
     });
   }
 }
@@ -60,8 +63,11 @@ export const getCallById = (id) => {
       })
     })
     .catch(error => {
-      console.log(error);
-    })
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )
+    });
   }
 }
 //UPDATE CALL
@@ -74,22 +80,33 @@ export const updateCall = (company, id, idUser) => {
       })
     }, history.push(`/suggest/call/?${idUser}/?${id}?page=1&limit=25`))
     .catch(error => {
-      console.log(error)
-    })
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )
+    });
   }
 }
 //DELETE CALL
-export const destroyCall = (id) => {
+export const destroyCall = (idCall) => {
   return dispatch => {
-    api.delete(`/adm/call/${id}`)
+    api.delete(`/adm/call/${idCall}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.DELETE_CALL,
-        id: id
-      })
+        id: idCall
+      });
+      if(Response.data.msg){
+        dispatch(
+          showMessage(Response.data.msg)
+        )
+      }
     })
     .catch(error => {
-      console.log(error)
-    })
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }

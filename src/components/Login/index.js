@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 import { auth } from '../../store/authReducer';
-import { showMessage, hideMessage, showProgress, hideProgress } from '../../store/messageReducer';
+import { showProgress, hideProgress } from '../../store/messageReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
@@ -71,6 +71,7 @@ const Login = (props) => {
       }),
       onSubmit: values => {
         props.auth(values);
+        props.hideProgress();
       },
   });
 
@@ -155,12 +156,11 @@ const Login = (props) => {
 }
 
 const mapStateToProps = state => ({
-  openDialog: state.message.showMessage,
   message: state.message.message,
   progress: state.message.progress
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({auth, showMessage, hideMessage, showProgress, hideProgress}, dispatch);
+  bindActionCreators({auth, showProgress, hideProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,9 +1,11 @@
 import api from '../services/api';
+import { getCompanyById } from './companyReducer';
+import { showMessage } from './messageReducer';
 
 const ACTIONS = {
   LIST_SUGGESTS: 'LISTSUGGESTS',
   FAVORITE: 'FAVORITE',
-  TOFILE: 'TOFILE',
+  OUT_LINE: 'OUT_LINE',
 }
 const INITIAL_STATE = {
   suggests: [],
@@ -24,23 +26,19 @@ export const suggestReducer = (state = INITIAL_STATE, action) => {
         }
       })
       return {...state, suggests: listUp}
-    case ACTIONS.TOFILE:
-      const listUpOut = [...state.suggests]
-      listUpOut.forEach(suggest => {
-        if(suggest._id === action._id){
-          suggest.outlier = true;
-        }
-      })
-      return {...state, suggests: listUpOut}
+    case ACTIONS.OUT_LINE:
+      const id = action.id;
+      const suggests1 = state.suggests.filter(suggest => suggest._id !== id) 
+      return {...state, suggests: suggests1}
     default:
       return state;
   }
 }
 //*******************************************SUGGESTS*********************************************
 //LISTAR SUGGESTS
-export const listSuggest = (idUrl, page, limit, type, fromDate, toDate) => {
+export const listSuggest = (idUrl, page, limit, outlier, fromDate, toDate) => {
   return dispatch => {
-    api.get(`/adm/all-suggest/${idUrl}?page=${page}&limit=${limit}&type=${type}&fromDate=${fromDate}&toDate=${toDate}`)
+    api.get(`/adm/all-suggest/${idUrl}?page=${page}&limit=${limit}&outlier=${outlier}&fromDate=${fromDate}&toDate=${toDate}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({
@@ -50,31 +48,51 @@ export const listSuggest = (idUrl, page, limit, type, fromDate, toDate) => {
       })
     })
     .catch(error => {
-      console.log(error);
-    });
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }
 //FAVORITAR SUGGEST
 export const favorite = (suggest) => {
   return dispatch => {
-    api.put(`/adm/suggest/${suggest._id}`, suggest )
+    api.put(`/adm/favorite-suggest/${suggest._id}`, suggest )
     .then(Response => {
       dispatch({
         type: ACTIONS.FAVORITE,
         id: suggest._id
-      })
+      }) 
     })
+    .catch(error => {
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }
 //ARQUIVAR SUGGEST
 export const outlier = (suggest) => {
   return dispatch => {
-    api.put(`/adm/suggest/${suggest._id}`, suggest )
+    api.put(`/adm/outlier-suggest/${suggest._id}`, suggest )
     .then(Response => {
       dispatch({
-        type: ACTIONS.TOFILE,
-        id: suggest._id
+          type: ACTIONS.OUT_LINE,
+          id: suggest._id
       })
-    })
+    }).then(() => {
+        dispatch(
+          getCompanyById(suggest.companyId)
+        )
+      }
+    )
+    .catch(error => {
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }

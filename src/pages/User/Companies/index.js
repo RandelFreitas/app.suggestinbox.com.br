@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listCompanies } from '../../../store/companyReducer' 
+import { listCompanies } from '../../../store/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -81,8 +81,9 @@ const Companies = (props) => {
                 </Card>
               </div>
             </Grid>
-          )})
-        }
+          )
+        })
+      }
     </React.Fragment>
   )
 
@@ -110,7 +111,7 @@ const Companies = (props) => {
 
 Companies.prototypes = {
   companies: PropTypes.array.isRequired,
-  infosCompanies: PropTypes.array.isRequired
+  infosCompanies: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -119,6 +120,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({listCompanies}, dispatch);
+  bindActionCreators({
+    listCompanies,
+  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);

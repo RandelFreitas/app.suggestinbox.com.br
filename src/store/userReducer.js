@@ -1,5 +1,6 @@
 import api from '../services/api';
 import history from '../services/history';
+import { showMessage } from './messageReducer';
 
 const ACTIONS = {
   LIST_USERS: 'LISTUSERS',
@@ -9,7 +10,6 @@ const ACTIONS = {
 const INITIAL_STATE = {
   users: [],
   userById: [],
-  userUp: [],
   infosUsers: [],
 }
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -17,7 +17,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
     case ACTIONS.BY_ID_USER:
       return {...state, userById: action.userById}
     case ACTIONS.UPDATE_USER:
-      return {...state, user: action.user}
+      return {...state, userById: action.userById}
     default:
       return state;
   }
@@ -32,40 +32,69 @@ export const listUser = (page, nOfItems) => {
         type: ACTIONS.LIST_USERS,
         users: docs,
         infosUsers: infos,
-      })
+      });
+      if(Response.data.error){
+        dispatch(
+          showMessage(Response.data.error)
+        )
+      }
     })
     .catch(error => {
-      console.log(error);
-    });
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }
 //GET BY ID USER
-export const getUserById = (id) => {
+export const getUserById = (idUser) => {
   return dispatch => {
-    api.get(`/adm/user/${id}`)
+    api.get(`/adm/user/${idUser}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.BY_ID_USER,
         userById: Response.data,
-      })
+      });
+      if(Response.data.error){
+        dispatch(
+          showMessage(Response.data.error)
+        )
+      }
     })
     .catch(error => {
-      console.log(error);
-    })
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }
 //UPDATE USER
-export const updateUser = (user, id) => {
+export const updateUser = (user, idUser) => {
   return dispatch => {
-    api.put(`/adm/user/${id}`, user)
+    api.put(`/adm/user/${idUser}`, user)
     .then(Response => {
       dispatch({
         type: ACTIONS.UPDATE_USER,
-        userUp: Response.data
-      })
-    }, history.push(`/user/?${id}?page=1&limit=25`))
-    .catch(error => {
-      console.log(error)
+        userById: Response.data
+      });
+      if(Response.data.error){
+        dispatch(
+          showMessage(Response.data.error)
+        )
+      }else{
+        dispatch(
+          showMessage("Usuário atualizado com sucesso!"),
+          history.push(`/user/?${idUser}?page=1&limit=25`)
+        )
+      }
     })
+    .catch(error => {
+      dispatch(
+        showMessage("Servidor indisponível, tente mais tarde!"),
+        console.log(error)
+      )}
+    );
   }
 }

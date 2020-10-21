@@ -6,6 +6,8 @@ import { logoutUser } from '../../services/auth';
 import { getUserById } from '../../store/userReducer';
 import PropTypes from 'prop-types';
 import RoutesUser from './routesUser';
+import MessageDialog from '../../components/Dialog';
+import history from '../../services/history';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const User = (props) => {
   const classes = useStyles();
-  const [ idUser ] = useState(window.location.href.split('?')[1].split('?')[0]);
+  const [ idUser ] = useState(window.location.href.split('/?')[1].split('?')[0]);
   const { userById } = props;
   
   useEffect(() => {
@@ -87,12 +89,13 @@ const User = (props) => {
           </Container>
         </main>
       </div>
+      <MessageDialog/>
     </div>
   );
 };
 
 User.prototypes = {
-  userById: PropTypes.array.isRequired
+  userById: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -100,6 +103,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({getUserById}, dispatch);
+  bindActionCreators({ getUserById }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

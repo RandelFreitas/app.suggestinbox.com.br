@@ -82,7 +82,7 @@ const useStyles = makeStyles(() =>({
 const Menu = (props) => {
   const classes = useStyles();
   const { companyById, menuById, sectionMenu } = props;
-  const [ idCompany ] = useState(window.location.href.split('?')[2]);
+  const [ idCompany ] = useState(window.location.href.split('/?')[2]);
   const [ edit, setEdit ] = useState(true);
   const [ menu, setMenu ] = useState({
     check: companyById.menu

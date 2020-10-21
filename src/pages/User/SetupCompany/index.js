@@ -559,7 +559,7 @@ const SetupCompany = (props) => {
 }
 
 SetupCompany.prototypes = {
-  companyById: PropTypes.array.isRequired
+  companyById: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -567,6 +567,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addCompany, getCompanyById, updateCompany, cleanCompany }, dispatch);
+  bindActionCreators({ 
+    addCompany, 
+    getCompanyById, 
+    updateCompany, 
+    cleanCompany, 
+  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetupCompany);

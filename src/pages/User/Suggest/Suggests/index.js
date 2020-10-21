@@ -34,6 +34,7 @@ import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import CheckIcon from '@material-ui/icons/Check';
 import Switch from "@material-ui/core/Switch";
 import FormGroup from '@material-ui/core/FormGroup';
@@ -77,16 +78,16 @@ const Suggest = (props) => {
   
   const [ page, setPage ] = useState(1);
   const [ limit, setLimit ] = useState(25);
-  const [typeSuggests, setTypeSuggests] = useState('All');
-  const [selectedDateFrom, setSelectedDateFrom] = useState(new Date('2020-01-01T00:00:00'));
-  const [selectedDateTo, setSelectedDateTo] = useState(Date.now);
+  const [ selectedDateFrom, setSelectedDateFrom ] = useState(new Date('2020-01-01T00:00:00'));
+  const [ selectedDateTo, setSelectedDateTo ] = useState(Date.now);
+  const [ outlier, setOutlier ] = useState(false);
 
   const [ suggestAtv, setSuggestAtv ] = useState({
     check: companyById.suggest
   });
   
   useEffect(() => {
-    props.listSuggest(idCompany, page, limit, typeSuggests, selectedDateFrom, selectedDateTo);
+    props.listSuggest(idCompany, page, limit, outlier, selectedDateFrom, selectedDateTo);
   },[]);
 
   useEffect(() => {
@@ -95,15 +96,15 @@ const Suggest = (props) => {
 
   const handleChangePage=(event, value)=>{
     setPage(value);
-    props.listSuggest(idCompany, value, limit, typeSuggests, selectedDateFrom, selectedDateTo);
+    props.listSuggest(idCompany, value, limit, outlier, selectedDateFrom, selectedDateTo);
   }
   const handleLimit=(event)=>{
     setLimit(event.target.value);
-    props.listSuggest(idCompany, page, event.target.value, typeSuggests, selectedDateFrom, selectedDateTo);
+    props.listSuggest(idCompany, page, event.target.value, outlier, selectedDateFrom, selectedDateTo);
     setPage(1);
   }
   const handleChangSuggest=(event)=>{
-    setTypeSuggests(event.target.value);
+    setOutlier(event.target.value);
     props.listSuggest(idCompany, page, limit, event.target.value, selectedDateFrom, selectedDateTo);
   }
   const handleDateChangeFrom = (date) => {
@@ -112,26 +113,26 @@ const Suggest = (props) => {
   };
   const handleDateChangeTo = (date) => {
     setSelectedDateTo(date);
-    props.listSuggest(idCompany, page, limit, typeSuggests, selectedDateFrom, date);
+    props.listSuggest(idCompany, page, limit, outlier, selectedDateFrom, date);
   };
 
   //FAV E ARQ
   const favoriteUpdate = (suggest) => {
     if(suggest.favorite){
       suggest.favorite = false;
-      return props.favorite(suggest)
+      return props.favorite(suggest);
     }else{
       suggest.favorite = true;
-      return props.favorite(suggest)
+      return props.favorite(suggest);
     }
   }
   const outlierUpdate = (suggest) => {
     if(suggest.outlier){
       suggest.outlier = false;
-      return props.outlier(suggest)
+      return props.outlier(suggest);
     }else{
       suggest.outlier = true;
-      return props.outlier(suggest)
+      return props.outlier(suggest);
     }
   }
 
@@ -180,14 +181,13 @@ const Suggest = (props) => {
           </Select>
         </FormControl>
         <FormControl className={classes.filter}>
-          <FormHelperText>Filtrar por:</FormHelperText>
+          <FormHelperText>Mostrar somente:</FormHelperText>
           <Select
-            value={typeSuggests}
+            value={outlier}
             onChange={handleChangSuggest}
             inputProps={{ 'aria-label': 'Without label' }}>
-            <MenuItem value={'All'}>Todas</MenuItem>
-            <MenuItem value={'Fav'}>Favoritas</MenuItem>
-            <MenuItem value={'Arq'}>Arquivadas</MenuItem>
+            <MenuItem value={false}>Válidas</MenuItem>
+            <MenuItem value={true}>Arquivadas</MenuItem>
           </Select>
         </FormControl>
         <MuiPickersUtilsProvider locale={ptBR} utils={DateFnsUtils}>
@@ -260,7 +260,7 @@ const Suggest = (props) => {
                       </TableCell>
                       <TableCell align='center'>
                         <IconButton onClick={() => outlierUpdate(suggest)}>
-                          {suggest.outlier? (<DeleteOutlineIcon color="disabled"/>):(<DeleteOutlineIcon/>)}
+                          {suggest.outlier? (<RestoreFromTrashIcon/>):(<DeleteOutlineIcon/>)}
                         </IconButton>
                       </TableCell>
                     </TableRow>

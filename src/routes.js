@@ -6,7 +6,7 @@ import Client from './pages/Client';
 import User from './pages/User';
 import Suggest from './pages/User/Suggest';
 import Adm from './pages/Adm';
-import { Login, Fogot, Reset } from './components';
+import { Login, Fogot, Reset, Print } from './components';
 
 import { isAuthenticated } from './services/auth';
 import history from './services/history';
@@ -35,6 +35,7 @@ const Routes = () => (
       <PrivateRoute path='/user' component={User}/>
       <PrivateRoute path='/suggest' component={Suggest}/>
       <PrivateRoute path='/adm' component={Adm}/>
+      <PrivateRoute path='/print' component={Print}/>
       <Route exact path="/not-found" component={()=><h1>Página não encontrada 404</h1>}/>
       <Redirect to="/not-found" />
     </Switch>

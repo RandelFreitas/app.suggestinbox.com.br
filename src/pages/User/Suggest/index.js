@@ -6,6 +6,7 @@ import { logoutUser } from '../../../services/auth';
 import { getCompanyById } from '../../../store/companyReducer';
 import { getUserById } from '../../../store/userReducer';
 import PropTypes from 'prop-types';
+import MessageDialog from '../../../components/Dialog';
 
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -219,7 +220,7 @@ const MainSuggest = (props) => {
                 </div>
                 <CardContent hidden={!open}>
                   <Typography variant="h3" color="textSecondary" component="p">
-                    {companyById.stars? parseFloat(companyById.stars).toFixed(1): "..."}
+                    {companyById.stars? parseFloat(companyById.stars).toFixed(1): "0.0"}
                   </Typography>
                   <Typography color="textSecondary" component="p">
                     {companyById.nStars} classificações
@@ -279,7 +280,7 @@ const MainSuggest = (props) => {
           </List>
         <Divider />
         </Drawer>
-
+        <MessageDialog/>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>

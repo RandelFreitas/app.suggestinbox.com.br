@@ -27,13 +27,13 @@ export const messageReducer = (state = INITIAL_STATE, action) => {
 export const showMessage = (message) => {
   return{
     type: ACTIONS.SHOW_MESSAGE,
-    message: message
+    message: message,
   }
 }
 //FECHAR MENSAGENS
 export const hideMessage = () => {
-  return {
-    type: ACTIONS.HIDE_MESSAGE
+  return { 
+    type: ACTIONS.HIDE_MESSAGE 
   }
 }
 //PROGRESS DA REQUISIÇÃO

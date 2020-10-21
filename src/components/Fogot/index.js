@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { showMessage, hideMessage, showProgress } from '../../store/messageReducer';
+import { hideMessage, showProgress } from '../../store/messageReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
@@ -102,6 +102,7 @@ const Fogot = (props) => {
           <div hidden={props.progress}>
             <CircularProgress/>
           </div>
+          <MessageDialog/>
         </div>
       </Container>
     </div>
@@ -109,12 +110,11 @@ const Fogot = (props) => {
 }
 
 const mapStateToProps = state => ({
-  openDialog: state.message.showMessage,
   message: state.message.message,
   progress: state.message.progress
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({fogot, showMessage, hideMessage, showProgress}, dispatch);
+  bindActionCreators({fogot, hideMessage, showProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Fogot);
