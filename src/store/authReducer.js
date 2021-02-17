@@ -27,29 +27,27 @@ export const authReducer = (state = INITIAL_STATE, action) => {
 //AUTENTICAÇÃO
 export const auth = (login) => {
   return dispatch => {
-    api.post('/auth', login)
+    api.post('/auth/sign-in', login)
     .then(Response => {
       dispatch({
         type: ACTIONS.AUTH,
         infos: Response.data,
-      }); 
-      if(Response.data.error){
+      });
+      setInfosLocalStorage(Response.data.token, Response.data.name);
+      history.push(`/user/?${Response.data.id}?page=1&limit=25`);
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
       }else{
-        setInfosLocalStorage(Response.data.token, Response.data.user);
-        history.push(`/user/?${Response.data.user._id}?page=1&limit=25`);
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servidor indisponível, tente mais tarde!"),
-        console.log(error)
-      )
     });
-  }
-}
+  };
+};
 //ESQUECI SENHA
 export const fogot = (email) => {
   return dispatch => {
@@ -59,23 +57,21 @@ export const fogot = (email) => {
         type: ACTIONS.FOGOT,
         email: Response.data,
       });
-      if(Response.data.error){
+      dispatch(
+        showMessage(Response.data.msg),
+        history.push('/login')
+      )
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
       }else{
         dispatch(
-          showMessage(Response.data.msg),
-          history.push('/login')
-        )
-      }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servidor indisponível, tente mais tarde!"),
-        console.log(error)
-      )}
-    );
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
+      }  
+    });
   }
 }
 //RESET SENHA
@@ -87,22 +83,20 @@ export const reset = (user) => {
           type: ACTIONS.FOGOT,
           user: Response.data,
       });
-      if(Response.data.error){
+      dispatch(
+        showMessage(Response.data.msg),
+        history.push('/login')
+      )
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
       }else{
         dispatch(
-          showMessage(Response.data.msg),
-          history.push('/login')
-        )
-      }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Serviço indisponível, tente mais tarde!"),
-        console.log(error)
-      )}
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
+      }}
     );
   }
 }

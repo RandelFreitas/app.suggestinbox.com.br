@@ -71,7 +71,6 @@ const Login = (props) => {
       }),
       onSubmit: values => {
         props.auth(values);
-        props.hideProgress();
       },
   });
 
@@ -128,8 +127,14 @@ const Login = (props) => {
                 <Typography className={classes.error}>{formik.errors.password}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
-            <Button type="submit" onClick={()=>props.showProgress()} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)}/>
+            <Button type="submit" 
+              onClick={()=>props.showProgress()} 
+              disabled={disableSubmit} 
+              fullWidth variant="contained" 
+              color="primary" 
+              className={classes.submit} 
+              onBlur={formik.handleBlur}>
               Entrar
             </Button>
             <Grid container>

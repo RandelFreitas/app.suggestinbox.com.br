@@ -81,11 +81,11 @@ const Companies = (props) => {
                 </Card>
               </div>
             </Grid>
-          )
+          );
         })
       }
     </React.Fragment>
-  )
+  );
 
   return(
     <div className={classes.root}>
@@ -106,8 +106,8 @@ const Companies = (props) => {
         </Box>
       </Grid>
     </div>
-  )
-}
+  );
+};
 
 Companies.prototypes = {
   companies: PropTypes.array.isRequired,
