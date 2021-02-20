@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listCompanies } from '../../../store/companyReducer';
+import { getCompanies } from '../../../store/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -38,14 +38,14 @@ const useStyles = makeStyles((theme) =>({
 const Companies = (props) => {
   const classes = useStyles();
 
-  const { companies, infosCompanies } = props;
+  const { companies, infosCompanies = 0 } = props;
   const [ idUrl ] = useState(window.location.href.split('/?')[1].split('?')[0]);
   const nOfPages = infosCompanies.pages;
-  const [page, setPage] = useState(1);
-  const [nOfItems, setNoOfItems] = useState(10);
+  const [page, setPage] = useState(0);
+  const [nOfItems, setNoOfItems] = useState(25);
 
   useEffect(() => {
-    props.listCompanies(page, nOfItems);
+    props.getCompanies(page, nOfItems);
   },[page, nOfItems]);
 
   const handleChange=(event, value)=>{
@@ -56,34 +56,33 @@ const Companies = (props) => {
     setPage(1);
   }
 
-  const mapCompanies = (
+  const mapCompanies = () => (
     <React.Fragment>
-      {companies.map( company => {
-          return(
-            <Grid key={company._id} item md={4} sm={6} xs={12}>
-              <div className={classes.item}>  
-                <Card>
-                  <CardActionArea component={Link} to={`/suggest/?${idUrl}/?${company._id}?page=${page}&limit=${nOfItems}`}>
-                    <CardContent>
-                      <Typography noWrap variant="h5" component="h2">
-                        {company.name}
-                      </Typography>
-                      <Typography noWrap variant="body2" color="textSecondary" component="p">
-                        {company.address.city} - {company.address.state}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions className={classes.center}>
-                    <Button component={Link} to={`/suggest/?${idUrl}/?${company._id}?page=${page}&limit=${nOfItems}`} variant="contained" color="primary">
-                      Gerenciar
-                    </Button>
-                  </CardActions>
-                </Card>
-              </div>
-            </Grid>
-          );
-        })
-      }
+      {companies.map(company => {
+        return(
+          <Grid key={company.id} item md={4} sm={6} xs={12}>
+            <div className={classes.item}>  
+              <Card>
+                <CardActionArea component={Link} to={`/suggest/?${idUrl}/?${company.id}?page=${page}&limit=${nOfItems}`}>
+                  <CardContent>
+                    <Typography noWrap variant="h5" component="h2">
+                      {company.name}
+                    </Typography>
+                    <Typography noWrap variant="body2" color="textSecondary" component="p">
+                      {company.address.city} - {company.address.state}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions className={classes.center}>
+                  <Button component={Link} to={`/suggest/?${idUrl}/?${company.id}?page=${page}&limit=${nOfItems}`} variant="contained" color="primary">
+                    Gerenciar
+                  </Button>
+                </CardActions>
+              </Card>
+            </div>
+          </Grid>
+        );
+      })}
     </React.Fragment>
   );
 
@@ -121,7 +120,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    listCompanies,
+    getCompanies,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Companies);

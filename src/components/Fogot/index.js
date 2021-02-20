@@ -1,13 +1,15 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { hideMessage, showProgress } from '../../store/messageReducer';
+import { hideMessage, showProgress, hideProgress } from '../../store/messageReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -25,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  center: {
+    textAlign: 'center',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -45,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
 const Fogot = (props) => {
   const classes = useStyles();
   const [disableSubmit, setDisableSubmit] = useState(false);
+
+  useEffect(()=>{
+    props.hideProgress();
+  },[])
 
   const formik = useFormik ({
     initialValues: { email: ''},
@@ -94,10 +103,27 @@ const Fogot = (props) => {
                 <Typography className={classes.error}>{formik.errors.email}</Typography>
               ) : null}
             </div>
-            <ReCAPTCHA sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" onChange={() => setDisableSubmit(false)} />
-            <Button type="submit" onClick={()=> props.showProgress()} disabled={disableSubmit} fullWidth variant="contained" color="primary" className={classes.submit} onBlur={formik.handleBlur}>
+            <ReCAPTCHA 
+              sitekey="6LcdP8cZAAAAAMLbn_f2B0EDFSdtvkPQaEO1hx30" 
+              onChange={() => setDisableSubmit(false)}/>
+            <Button 
+              type="submit" 
+              onClick={()=> props.showProgress()} 
+              disabled={disableSubmit} 
+              fullWidth 
+              variant="contained" 
+              color="primary" 
+              className={classes.submit} 
+              onBlur={formik.handleBlur}>
               Enviar link para email
             </Button>
+            <Grid container className={classes.center}>
+              <Grid item xs>
+                <Link to="/login" variant="body2">
+                  Login
+                </Link>
+              </Grid>
+            </Grid>
           </form>
           <div hidden={props.progress}>
             <CircularProgress/>
@@ -115,6 +141,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({fogot, hideMessage, showProgress}, dispatch);
+  bindActionCreators({fogot, hideMessage, showProgress, hideProgress}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Fogot);

@@ -34,7 +34,7 @@ export const auth = (login) => {
         infos: Response.data,
       });
       setInfosLocalStorage(Response.data.token, Response.data.name);
-      history.push(`/user/?${Response.data.id}?page=1&limit=25`);
+      history.push(`/user/?${Response.data.id}?page=0&pageSize=25`);
     }).catch(error => {
       if(error.response){
         dispatch(
@@ -51,21 +51,20 @@ export const auth = (login) => {
 //ESQUECI SENHA
 export const fogot = (email) => {
   return dispatch => {
-    api.post('/auth/fogot', email)
+    api.post('/auth/fogot-password', email)
     .then(Response => {
       dispatch({
         type: ACTIONS.FOGOT,
         email: Response.data,
       });
       dispatch(
-        showMessage(Response.data.msg),
-        history.push('/login')
-      )
+        showMessage(Response.data.success),
+      );
     }).catch(error => {
       if(error.response){
         dispatch(
           showMessage(error.response.data.err),
-        )
+        );
       }else{
         dispatch(
           showMessage("Servidor indisponível, tente mais tarde!"),
@@ -80,18 +79,17 @@ export const reset = (user) => {
     api.post('/auth/reset-password', user)
     .then(Response => {
       dispatch({
-          type: ACTIONS.FOGOT,
-          user: Response.data,
-      });
-      dispatch(
-        showMessage(Response.data.msg),
-        history.push('/login')
-      )
+        type: ACTIONS.FOGOT,
+        user: Response.data,
+      },
+      showMessage(Response.data.msg),
+      history.push('/login')
+      );
     }).catch(error => {
       if(error.response){
         dispatch(
           showMessage(error.response.data.err),
-        )
+        );
       }else{
         dispatch(
           showMessage("Servidor indisponível, tente mais tarde!"),

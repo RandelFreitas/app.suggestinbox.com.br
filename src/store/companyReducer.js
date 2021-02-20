@@ -36,24 +36,25 @@ export const companyReducer = (state = INITIAL_STATE, action) => {
   }
 }
 //LISTAR COMPANIAS
-export const listCompanies = (page, nOfItems) => {
+export const getCompanies = (page, pageSize) => {
   return dispatch => {
-    api.get(`/adm/company?page=${page}&limit=${nOfItems}`)
+    api.get(`/adm/companies?page=${page}&pageSize=${pageSize}`)
     .then(Response => {
-      const { docs, infos } = Response.data;
       dispatch({
         type: ACTIONS.LIST_COMPANIES,
-        companies: docs,
+        companies: Response.data,
         infosCompanies: infos,
       });
-      if(Response.data.error){
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error),
+          showMessage(error.response.data.err),
         )
+      }else{
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      console.log(error);
     });
   }
 }
@@ -65,22 +66,20 @@ export const addCompany = (company, idUser) => {
       dispatch({
         type: ACTIONS.ADD_COMPANY,
       });
-      if(Response.data.error){
+      dispatch(
+        showMessage(Response.data.success),
+      );
+      history.push(`/user/?${idUser}?page=1&limit=25`);
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
       }else{
         dispatch(
-          showMessage("Companhia cadastrada com sucesso!")
+          showMessage("Servidor indisponível, tente mais tarde!"),
         );
-        history.push(`/user/?${idUser}?page=1&limit=25`)
-      }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servido indisponivel, tente mais tarde!"),
-        console.log(error)
-      )
+      };
     });
   }
 }
@@ -93,12 +92,16 @@ export const getCompanyById = (idCompany) => {
         type: ACTIONS.BY_ID_COMPANY,
         companyById: Response.data,
       })
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servido indisponivel, tente mais tarde!"),
-        console.log(error)
-      )
+    }).catch(error => {
+      if(error.response){
+        dispatch(
+          showMessage(error.response.data.err),
+        )
+      }else{
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
+      }
     })
   }
 }
@@ -111,23 +114,17 @@ export const updateCompany = (company, idCompany, idUser) => {
         type: ACTIONS.UPDATE_COMPANY,
         companyById: Response.data,
       });
-      if(Response.data.error){
+      history.push(`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`);
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error),
-          history.push(`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`)
+          showMessage(error.response.data.err),
         )
       }else{
         dispatch(
-          showMessage('Companhia atualizada com sucesso!'),
-          history.push(`/suggest/?${idUser}/?${idCompany}?page=1&limit=25`)
-        )
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servido indisponivel, tente mais tarde!"),
-        console.log(error)
-      )
     });
   }
 }
@@ -145,17 +142,19 @@ export const atvCompany = (company) => {
       dispatch({
         type: ACTIONS.ATV_COMPANY,
       });
-      if(Response.data.error){
-        dispatch(
-          showMessage(Response.data.error)
-        )
-      }
-    })
-    .catch(error => {
       dispatch(
-        showMessage("Servido indisponivel, tente mais tarde!"),
-        console.log(error)
-      )
+        showMessage(Response.data.success),
+      );
+    }).catch(error => {
+      if(error.response){
+        dispatch(
+          showMessage(error.response.data.err),
+        )
+      }else{
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
+      }
     })
   }
 }
