@@ -34,7 +34,7 @@ export const auth = (login) => {
         infos: Response.data,
       });
       setInfosLocalStorage(Response.data.token, Response.data.name);
-      history.push(`/user/?${Response.data.id}?page=0&pageSize=25`);
+      history.push(`/user/?${Response.data.id}`);
     }).catch(error => {
       if(error.response){
         dispatch(

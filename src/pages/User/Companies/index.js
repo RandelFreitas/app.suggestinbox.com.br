@@ -12,9 +12,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 import CardActions from '@material-ui/core/CardActions';
-import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) =>({
   root: {
@@ -32,77 +30,61 @@ const useStyles = makeStyles((theme) =>({
   },
   button: {
     margin: '15px'
-  }
+  },
 }));
 
 const Companies = (props) => {
   const classes = useStyles();
 
-  const { companies, infosCompanies = 0 } = props;
-  const [ idUrl ] = useState(window.location.href.split('/?')[1].split('?')[0]);
-  const nOfPages = infosCompanies.pages;
-  const [page, setPage] = useState(0);
-  const [nOfItems, setNoOfItems] = useState(25);
+  const { companies } = props;
+  const [ idUser ] = useState(window.location.href.split('/?')[1].split('?')[0]);
 
   useEffect(() => {
-    props.getCompanies(page, nOfItems);
-  },[page, nOfItems]);
+    props.getCompanies();
+  },[]);
 
-  const handleChange=(event, value)=>{
-    setPage(value);
+  function ListCompanies() {
+    if(companies){
+      return <React.Fragment>
+        {companies.map(company => {
+          return(
+            <Grid key={company.id} item md={4} sm={6} xs={12}>
+              <div className={classes.item}>  
+                <Card>
+                  <CardActionArea component={Link} to={`/suggest/?${idUser}/?${company.id}`}>
+                    <CardContent>
+                      <Typography noWrap variant="h5" component="h2">
+                        {company.name}
+                      </Typography>
+                      <Typography noWrap variant="body2" color="textSecondary" component="p">
+                        {company.address.city} - {company.address.state}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions className={classes.center}>
+                    <Button component={Link} to={`/suggest/?${idUser}/?${company.id}`} variant="contained" color="primary">
+                      Gerenciar
+                    </Button>
+                  </CardActions>
+                </Card>
+              </div>
+            </Grid>
+          );
+        })}
+      </React.Fragment>
+    }
   }
-  const handleNofItems=(event)=>{
-    setNoOfItems(event.target.value);
-    setPage(1);
-  }
-
-  const mapCompanies = () => (
-    <React.Fragment>
-      {companies.map(company => {
-        return(
-          <Grid key={company.id} item md={4} sm={6} xs={12}>
-            <div className={classes.item}>  
-              <Card>
-                <CardActionArea component={Link} to={`/suggest/?${idUrl}/?${company.id}?page=${page}&limit=${nOfItems}`}>
-                  <CardContent>
-                    <Typography noWrap variant="h5" component="h2">
-                      {company.name}
-                    </Typography>
-                    <Typography noWrap variant="body2" color="textSecondary" component="p">
-                      {company.address.city} - {company.address.state}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions className={classes.center}>
-                  <Button component={Link} to={`/suggest/?${idUrl}/?${company.id}?page=${page}&limit=${nOfItems}`} variant="contained" color="primary">
-                    Gerenciar
-                  </Button>
-                </CardActions>
-              </Card>
-            </div>
-          </Grid>
-        );
-      })}
-    </React.Fragment>
-  );
 
   return(
     <div className={classes.root}>
       <Typography className={classes.center} variant="h5" component="h2">Companhias</Typography>
-      <Button className={classes.button} component={Link} to={`/user/setup-company/?${idUrl}`} variant="contained" color="primary">
+      <Button className={classes.button} component={Link} 
+        to={`/user/setup-company/?${idUser}`} 
+        variant="contained" color="primary">
         Adicionar Companhia
       </Button>
       <Grid container item xs={12} spacing={3}>
-        {mapCompanies}
-      </Grid>
-      <Grid className={classes.center} container item xs={12} spacing={3}>
-        <Box component="span">
-          <Pagination
-            count={nOfPages}
-            page={page}
-            onChange={handleChange}
-          />
-        </Box>
+        <ListCompanies/>
       </Grid>
     </div>
   );

@@ -13,14 +13,13 @@ const ACTIONS = {
 const INITIAL_STATE = {
   companies: [],
   companyById: [],
-  infosCompanies: [],
   companyAtv: [],
   suggest: []
 }
 export const companyReducer = (state = INITIAL_STATE, action) => {
   switch(action.type){
     case ACTIONS.LIST_COMPANIES:
-      return {...state, companies: action.companies, infosCompanies: action.infosCompanies}
+      return {...state, companies: action.companies}
     case ACTIONS.ADD_COMPANY:
       return {...state}
     case ACTIONS.BY_ID_COMPANY:
@@ -36,14 +35,13 @@ export const companyReducer = (state = INITIAL_STATE, action) => {
   }
 }
 //LISTAR COMPANIAS
-export const getCompanies = (page, pageSize) => {
+export const getCompanies = () => {
   return dispatch => {
-    api.get(`/adm/companies?page=${page}&pageSize=${pageSize}`)
+    api.get(`/adm/companies`)
     .then(Response => {
       dispatch({
         type: ACTIONS.LIST_COMPANIES,
         companies: Response.data,
-        infosCompanies: infos,
       });
     }).catch(error => {
       if(error.response){
@@ -69,7 +67,7 @@ export const addCompany = (company, idUser) => {
       dispatch(
         showMessage(Response.data.success),
       );
-      history.push(`/user/?${idUser}?page=1&limit=25`);
+      history.push(`/user/?${idUser}`);
     }).catch(error => {
       if(error.response){
         dispatch(

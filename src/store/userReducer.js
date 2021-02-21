@@ -1,5 +1,4 @@
 import api from '../services/api';
-import history from '../services/history';
 import { showMessage } from './messageReducer';
 
 const ACTIONS = {
@@ -33,18 +32,17 @@ export const listUser = (page, nOfItems) => {
         users: docs,
         infosUsers: infos,
       });
-      if(Response.data.error){
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
+      }else{
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servidor indisponível, tente mais tarde!"),
-        console.log(error)
-      )}
-    );
+    });
   }
 }
 //GET BY ID USER
@@ -56,18 +54,17 @@ export const getUserById = (idUser) => {
         type: ACTIONS.BY_ID_USER,
         userById: Response.data,
       });
-      if(Response.data.error){
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
+      }else{
+        dispatch(
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servidor indisponível, tente mais tarde!"),
-        console.log(error)
-      )}
-    );
+    });
   }
 }
 //UPDATE USER
@@ -79,22 +76,16 @@ export const updateUser = (user, idUser) => {
         type: ACTIONS.UPDATE_USER,
         userById: Response.data
       });
-      if(Response.data.error){
+    }).catch(error => {
+      if(error.response){
         dispatch(
-          showMessage(Response.data.error)
+          showMessage(error.response.data.err),
         )
       }else{
         dispatch(
-          showMessage("Usuário atualizado com sucesso!"),
-          history.push(`/user/?${idUser}?page=1&limit=25`)
-        )
+          showMessage("Servidor indisponível, tente mais tarde!"),
+        );
       }
-    })
-    .catch(error => {
-      dispatch(
-        showMessage("Servidor indisponível, tente mais tarde!"),
-        console.log(error)
-      )}
-    );
+    });
   }
 }

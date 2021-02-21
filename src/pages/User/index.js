@@ -7,7 +7,6 @@ import { getUserById } from '../../store/userReducer';
 import PropTypes from 'prop-types';
 import RoutesUser from './routesUser';
 import MessageDialog from '../../components/Dialog';
-import history from '../../services/history';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24,
   },
   title: {
     flexGrow: 1,
@@ -63,7 +62,7 @@ const User = (props) => {
         <CssBaseline />
         <AppBar position="absolute">
           <Toolbar className={classes.toolbar}>
-            <Typography component={Link} to={`/user/?${userById._id}?page=1&limit=25`} variant="h6" color="inherit" noWrap className={classes.title}>
+            <Typography component={Link} to={`/user/?${userById.id}`} variant="h6" color="inherit" noWrap className={classes.title}>
               SuggestInBox
             </Typography>
             <div className={classes.profile}>{userById.name}</div>
@@ -72,7 +71,7 @@ const User = (props) => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton component={Link} to={`/user/setup/?${userById._id}`} color="inherit">
+            <IconButton component={Link} to={`/user/setup/?${userById.id}`} color="inherit">
               <SettingsIcon/>
             </IconButton>
             <IconButton onClick={()=>logoutUser()} color="inherit">

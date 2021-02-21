@@ -148,7 +148,7 @@ const SetupUser = (props) => {
   return (
     <div>
       <Formik 
-        initialValues= {userById._id? userById : defaultFormShape}
+        initialValues= {userById.id? userById : defaultFormShape}
         enableReinitialize
         validationSchema={Yup.object({
           email: Yup.string()
@@ -405,7 +405,7 @@ const SetupUser = (props) => {
                   <Button type="submit" className={classes.button} variant="contained" color="primary">
                     Atualizar
                   </Button>
-                  <Button className={classes.button} component={Link} to={`/user/?${userById._id}?page=1&limit=25`} variant="outlined" color="primary">
+                  <Button className={classes.button} component={Link} to={`/user/?${userById.id}`} variant="outlined" color="primary">
                     Cancelar
                   </Button>
                 </Grid>
