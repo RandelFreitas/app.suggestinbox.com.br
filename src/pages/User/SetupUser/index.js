@@ -136,7 +136,7 @@ const SetupUser = (props) => {
       number: '',
       type: '',
       district: '',
-      zip: '',
+      zipcode: '',
       obs: ''
     },
   };
@@ -181,8 +181,8 @@ const SetupUser = (props) => {
 
         onSubmit={(values) => {
           const { name, email, phone, cpf } = values;
-          const { state, city, street, number, type, district, zip, obs } = values.address;
-          const address = {state, city, street, number, type, district, zip, obs};
+          const { state, city, street, number, type, district, zipcode, obs } = values.address;
+          const address = { state, city, street, number, type, district, zipcode, obs };
           const userUpdate = { name, email, cpf, phone, address };
           props.updateUser(userUpdate, userById._id);
         }}>
@@ -269,14 +269,14 @@ const SetupUser = (props) => {
                       label="Cep:"
                       margin="dense"
                       fullWidth
-                      name="address.zip"
+                      name="address.zipcode"
                       InputProps={{inputComponent: ZipFormatCustom}}
                       InputLabelProps={{ shrink: true }}
-                      {...formik.getFieldProps('address.zip')}
+                      {...formik.getFieldProps('address.zipcode')}
                     />
                     <div>
                       {formik.touched.address && formik.errors.address ? (
-                        <Typography className={classes.error}>{formik.errors.address.zip}</Typography>
+                        <Typography className={classes.error}>{formik.errors.address.zipcode}</Typography>
                       ) : null}
                     </div>
                   </Grid>

@@ -231,10 +231,22 @@ const SetupCompany = (props) => {
           <Grid className={idCompany?  classes.qrCode : classes.hide} item>
             <QRCode value={`https://app.suggestinbox.com.br/client/?${idCompany}?table=0`}/>
             <Typography className={classes.title}>QR Code geral</Typography>
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} variant="contained" color="primary">
+            <Button 
+              rel="noopener noreferrer" 
+              className={classes.buttonQr} 
+              target="_blank" 
+              href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} 
+              variant="contained" 
+              color="primary">
               Ver Perfil
             </Button>
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} variant="outlined" color="primary">
+            <Button 
+              rel="noopener noreferrer" 
+              className={classes.buttonQr} 
+              target="_blank" 
+              href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=0`} 
+              variant="outlined" 
+              color="primary">
               Imprimir
             </Button>
           </Grid>
@@ -253,10 +265,22 @@ const SetupCompany = (props) => {
                 shrink: true,
               }}
             />
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=${nTable}`} variant="contained" color="primary">
+            <Button 
+              rel="noopener noreferrer" 
+              className={classes.buttonQr} 
+              target="_blank" 
+              href={`http://app.suggestinbox.com.br/client/?${idCompany}?table=${nTable}`} 
+              variant="contained" 
+              color="primary">
               Ver Perfil
             </Button>
-            <Button rel="noopener noreferrer" className={classes.buttonQr} target="_blank" href={`localhost:3000/client/?${idCompany}?table=0`} variant="outlined" color="primary">
+            <Button 
+              rel="noopener noreferrer" 
+              className={classes.buttonQr} 
+              target="_blank" 
+              href={`localhost:3000/client/?${idCompany}?table=0`} 
+              variant="outlined" 
+              color="primary">
               Imprimir
             </Button>
           </Grid>
@@ -298,7 +322,7 @@ const SetupCompany = (props) => {
         })}
 
         onSubmit={(values) => {
-          if(companyById._id){
+          if(companyById.id){
             const { name, slogan, history, localization, email, cnpj, phone } = values;
             const { state, city, street, number, type, district, zip, obs } = values.address;
             const address = {state, city, street, number, type, district, zip, obs};
@@ -544,8 +568,11 @@ const SetupCompany = (props) => {
                   <Button type="submit" className={classes.button} variant="contained" color="primary">
                     {idCompany? 'Atualizar': 'Salvar'}
                   </Button>
-                  <Button className={classes.button} component={Link} 
-                    to={idCompany? `/suggest/?${idUser}/?${idCompany}?page=1&limit=25` : `/user/?${idUser}?page=1&limit=25`} variant="outlined" color="primary">
+                  <Button 
+                    className={classes.button} component={Link} 
+                    to={idCompany? `/suggest/?${idUser}/?${idCompany}?page=1&limit=25` : `/user/?${idUser}`} 
+                    variant="outlined" 
+                    color="primary">
                     Cancelar
                   </Button>
                 </Grid>
