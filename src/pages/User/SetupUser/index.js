@@ -125,8 +125,8 @@ const SetupUser = (props) => {
 
   const [idUrl] = useState(window.location.href.split('/?')[1]);
   const defaultFormShape = {
-    email: '',
     name: '',
+    email: '',
     cpf: '',
     phone: '',
     address: {
@@ -160,7 +160,7 @@ const SetupUser = (props) => {
           phone: Yup.string()
             .required('Telefone obrigatório!'),
           address: Yup.object({
-            zip: Yup.string()
+            zipcode: Yup.string()
               .required('Cep obrigatorio!'),
             street: Yup.string()
               .required('Rua obrigatorio!'),
@@ -184,7 +184,7 @@ const SetupUser = (props) => {
           const { state, city, street, number, type, district, zipcode, obs } = values.address;
           const address = { state, city, street, number, type, district, zipcode, obs };
           const userUpdate = { name, email, cpf, phone, address };
-          props.updateUser(userUpdate, userById._id);
+          props.updateUser(userUpdate, userById.id);
         }}>
         {formik => (
           <Card >
@@ -221,7 +221,7 @@ const SetupUser = (props) => {
                       {...formik.getFieldProps('cpf')}
                     />
                     <div>
-                      {formik.touched.cpf && formik.errors.cpf ? (
+                      {formik.touched.cpf && formik.errors.cpf_cnpj ? (
                         <Typography className={classes.error}>{formik.errors.cpf}</Typography>
                       ) : null}
                     </div>

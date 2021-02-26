@@ -69,8 +69,9 @@ export const getUserById = (idUser) => {
 }
 //UPDATE USER
 export const updateUser = (user, idUser) => {
+  console.log('ok');
   return dispatch => {
-    api.put(`/adm/user/${idUser}`, user)
+    api.patch(`/auth/user/${idUser}`, user)
     .then(Response => {
       dispatch({
         type: ACTIONS.UPDATE_USER,

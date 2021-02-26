@@ -327,7 +327,7 @@ const SetupCompany = (props) => {
             const { state, city, street, number, type, district, zip, obs } = values.address;
             const address = {state, city, street, number, type, district, zip, obs};
             const companyUpdate = { name, slogan, history, localization, email, cnpj, phone, address };
-            props.updateCompany(companyUpdate, companyById._id, idUser);
+            props.updateCompany(companyUpdate, companyById.id, idUser);
           }else{
             props.addCompany(values, idUser);
           }
