@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../services/auth';
-import { getCompanyById } from '../../../store/companyReducer';
-import { getUserById } from '../../../store/userReducer';
+import { getCompanyById } from '../../../store/userStores/companyStores/companyReducer';
+import { getUserById } from '../../../store/userStores/userStores/userReducer';
 import PropTypes from 'prop-types';
 import MessageDialog from '../../../components/Dialog';
 

@@ -1,6 +1,6 @@
-import api from '../services/api';
-import history from '../services/history';
-import { showMessage } from './messageReducer';
+import api from '../../../services/api';
+import history from '../../../services/history';
+import { showMessage } from '../../sharedStores/messageReducer';
 
 const ACTIONS = {
   LIST_CALLS: 'LISTCALLS',

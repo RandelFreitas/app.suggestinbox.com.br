@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { hideMessage, showProgress, hideProgress } from '../../store/messageReducer';
+import { hideMessage, showProgress, hideProgress } from '../../store/sharedStores/messageReducer';
+import { fogot } from '../../store/authStores/authReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';
@@ -16,7 +17,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { fogot } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import CircularProgress from '@material-ui/core/CircularProgress';

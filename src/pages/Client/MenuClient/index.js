@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getMenu, addCall } from '../../../store/clientReducer';
+import { getMenu, addCall } from '../../../store/clientStores/clientReducer';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -99,7 +99,7 @@ const MenuClient = (props) =>{
           variant="contained" color="primary">
           Voltar ao Menu
         </Button>
-        <Button className={props.infos.call && idTable != 0? classes.buttonEnd : classes.hide} 
+        <Button className={props.infos.call && idTable !== 0? classes.buttonEnd : classes.hide} 
           onClick={() => props.addCall(infos._id, idTable)}
           component={Link} to={`/client/atencao/?${infos._id}?table=${idTable? idTable: 0}`} 
           variant="contained" color="primary">

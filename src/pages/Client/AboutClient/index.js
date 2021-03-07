@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getInfo } from '../../../store/clientReducer';
+import { getInfo } from '../../../store/clientStores/clientReducer';
 
 const AboutClient = (props) => {
   const { infos } = props;

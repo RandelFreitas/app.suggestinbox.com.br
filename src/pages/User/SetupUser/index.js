@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, TextField, Card, Typography, Grid} from '@material-ui/core';
-import { getUserById, updateUser } from '../../../store/userReducer';
+import { getUserById, updateUser } from '../../../store/userStores/userStores/userReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {

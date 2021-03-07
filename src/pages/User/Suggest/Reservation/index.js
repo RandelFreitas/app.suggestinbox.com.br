@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { atvCompany, getCompanyById } from '../../../../store/companyReducer';
+import { updateCompany, getCompanyById } from '../../../../store/userStores/companyStores/companyReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -35,11 +35,11 @@ const Reservation = (props) => {
     if(companyById.reservation){
       companyById.reservation = false;
       setReservation({check: companyById.reservation});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }else{
       companyById.reservation = true;
       setReservation({check: companyById.reservation});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }
   }
 
@@ -76,6 +76,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({atvCompany, getCompanyById}, dispatch);
+  bindActionCreators({updateCompany, getCompanyById}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Reservation);

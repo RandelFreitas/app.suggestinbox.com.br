@@ -11,7 +11,7 @@ import QRCode from 'qrcode.react';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, TextField, Card, Typography, Grid} from '@material-ui/core';
-import { addCompany, getCompanyById, updateCompany, cleanCompany } from '../../../store/companyReducer';
+import { addCompany, getCompanyById, updateCompany, cleanCompany } from '../../../../store/userStores/companyStores/companyReducer';
 
 const useStyles = makeStyles((theme) => ({
   root: {

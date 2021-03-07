@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { submitSuggest } from '../../../store/clientReducer'
+import { submitSuggest } from '../../../store/clientStores/clientReducer'
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 

@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listCalls, destroyCall } from '../../../../store/callReducer';
-import { atvCompany } from '../../../../store/companyReducer';
+import { listCalls, destroyCall } from '../../../../store/userStores/companyStores/callReducer';
+import { updateCompany } from '../../../../store/userStores/companyStores/companyReducer';
 import { parseISO } from 'date-fns';
 import { format } from 'date-fns-tz';
 
@@ -60,11 +60,11 @@ const Call = (props) => {
     if(companyById.call){
       companyById.call = false;
       setCall({check: companyById.call});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }else{
       companyById.call = true;
       setCall({check: companyById.call});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }
   }
 
@@ -136,6 +136,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({listCalls, atvCompany, destroyCall}, dispatch);
+  bindActionCreators({listCalls, updateCompany, destroyCall}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Call);

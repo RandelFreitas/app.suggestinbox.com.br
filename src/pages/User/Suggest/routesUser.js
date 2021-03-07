@@ -8,7 +8,7 @@ import Menu from './Menu';
 import Finances from './Finances';
 import Reservation from './Reservation';
 import Delivery from './Delivery';
-import SetupCompany from '../SetupCompany';
+import SetupCompany from '../Companies/SetupCompany';
 
 const RoutesUser = () => {
   return(

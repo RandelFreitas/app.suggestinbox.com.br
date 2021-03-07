@@ -1,19 +1,17 @@
-import api from '../services/api';
-import history from '../services/history';
-import { showMessage } from './messageReducer';
+import api from '../../../services/api';
+import history from '../../../services/history';
+import { showMessage } from '../../sharedStores/messageReducer';
 
 const ACTIONS = {
   LIST_COMPANIES: 'LIST_COMPANIES',
   BY_ID_COMPANY: 'BY_ID_COMPANY',
   UPDATE_COMPANY: 'UPDATE_COMPANY',
-  ATV_COMPANY: 'ATV_COMPANY',
   CLEAN_COMPANY: 'CLEAN_COMPANY',
   ADD_COMPANY: 'ADD_COMPANY',
 }
 const INITIAL_STATE = {
   companies: [],
   companyById: [],
-  companyAtv: [],
   suggest: []
 }
 export const companyReducer = (state = INITIAL_STATE, action) => {
@@ -28,16 +26,14 @@ export const companyReducer = (state = INITIAL_STATE, action) => {
       return {...state, companyById: action.companyById};
     case ACTIONS.CLEAN_COMPANY:
       return {...state, companyById: []}
-    case ACTIONS.ATV_COMPANY:
-      return {...state}
     default:
       return state;
   }
 }
-//LISTAR COMPANIAS
+//LISTAR COMPANIAS POR USUÁRIO
 export const getCompanies = () => {
   return dispatch => {
-    api.get(`/adm/companies`)
+    api.get(`/user/companies`)
     .then(Response => {
       dispatch({
         type: ACTIONS.LIST_COMPANIES,
@@ -59,7 +55,7 @@ export const getCompanies = () => {
 //ADICIONAR COMPANY
 export const addCompany = (company, idUser) => {
   return dispatch => {
-    api.post('/adm/company', company)
+    api.post('/user/company', company)
     .then(Response => {
       dispatch({
         type: ACTIONS.ADD_COMPANY,
@@ -84,7 +80,7 @@ export const addCompany = (company, idUser) => {
 //GET BY ID COMPANY
 export const getCompanyById = (idCompany) => {
   return dispatch => {
-    api.get(`/adm/company/${idCompany}`)
+    api.get(`/user/company/${idCompany}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.BY_ID_COMPANY,
@@ -103,10 +99,10 @@ export const getCompanyById = (idCompany) => {
     })
   }
 }
-//UPDATE COMPANY
+//UPDATE COMPANY / CALL, SUGGEST, MENU...
 export const updateCompany = (company, idCompany, idUser) => {
   return dispatch => {
-    api.put(`/adm/company/${idCompany}`, company)
+    api.patch(`/user/company/${idCompany}`, company)
     .then(Response => {
       dispatch({
         type: ACTIONS.UPDATE_COMPANY,
@@ -130,29 +126,5 @@ export const updateCompany = (company, idCompany, idUser) => {
 export const cleanCompany = () => {
   return {
     type: ACTIONS.CLEAN_COMPANY,
-  }
-}
-//ATIVAR / DESATIVAR: MENU, PROMO, CALL
-export const atvCompany = (company) => {
-  return dispatch => {
-    api.put(`/adm/company/${company._id}`, company)
-    .then(Response => {
-      dispatch({
-        type: ACTIONS.ATV_COMPANY,
-      });
-      dispatch(
-        showMessage(Response.data.success),
-      );
-    }).catch(error => {
-      if(error.response){
-        dispatch(
-          showMessage(error.response.data.err),
-        )
-      }else{
-        dispatch(
-          showMessage("Servidor indisponível, tente mais tarde!"),
-        );
-      }
-    })
   }
 }

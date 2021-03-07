@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listSuggest, favorite, outlier } from '../../../../store/suggestReducer';
-import { atvCompany } from '../../../../store/companyReducer';
+import { listSuggest, favorite, outlier } from '../../../../store/userStores/companyStores/suggestReducer';
+import { updateCompany } from '../../../../store/userStores/companyStores/companyReducer';
 import { parseISO } from 'date-fns';
 import { format } from 'date-fns-tz';
 import DateFnsUtils from '@date-io/date-fns';
@@ -140,11 +140,11 @@ const Suggest = (props) => {
     if(companyById.suggest){
       companyById.suggest = false;
       setSuggestAtv({check: companyById.suggest});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }else{
       companyById.suggest = true;
       setSuggestAtv({check: companyById.suggest});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }
   }
 
@@ -295,6 +295,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({listSuggest, favorite, outlier, atvCompany}, dispatch);
+  bindActionCreators({listSuggest, favorite, outlier, updateCompany}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Suggest);

@@ -6,8 +6,8 @@ import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
-import { auth } from '../../store/authReducer';
-import { showProgress, hideProgress } from '../../store/messageReducer';
+import { auth } from '../../store/authStores/authReducer';
+import { showProgress, hideProgress } from '../../store/sharedStores/messageReducer';
 import MessageDialog from '../Dialog';
 
 import Container from '@material-ui/core/Container';

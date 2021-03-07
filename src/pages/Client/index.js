@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RoutesClient from './routesClient';
-import { getInfo } from '../../store/clientReducer';
+import { getInfo } from '../../store/clientStores/clientReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';

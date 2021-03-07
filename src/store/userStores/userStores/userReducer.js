@@ -1,5 +1,5 @@
-import api from '../services/api';
-import { showMessage } from './messageReducer';
+import api from '../../../services/api';
+import { showMessage } from '../../sharedStores/messageReducer';
 
 const ACTIONS = {
   LIST_USERS: 'LISTUSERS',
@@ -24,7 +24,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
 //LISTAR TODOS USUÁRIOS
 export const listUser = (page, nOfItems) => {
   return dispatch => {
-    api.get(`/adm/user?page=${page}&limit=${nOfItems}`)
+    api.get(`/user/user?page=${page}&limit=${nOfItems}`)
     .then(Response => {
       const { docs, infos } = Response.data;
       dispatch({
@@ -48,7 +48,7 @@ export const listUser = (page, nOfItems) => {
 //GET BY ID USER
 export const getUserById = (idUser) => {
   return dispatch => {
-    api.get(`/adm/user/${idUser}`)
+    api.get(`/user/user/${idUser}`)
     .then(Response => {
       dispatch({
         type: ACTIONS.BY_ID_USER,

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CardMedia from '@material-ui/core/CardMedia';
-import { addCall } from '../../../store/clientReducer';
+import { addCall } from '../../../store/clientStores/clientReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -55,7 +55,7 @@ const MainClient = (props) => {
         variant="contained" color="primary">
         Cardápio online
       </Button>
-      <Button className={props.infos.call && idTable != 0? classes.button : classes.hide} 
+      <Button className={props.infos.call && idTable !== 0? classes.button : classes.hide} 
         onClick={() => props.addCall(infos._id, idTable)}
         component={Link} to={`/client/atencao/?${infos._id}?table=${idTable? idTable: 0}`} 
         variant="contained" color="primary">

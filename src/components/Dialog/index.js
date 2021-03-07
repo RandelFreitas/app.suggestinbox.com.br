@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import { showMessage, hideMessage } from '../../store/messageReducer';
+import { showMessage, hideMessage } from '../../store/sharedStores/messageReducer';
 
 const MessageDialog = (props) => {
   return(

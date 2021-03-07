@@ -2,9 +2,8 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { atvCompany, getCompanyById } from '../../../../store/companyReducer';
-import { getMenuById } from '../../../../store/menuReducer';
-import { Link } from 'react-router-dom';
+import { updateCompany, getCompanyById } from '../../../../store/userStores/companyStores/companyReducer';
+import { getMenuById } from '../../../../store/userStores/companyStores/menuReducer';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from "@material-ui/core/Switch";
@@ -81,7 +80,7 @@ const useStyles = makeStyles(() =>({
 
 const Menu = (props) => {
   const classes = useStyles();
-  const { companyById, menuById, sectionMenu } = props;
+  const { companyById, sectionMenu } = props;
   const [ idCompany ] = useState(window.location.href.split('/?')[2]);
   const [ edit, setEdit ] = useState(true);
   const [ menu, setMenu ] = useState({
@@ -97,11 +96,11 @@ const Menu = (props) => {
     if(companyById.menu){
       companyById.menu = false;
       setMenu({check: companyById.menu});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }else{
       companyById.menu = true;
       setMenu({check: companyById.menu});
-      return props.atvCompany(companyById);
+      return props.updateCompany(companyById);
     }
   }
 
@@ -399,6 +398,6 @@ const mapStateToProps = state => ({
 });
 
 const mapsDispatchToProps = dispatch => 
-  bindActionCreators({atvCompany, getCompanyById, getMenuById}, dispatch);
+  bindActionCreators({updateCompany, getCompanyById, getMenuById}, dispatch);
 
 export default connect(mapStateToProps, mapsDispatchToProps)(Menu);

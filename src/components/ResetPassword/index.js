@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import ReCAPTCHA from "react-google-recaptcha"
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { showMessage, hideMessage } from '../../store/messageReducer';
+import { showMessage, hideMessage } from '../../store/sharedStores/messageReducer';
+import { reset } from '../../store/authStores/authReducer';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,7 +14,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { reset } from '../../store/authReducer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Dialog from '@material-ui/core/Dialog';

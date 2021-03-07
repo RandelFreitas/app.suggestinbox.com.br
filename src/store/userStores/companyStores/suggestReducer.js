@@ -1,6 +1,6 @@
-import api from '../services/api';
+import api from '../../../services/api';
 import { getCompanyById } from './companyReducer';
-import { showMessage } from './messageReducer';
+import { showMessage } from '../../sharedStores/messageReducer';
 
 const ACTIONS = {
   LIST_SUGGESTS: 'LISTSUGGESTS',

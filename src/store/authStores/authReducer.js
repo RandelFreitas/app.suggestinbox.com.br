@@ -1,7 +1,7 @@
-import api from '../services/api';
-import history from '../services/history';
-import { setInfosLocalStorage } from '../services/auth';
-import { showMessage } from './messageReducer';
+import api from '../../services/api';
+import history from '../../services/history';
+import { setInfosLocalStorage } from '../../services/auth';
+import { showMessage } from '../sharedStores/messageReducer';
 
 const ACTIONS = {
   AUTH: 'AUTH',

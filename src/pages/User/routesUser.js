@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Companies from './Companies';
 import SetupUser from './SetupUser';
-import SetupCompany from './SetupCompany';
+import SetupCompany from './Companies/SetupCompany';
 
 const RoutesUser = () => {
   return(
