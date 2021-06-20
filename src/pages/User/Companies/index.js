@@ -57,7 +57,7 @@ const Companies = (props) => {
                         {company.name}
                       </Typography>
                       <Typography noWrap variant="body2" color="textSecondary" component="p">
-                        {company.address.city} - {company.address.state}
+                        {company.address === null? 'Cidade' : company.address.city} - {company.address === null? 'UF' : company.address.state}
                       </Typography>
                     </CardContent>
                   </CardActionArea>

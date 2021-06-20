@@ -71,7 +71,7 @@ export const getUserById = (idUser) => {
 export const updateUser = (user, idUser) => {
   console.log('ok');
   return dispatch => {
-    api.patch(`/auth/user/${idUser}`, user)
+    api.patch(`/user/user/${idUser}`, user)
     .then(Response => {
       dispatch({
         type: ACTIONS.UPDATE_USER,

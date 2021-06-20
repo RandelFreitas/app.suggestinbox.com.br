@@ -44,7 +44,7 @@ export const auth = (login) => {
         dispatch(
           showMessage("Servidor indisponível, tente mais tarde!"),
         );
-      }
+      };
     });
   };
 };
@@ -69,7 +69,7 @@ export const fogot = (email) => {
         dispatch(
           showMessage("Servidor indisponível, tente mais tarde!"),
         );
-      }  
+      };
     });
   }
 }
